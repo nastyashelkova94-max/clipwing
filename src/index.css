@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  --color-indigo-300: #a5b4fc;
+  --color-indigo-400: #818cf8;
+  --color-indigo-500: #6366f1;
+  --color-indigo-600: #4f46e5;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 12%, rgba(255, 255, 255, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 35% at 85% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 65% 45% at 25% 70%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 85%, rgba(255, 255, 255, 0.45) 0%, transparent 60%),
+    linear-gradient(180deg, #bfe3fa 0%, #a3cdef 45%, #bfe3fa 100%);
+  background-attachment: fixed;
+  background-size: 100% 100vh;
+  color: #0f172a;
+  font-family: var(--font-sans);
+}
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+@utility glass-soft {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+@utility glass-indigo {
+  background: rgba(99, 102, 241, 0.16);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(165, 180, 252, 0.5);
+}
+
+@keyframes flow-dot {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+.flow-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #4f46e5;
+  box-shadow: 0 0 6px 1px rgba(79, 70, 229, 0.6);
+  animation: flow-dot 3s linear infinite;
+}

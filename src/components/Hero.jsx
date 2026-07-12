@@ -1,0 +1,90 @@
+import { motion } from 'framer-motion'
+
+const avatars = [
+  { src: new URL('../assets/images/avatar-1.png', import.meta.url).href },
+  { src: new URL('../assets/images/avatar-2.png', import.meta.url).href },
+  { src: new URL('../assets/images/avatar-3.png', import.meta.url).href },
+  { src: new URL('../assets/images/avatar-4.png', import.meta.url).href },
+  { src: new URL('../assets/images/avatar-5.png', import.meta.url).href },
+  { src: new URL('../assets/images/avatar-6.png', import.meta.url).href },
+  { src: new URL('../assets/images/avatar-7.png', import.meta.url).href },
+]
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+}
+
+export default function Hero() {
+  return (
+    <motion.section
+      initial="hidden"
+      animate="show"
+      variants={container}
+      className="relative z-10 mx-auto flex max-w-[960px] flex-col items-center gap-8 px-6 pt-16 pb-20 text-center"
+    >
+      <div className="flex flex-col items-center gap-4">
+        <motion.h1
+          variants={item}
+          className="font-sans text-[46px] font-medium leading-[1.15] text-slate-900 sm:text-[56px] lg:text-[70px] lg:leading-[76px]"
+        >
+          <span className="block">Smarter than an AI clipper,</span>
+          <span className="block">
+            <span className="font-serif font-medium italic text-indigo-600">
+              easier
+            </span>{' '}
+            than hiring
+          </span>
+        </motion.h1>
+        <motion.p
+          variants={item}
+          className="max-w-[449px] font-sans text-xl font-normal text-slate-900"
+        >
+          You send a video link. A real editor turns it into clips in 3 days. No
+          hunting, no hassle
+        </motion.p>
+      </div>
+
+      <motion.div variants={item} className="flex flex-col items-center gap-4">
+        <div className="flex flex-nowrap items-center justify-center gap-4">
+          <motion.a
+            href="#"
+            whileHover={{ y: -3, scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
+          >
+            Get my clips
+          </motion.a>
+          <motion.a
+            href="#"
+            whileHover={{ y: -3, scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="glass-soft flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-300! px-6 py-3 text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)]"
+          >
+            See examples
+          </motion.a>
+        </div>
+        <p className="text-base text-slate-500">Free to sign up</p>
+      </motion.div>
+
+      <motion.div variants={item} className="flex flex-col items-center gap-3 pt-6">
+        <div className="flex">
+          {avatars.map((avatar, i) => (
+            <img
+              key={i}
+              src={avatar.src}
+              alt=""
+              className="-ml-[15px] h-11 w-11 rounded-full border-[3px] border-[#e3ecf2] object-cover first:ml-0"
+            />
+          ))}
+        </div>
+        <p className="text-xl text-[#21234e] opacity-80">Loved by 3000+ creators</p>
+      </motion.div>
+    </motion.section>
+  )
+}
