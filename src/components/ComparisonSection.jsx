@@ -71,7 +71,7 @@ export default function ComparisonSection() {
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-6 grid w-full grid-cols-1 items-end gap-4 lg:mt-8 lg:grid-cols-3">
+      <div className="mx-auto mt-6 grid w-full grid-cols-1 items-center gap-4 lg:mt-8 lg:grid-cols-3">
         {cards.map((card, i) => (
           <motion.div
             key={card.key}
