@@ -35,11 +35,19 @@ const steps = [
 
 const STEP_DURATION = 4
 
+const CROSSFADE_MS = 500
+
 export default function ProcessSection() {
   const [active, setActive] = useState(0)
   const [inView, setInView] = useState(false)
   const sectionRef = useRef(null)
   const current = steps[active]
+  const [prevImage, setPrevImage] = useState(current.image)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setPrevImage(current.image), CROSSFADE_MS)
+    return () => clearTimeout(timer)
+  }, [current.image])
 
   useEffect(() => {
     const el = sectionRef.current
@@ -113,14 +121,19 @@ export default function ProcessSection() {
           })}
         </Reveal>
 
-        <Reveal delay={0.15} className="relative h-[300px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-full">
+        <Reveal delay={0.15} className="relative h-[300px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-[480px]">
+          <img
+            src={prevImage}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-top"
+          />
           <motion.img
             key={active}
             src={current.image}
             alt={current.tab}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: CROSSFADE_MS / 1000, ease: 'easeInOut' }}
             className="absolute inset-0 h-full w-full object-cover object-top"
           />
         </Reveal>
