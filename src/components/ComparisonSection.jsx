@@ -46,7 +46,7 @@ const cards = [
   {
     key: 'upwork',
     image: frameUpwork,
-    imageHeight: 'h-[258px]',
+    imageHeight: 'h-[244px]',
     icon: circleX,
     highlighted: false,
     title: 'An Upwork editor',
@@ -61,7 +61,7 @@ const cards = [
 
 export default function ComparisonSection() {
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
+    <section className="relative z-10 mx-auto max-w-[1240px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex flex-col items-center gap-2 text-center">
         <h2 className="text-[32px] leading-[1.15] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           <span className="block">Three ways to get clips.</span>
@@ -71,7 +71,7 @@ export default function ComparisonSection() {
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-[90px] grid max-w-[1280px] grid-cols-1 items-end gap-4 lg:mt-[98px] lg:grid-cols-3">
+      <div className="mx-auto mt-6 grid w-full grid-cols-1 items-end gap-4 lg:mt-8 lg:grid-cols-3">
         {cards.map((card, i) => (
           <motion.div
             key={card.key}
@@ -90,7 +90,7 @@ export default function ComparisonSection() {
                 alt=""
                 className={`w-full object-cover ${card.imageHeight}`}
               />
-              <div className="flex flex-col items-start gap-6 p-4 text-left lg:px-6 lg:py-8">
+              <div className="flex flex-col items-start gap-6 p-4 text-left lg:px-4 lg:py-8">
                 <h3 className="flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-slate-900">
                   {card.highlighted && (
                     <img src={logoMark} alt="" className="h-6 w-6" />
