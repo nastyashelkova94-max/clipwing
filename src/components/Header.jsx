@@ -22,6 +22,7 @@ const freeTools = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [toolsOpen, setToolsOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const closeTimer = useRef(null)
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Header() {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="sticky top-0 z-30 flex justify-center px-6 py-6 lg:px-10"
+      className="sticky top-0 z-30 flex flex-col items-center px-6 py-6 lg:px-10"
     >
       <div
         className={`flex w-full items-center justify-between transition-all duration-300 ${
@@ -117,15 +118,67 @@ export default function Header() {
           )}
         </nav>
 
-        <motion.a
-          href="#"
-          whileHover={{ y: -2, scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="rounded-xl border border-indigo-400 bg-indigo-500 px-4 py-3 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
-        >
-          Create my viral clip
-        </motion.a>
+        <div className="flex items-center gap-3">
+          <motion.a
+            href="#"
+            whileHover={{ y: -2, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="hidden whitespace-nowrap rounded-xl border border-indigo-400 bg-indigo-500 px-4 py-3 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] sm:flex sm:items-center sm:justify-center"
+          >
+            Create my viral clip
+          </motion.a>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Toggle menu"
+            className="flex h-10 w-10 items-center justify-center rounded-lg lg:hidden"
+          >
+            <span className="relative flex h-4 w-5 flex-col justify-between">
+              <span
+                className={`h-[2px] w-full rounded-full bg-slate-900 transition-transform duration-200 ${
+                  menuOpen ? 'translate-y-[7px] rotate-45' : ''
+                }`}
+              />
+              <span
+                className={`h-[2px] w-full rounded-full bg-slate-900 transition-opacity duration-200 ${
+                  menuOpen ? 'opacity-0' : ''
+                }`}
+              />
+              <span
+                className={`h-[2px] w-full rounded-full bg-slate-900 transition-transform duration-200 ${
+                  menuOpen ? '-translate-y-[7px] -rotate-45' : ''
+                }`}
+              />
+            </span>
+          </button>
+        </div>
       </div>
+
+      {menuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="glass mt-3 flex w-full max-w-[1140px] flex-col gap-1 rounded-3xl p-4 lg:hidden"
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href="#"
+              className="rounded-xl px-2 py-3 text-base text-slate-900 transition-colors hover:text-indigo-600"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#"
+            className="mt-2 flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-400 bg-indigo-500 px-4 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] sm:hidden"
+          >
+            Create my viral clip
+          </a>
+        </motion.div>
+      )}
     </motion.header>
   )
 }

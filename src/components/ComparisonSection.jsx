@@ -63,7 +63,7 @@ export default function ComparisonSection() {
   return (
     <section className="relative z-10 mx-auto max-w-[1280px] px-6 pb-40">
       <Reveal className="mx-auto flex flex-col items-center gap-2 text-center">
-        <h2 className="text-[48px] leading-[1.15] font-medium text-slate-900">
+        <h2 className="text-[32px] leading-[1.15] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           <span className="block">Three ways to get clips.</span>
           <span className="block font-serif italic text-indigo-600">
             Two are a pain

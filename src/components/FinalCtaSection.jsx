@@ -5,9 +5,9 @@ export default function FinalCtaSection() {
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-40">
       <Reveal className="mx-auto flex flex-col items-center gap-4 text-center">
-        <h2 className="whitespace-nowrap text-[48px] font-medium text-slate-900">
+        <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:whitespace-nowrap lg:text-[48px]">
           Get clips without the{' '}
-          <span className="font-serif text-[48px] font-medium italic text-indigo-600">
+          <span className="font-serif text-[32px] font-medium italic text-indigo-600 sm:text-[40px] lg:text-[48px]">
             editor hunt
           </span>
         </h2>

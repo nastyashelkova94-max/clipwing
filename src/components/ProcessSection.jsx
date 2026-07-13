@@ -63,9 +63,9 @@ export default function ProcessSection() {
   return (
     <section ref={sectionRef} className="relative z-10 mx-auto max-w-[1200px] px-6 pb-40">
       <Reveal className="mx-auto flex max-w-[626px] flex-col items-center gap-4 text-center">
-        <h2 className="text-[48px] font-medium text-slate-900">
+        <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           From your link to ready{' '}
-          <span className="font-serif text-[48px] font-medium italic text-indigo-600">
+          <span className="font-serif text-[32px] font-medium italic text-indigo-600 sm:text-[40px] lg:text-[48px]">
             clips
           </span>
         </h2>
@@ -113,7 +113,7 @@ export default function ProcessSection() {
           })}
         </Reveal>
 
-        <Reveal delay={0.15} className="relative h-full overflow-hidden rounded-3xl">
+        <Reveal delay={0.15} className="relative h-[300px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-full">
           <motion.img
             key={active}
             src={current.image}

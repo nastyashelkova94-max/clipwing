@@ -23,9 +23,9 @@ export default function PricingSection() {
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-40">
       <Reveal className="mx-auto flex max-w-[626px] flex-col items-center gap-4 text-center">
-        <h2 className="text-[48px] font-medium text-slate-900">
+        <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           Simple{' '}
-          <span className="font-serif text-[48px] font-medium italic text-indigo-600">
+          <span className="font-serif text-[32px] font-medium italic text-indigo-600 sm:text-[40px] lg:text-[48px]">
             pricing
           </span>
         </h2>
@@ -34,7 +34,7 @@ export default function PricingSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-8 grid max-w-[1000px] grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="mx-auto mt-8 grid max-w-[1000px] grid-cols-1 gap-6 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -49,7 +49,7 @@ export default function PricingSection() {
             </span>
             <div>
               <h3 className="text-2xl font-medium text-slate-900">Autopilot</h3>
-              <p className="mt-1 whitespace-nowrap text-[15px] text-slate-500">
+              <p className="mt-1 text-[15px] text-slate-500 lg:whitespace-nowrap">
                 A real editor on every video you send
               </p>
             </div>
@@ -84,7 +84,7 @@ export default function PricingSection() {
               {autopilotFeatures.map((f) => (
                 <li
                   key={f}
-                  className="flex items-center gap-2 whitespace-nowrap text-base text-slate-700"
+                  className="flex items-start gap-2 text-base text-slate-700 lg:items-center lg:whitespace-nowrap"
                 >
                   <img src={circleCheck} alt="" className="h-4 w-4 shrink-0" />
                   {f}
@@ -105,7 +105,7 @@ export default function PricingSection() {
           <div className="flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-5">
             <div>
               <h3 className="text-2xl font-medium text-slate-900">Enterprise</h3>
-              <p className="mt-1 whitespace-nowrap text-[15px] text-slate-500">
+              <p className="mt-1 text-[15px] text-slate-500 lg:whitespace-nowrap">
                 Higher volume and full-service production for teams
               </p>
             </div>
@@ -134,7 +134,7 @@ export default function PricingSection() {
               {enterpriseFeatures.map((f) => (
                 <li
                   key={f}
-                  className="flex items-center gap-2 whitespace-nowrap text-base text-slate-700"
+                  className="flex items-start gap-2 text-base text-slate-700 lg:items-center lg:whitespace-nowrap"
                 >
                   <img src={circleCheck} alt="" className="h-4 w-4 shrink-0" />
                   {f}
