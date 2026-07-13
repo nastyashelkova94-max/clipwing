@@ -33,7 +33,7 @@ const steps = [
   },
 ]
 
-const STEP_DURATION = 4
+const STEP_DURATION = 7
 
 const CROSSFADE_MS = 500
 
@@ -103,26 +103,16 @@ export default function ProcessSection() {
                   <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                     {i + 1}. {s.title}
                   </h3>
-                  {isActive && (
-                    <motion.div
-                      key={active}
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="mt-3 text-base leading-snug text-[#21234e]">
-                        {s.body}
-                      </p>
-                    </motion.div>
-                  )}
+                  <p className="mt-3 line-clamp-2 text-base leading-snug text-[#21234e]">
+                    {s.body}
+                  </p>
                 </button>
               </motion.div>
             )
           })}
         </Reveal>
 
-        <Reveal delay={0.15} className="relative h-[300px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-[430px]">
+        <Reveal delay={0.15} className="relative h-[300px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-full">
           <img
             src={prevImage}
             alt=""
