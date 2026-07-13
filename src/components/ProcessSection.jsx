@@ -103,9 +103,13 @@ export default function ProcessSection() {
                   <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                     {i + 1}. {s.title}
                   </h3>
-                  <p className="mt-3 line-clamp-2 text-base leading-snug text-[#21234e]">
+                  <motion.p
+                    animate={{ opacity: isActive ? 1 : 0.45 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="mt-3 line-clamp-2 text-base leading-snug text-[#21234e]"
+                  >
                     {s.body}
-                  </p>
+                  </motion.p>
                 </button>
               </motion.div>
             )
