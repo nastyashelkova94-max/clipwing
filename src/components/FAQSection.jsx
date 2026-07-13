@@ -50,7 +50,7 @@ export default function FAQSection() {
           </h2>
         </Reveal>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
           {faqs.map((faq, i) => {
             const isOpen = i === openIndex
             return (

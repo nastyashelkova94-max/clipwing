@@ -34,7 +34,7 @@ export default function PricingSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-6 grid max-w-[1000px] grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-2 lg:gap-[90px]">
+      <div className="mx-auto mt-6 grid max-w-[1000px] grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -128,7 +128,7 @@ export default function OneVideoSection() {
           </span>
         </div>
 
-        <div className="grid w-full max-w-[520px] grid-cols-3 gap-3">
+        <div className="grid w-full max-w-[520px] grid-cols-3 gap-4">
           {mobileClips.map((clip, i) => (
             <motion.div
               key={i}
