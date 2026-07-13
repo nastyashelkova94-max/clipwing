@@ -21,7 +21,7 @@ const autopilotFeatures = [
 
 export default function PricingSection() {
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[90px]">
+    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex max-w-[626px] flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           Simple{' '}
@@ -34,16 +34,16 @@ export default function PricingSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-8 grid max-w-[1000px] grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="mx-auto mt-6 grid max-w-[1000px] grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-2 lg:gap-[90px]">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ y: -6 }}
-          className="glass-indigo relative rounded-3xl p-2"
+          className="glass-indigo relative rounded-[20px] p-1 lg:rounded-3xl lg:p-2"
         >
-          <div className="relative flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-5">
+          <div className="relative flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-4 lg:p-5">
             <span className="absolute right-6 top-6 rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-600">
               Most popular
             </span>
@@ -100,9 +100,9 @@ export default function PricingSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ y: -6 }}
-          className="glass-soft rounded-3xl p-2"
+          className="glass-soft rounded-[20px] p-1 lg:rounded-3xl lg:p-2"
         >
-          <div className="flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-5">
+          <div className="flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-4 lg:p-5">
             <div>
               <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Enterprise</h3>
               <p className="mt-1 text-[15px] text-slate-500 lg:whitespace-nowrap">

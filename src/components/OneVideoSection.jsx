@@ -104,7 +104,7 @@ export default function OneVideoSection() {
   const [playing, setPlaying] = useState(false)
 
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[90px]">
+    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex max-w-[751px] flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           See what we make from{' '}
@@ -119,7 +119,7 @@ export default function OneVideoSection() {
       </Reveal>
 
       {/* Mobile / tablet: simple stacked layout, no branch lines */}
-      <Reveal delay={0.1} y={32} className="mt-12 flex flex-col items-center gap-8 lg:hidden">
+      <Reveal delay={0.1} y={32} className="mt-6 flex flex-col items-center gap-8 lg:hidden">
         <VideoPlayer playing={playing} setPlaying={setPlaying} className="max-w-[520px]" />
 
         <div className="glass-soft flex items-start rounded-[28px] p-1">
@@ -159,7 +159,7 @@ export default function OneVideoSection() {
       <Reveal
         delay={0.1}
         y={32}
-        className="mt-16 hidden items-center justify-start gap-10 lg:flex"
+        className="mt-8 hidden items-center justify-start gap-10 lg:flex"
       >
         <VideoPlayer playing={playing} setPlaying={setPlaying} className="max-w-[520px]" />
 

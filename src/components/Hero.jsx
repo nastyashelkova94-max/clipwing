@@ -26,7 +26,7 @@ export default function Hero() {
       initial="hidden"
       animate="show"
       variants={container}
-      className="relative z-10 mx-auto flex max-w-[960px] flex-col items-center gap-8 px-6 pt-16 pb-20 text-center"
+      className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center gap-8 px-6 pt-16 pb-20 text-center"
     >
       <div className="flex flex-col items-center gap-4">
         <motion.h1

@@ -11,7 +11,7 @@ import Footer from './components/Footer'
 import cloud from './assets/images/cloud-corner.png'
 
 const clouds = [
-  { top: -80, side: 'left', width: 850, opacity: 0.75, flip: false },
+  { top: 40, side: 'left', width: 850, opacity: 0.75, flip: false },
   { top: 950, side: 'right', width: 760, opacity: 0.6, flip: true },
   { top: 2150, side: 'left', width: 820, opacity: 0.65, flip: false },
   { top: 3450, side: 'right', width: 880, opacity: 0.6, flip: true },
