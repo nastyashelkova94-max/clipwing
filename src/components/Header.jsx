@@ -51,7 +51,7 @@ export default function Header() {
       <div
         className={`flex w-full items-center justify-between transition-all duration-300 ${
           scrolled
-            ? 'glass max-w-[1140px] rounded-full px-6 py-3'
+            ? 'glass max-w-[1140px] rounded-[26px] p-[10px]'
             : 'max-w-[1300px]'
         }`}
       >
