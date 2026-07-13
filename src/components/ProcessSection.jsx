@@ -92,6 +92,7 @@ export default function ProcessSection() {
                 key={s.tab}
                 initial={false}
                 animate={{ scale: isActive ? 1 : 0.99 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="glass-soft overflow-hidden rounded-[20px] p-1 lg:rounded-3xl lg:p-2"
               >
                 <button
@@ -107,7 +108,7 @@ export default function ProcessSection() {
                       key={active}
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
-                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
                       <p className="mt-3 text-base leading-snug text-[#21234e]">
@@ -121,7 +122,7 @@ export default function ProcessSection() {
           })}
         </Reveal>
 
-        <Reveal delay={0.15} className="relative h-[300px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-[480px]">
+        <Reveal delay={0.15} className="relative h-[300px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-[430px]">
           <img
             src={prevImage}
             alt=""
