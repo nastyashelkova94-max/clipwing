@@ -26,7 +26,7 @@ export default function Hero() {
       initial="hidden"
       animate="show"
       variants={container}
-      className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center gap-8 px-6 pt-16 pb-20 text-center"
+      className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center gap-8 px-6 pt-16 pb-16 text-center"
     >
       <div className="flex flex-col items-center gap-4">
         <motion.h1
@@ -72,7 +72,7 @@ export default function Hero() {
         <p className="text-base text-slate-500">Free to sign up</p>
       </motion.div>
 
-      <motion.div variants={item} className="flex flex-col items-center gap-3 pt-6">
+      <motion.div variants={item} className="flex flex-col items-center gap-3 pt-1">
         <div className="flex">
           {avatars.map((avatar, i) => (
             <img
