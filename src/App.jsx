@@ -21,33 +21,35 @@ const clouds = [
 
 export default function App() {
   return (
-    <div className="relative overflow-hidden">
-      {clouds.map((c, i) => (
-        <img
-          key={i}
-          src={cloud}
-          alt=""
-          className="pointer-events-none absolute"
-          style={{
-            top: c.top,
-            [c.side]: -60,
-            width: c.width,
-            opacity: c.opacity,
-            transform: c.flip ? 'scaleX(-1)' : undefined,
-          }}
-        />
-      ))}
-
+    <>
       <Header />
-      <Hero />
-      <ShowcaseDemo />
-      <OneVideoSection />
-      <ProcessSection />
-      <ComparisonSection />
-      <PricingSection />
-      <FAQSection />
-      <FinalCtaSection />
-      <Footer />
-    </div>
+      <div className="relative overflow-hidden">
+        {clouds.map((c, i) => (
+          <img
+            key={i}
+            src={cloud}
+            alt=""
+            className="pointer-events-none absolute"
+            style={{
+              top: c.top,
+              [c.side]: -60,
+              width: c.width,
+              opacity: c.opacity,
+              transform: c.flip ? 'scaleX(-1)' : undefined,
+            }}
+          />
+        ))}
+
+        <Hero />
+        <ShowcaseDemo />
+        <OneVideoSection />
+        <ProcessSection />
+        <ComparisonSection />
+        <PricingSection />
+        <FAQSection />
+        <FinalCtaSection />
+        <Footer />
+      </div>
+    </>
   )
 }
