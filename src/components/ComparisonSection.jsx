@@ -81,7 +81,7 @@ export default function ComparisonSection() {
             transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -8 }}
             className={`overflow-hidden rounded-[20px] p-1 shadow-sm lg:rounded-3xl lg:p-2 ${
-              card.highlighted ? 'glass-indigo lg:-mt-8' : 'glass-soft'
+              card.highlighted ? 'glass-indigo' : 'glass-soft'
             }`}
           >
             <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white">

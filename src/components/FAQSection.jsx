@@ -39,7 +39,7 @@ const faqs = [
 ]
 
 export default function FAQSection() {
-  const [openIndex, setOpenIndex] = useState(0)
+  const [openIndex, setOpenIndex] = useState(-1)
 
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
