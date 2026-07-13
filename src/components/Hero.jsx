@@ -1,15 +1,5 @@
 import { motion } from 'framer-motion'
 
-const avatars = [
-  { src: new URL('../assets/images/avatar-1.png', import.meta.url).href },
-  { src: new URL('../assets/images/avatar-2.png', import.meta.url).href },
-  { src: new URL('../assets/images/avatar-3.png', import.meta.url).href },
-  { src: new URL('../assets/images/avatar-4.png', import.meta.url).href },
-  { src: new URL('../assets/images/avatar-5.png', import.meta.url).href },
-  { src: new URL('../assets/images/avatar-6.png', import.meta.url).href },
-  { src: new URL('../assets/images/avatar-7.png', import.meta.url).href },
-]
-
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
@@ -70,20 +60,6 @@ export default function Hero() {
           </motion.a>
         </div>
         <p className="text-base text-slate-500">Free to sign up</p>
-      </motion.div>
-
-      <motion.div variants={item} className="flex flex-col items-center gap-3 pt-1">
-        <div className="flex">
-          {avatars.map((avatar, i) => (
-            <img
-              key={i}
-              src={avatar.src}
-              alt=""
-              className="-ml-[15px] h-11 w-11 rounded-full border-[3px] border-[#e3ecf2] object-cover first:ml-0"
-            />
-          ))}
-        </div>
-        <p className="text-xl text-[#21234e] opacity-80">Loved by 3000+ creators</p>
       </motion.div>
     </motion.section>
   )

@@ -36,9 +36,6 @@ export default function FinalCtaSection() {
             Book a call
           </motion.a>
         </div>
-        <p className="text-base text-slate-500">
-          Free to sign up · 3000+ creators
-        </p>
       </div>
     </section>
   )
