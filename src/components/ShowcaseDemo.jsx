@@ -3,7 +3,7 @@ import showcaseAll from '../assets/images/showcase-all.png'
 
 export default function ShowcaseDemo() {
   return (
-    <section className="relative z-10 mx-auto max-w-[1103px] px-6 pb-40">
+    <section className="relative z-10 mx-auto max-w-[1103px] px-6 pb-[90px]">
       <Reveal
         y={32}
         className="glass-soft relative overflow-hidden rounded-[24px] p-[9px]"

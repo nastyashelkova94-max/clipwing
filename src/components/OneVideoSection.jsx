@@ -104,7 +104,7 @@ export default function OneVideoSection() {
   const [playing, setPlaying] = useState(false)
 
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-40">
+    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[90px]">
       <Reveal className="mx-auto flex max-w-[751px] flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           See what we make from{' '}

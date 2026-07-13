@@ -21,7 +21,7 @@ const autopilotFeatures = [
 
 export default function PricingSection() {
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-40">
+    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[90px]">
       <Reveal className="mx-auto flex max-w-[626px] flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           Simple{' '}
@@ -48,7 +48,7 @@ export default function PricingSection() {
               Most popular
             </span>
             <div>
-              <h3 className="text-2xl font-medium text-slate-900">Autopilot</h3>
+              <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Autopilot</h3>
               <p className="mt-1 text-[15px] text-slate-500 lg:whitespace-nowrap">
                 A real editor on every video you send
               </p>
@@ -104,7 +104,7 @@ export default function PricingSection() {
         >
           <div className="flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-5">
             <div>
-              <h3 className="text-2xl font-medium text-slate-900">Enterprise</h3>
+              <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Enterprise</h3>
               <p className="mt-1 text-[15px] text-slate-500 lg:whitespace-nowrap">
                 Higher volume and full-service production for teams
               </p>

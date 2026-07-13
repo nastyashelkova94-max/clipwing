@@ -23,7 +23,6 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [toolsOpen, setToolsOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [mobileToolsOpen, setMobileToolsOpen] = useState(false)
   const closeTimer = useRef(null)
 
   useEffect(() => {
@@ -164,39 +163,7 @@ export default function Header() {
           className="glass mt-3 flex w-full max-w-[1140px] flex-col gap-1 rounded-3xl p-4 lg:hidden"
         >
           {navLinks.map((link) =>
-            link.hasChevron ? (
-              <div key={link.label} className="flex flex-col">
-                <button
-                  type="button"
-                  onClick={() => setMobileToolsOpen((v) => !v)}
-                  className={`flex items-center justify-between rounded-xl px-2 py-3 text-base transition-colors ${
-                    mobileToolsOpen ? 'text-indigo-600' : 'text-slate-900 hover:text-indigo-600'
-                  }`}
-                >
-                  {link.label}
-                  <img
-                    src={chevronDown}
-                    alt=""
-                    className={`h-4 w-4 transition-transform duration-200 ${
-                      mobileToolsOpen ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {mobileToolsOpen && (
-                  <div className="flex flex-col gap-1 pb-1 pl-4">
-                    {freeTools.map((tool) => (
-                      <a
-                        key={tool}
-                        href="#"
-                        className="rounded-xl px-2 py-2.5 text-base text-slate-900/70 transition-colors hover:text-indigo-600"
-                      >
-                        {tool}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
+            link.hasChevron ? null : (
               <a
                 key={link.label}
                 href="#"
@@ -206,6 +173,15 @@ export default function Header() {
               </a>
             )
           )}
+          {freeTools.map((tool) => (
+            <a
+              key={tool}
+              href="#"
+              className="rounded-xl px-2 py-3 text-base text-slate-900 transition-colors hover:text-indigo-600"
+            >
+              {tool}
+            </a>
+          ))}
           <a
             href="#"
             className="mt-2 flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-400 bg-indigo-500 px-4 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] sm:hidden"

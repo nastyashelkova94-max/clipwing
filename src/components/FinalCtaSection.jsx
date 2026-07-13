@@ -3,7 +3,7 @@ import Reveal from './Reveal'
 
 export default function FinalCtaSection() {
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-40">
+    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[90px]">
       <Reveal className="mx-auto flex flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:whitespace-nowrap lg:text-[48px]">
           Get clips without the{' '}

@@ -61,7 +61,7 @@ export default function ProcessSection() {
   }, [active, inView])
 
   return (
-    <section ref={sectionRef} className="relative z-10 mx-auto max-w-[1200px] px-6 pb-40">
+    <section ref={sectionRef} className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[90px]">
       <Reveal className="mx-auto flex max-w-[626px] flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           From your link to ready{' '}
@@ -91,7 +91,7 @@ export default function ProcessSection() {
                   onClick={() => setActive(i)}
                   className="w-full rounded-2xl bg-white p-6 text-left"
                 >
-                  <h3 className="text-xl font-medium text-[#21234e]">
+                  <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                     {i + 1}. {s.title}
                   </h3>
                   {isActive && (

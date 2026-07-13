@@ -33,7 +33,7 @@ export default function App() {
             style={{
               top: c.top,
               [c.side]: -60,
-              width: c.width,
+              width: `min(${c.width}px, 65vw)`,
               opacity: c.opacity,
               transform: c.flip ? 'scaleX(-1)' : undefined,
             }}

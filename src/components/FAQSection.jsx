@@ -42,7 +42,7 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-40">
+    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[90px]">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[540px_1fr]">
         <Reveal className="flex flex-col items-start gap-4">
           <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:whitespace-nowrap lg:text-[48px]">
@@ -69,7 +69,7 @@ export default function FAQSection() {
                   className="w-full rounded-2xl bg-white p-6 text-left"
                 >
                   <div className="flex items-center justify-between gap-4">
-                    <h3 className="text-xl font-medium text-[#21234e]">{faq.q}</h3>
+                    <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">{faq.q}</h3>
                     {isOpen ? (
                       <span className="block h-[2px] w-4 shrink-0 bg-slate-800" />
                     ) : (

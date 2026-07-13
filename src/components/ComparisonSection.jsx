@@ -61,7 +61,7 @@ const cards = [
 
 export default function ComparisonSection() {
   return (
-    <section className="relative z-10 mx-auto max-w-[1280px] px-6 pb-40">
+    <section className="relative z-10 mx-auto max-w-[1280px] px-6 pb-[90px]">
       <Reveal className="mx-auto flex flex-col items-center gap-2 text-center">
         <h2 className="text-[32px] leading-[1.15] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
           <span className="block">Three ways to get clips.</span>
@@ -91,7 +91,7 @@ export default function ComparisonSection() {
                 className={`w-full object-cover ${card.imageHeight}`}
               />
               <div className="flex flex-col items-start gap-6 px-6 py-8 text-left">
-                <h3 className="flex items-center gap-2 text-2xl font-semibold tracking-tight text-slate-900">
+                <h3 className="flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-slate-900">
                   {card.highlighted && (
                     <img src={logoMark} alt="" className="h-6 w-6" />
                   )}
