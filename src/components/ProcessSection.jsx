@@ -83,7 +83,7 @@ export default function ProcessSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-6 grid max-w-[1210px] grid-cols-1 gap-5 lg:mt-8 lg:grid-cols-2">
+      <div className="mx-auto mt-6 grid max-w-[1210px] grid-cols-1 gap-5 lg:mt-8 lg:grid-cols-[400px_1fr]">
         <Reveal delay={0.05} className="flex flex-col justify-center gap-4">
           {steps.map((s, i) => {
             const isActive = i === active
@@ -103,13 +103,18 @@ export default function ProcessSection() {
                   <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                     {i + 1}. {s.title}
                   </h3>
-                  <motion.p
-                    animate={{ opacity: isActive ? 1 : 0.45 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-3 line-clamp-2 text-base leading-snug text-[#21234e]"
-                  >
-                    {s.body}
-                  </motion.p>
+                  {isActive && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="mt-3 text-base leading-snug text-[#21234e]">
+                        {s.body}
+                      </p>
+                    </motion.div>
+                  )}
                 </button>
               </motion.div>
             )
