@@ -59,6 +59,10 @@ const mobileClips = [
   { src: clip3, poster: poster3 },
 ]
 
+// Mirrors the desktop trunk-then-fork connector, drawn in percentage units so it
+// scales with the mobile grid's width regardless of viewport (grid-cols-3, gap-4).
+const MOBILE_FORK_PATHS = ['M50,0 L16.7,44', 'M50,0 L50,44', 'M50,0 L83.3,44']
+
 function VideoPlayer({ playing, setPlaying, className = '' }) {
   return (
     <div className={`glass-soft w-full shrink-0 overflow-hidden rounded-[33px] p-2.5 ${className}`}>
@@ -106,9 +110,9 @@ export default function OneVideoSection() {
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex max-w-[751px] flex-col items-center gap-4 text-center">
-        <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
+        <h2 className="text-[32px] font-medium leading-[100%] text-slate-900 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
           See what we make from{' '}
-          <span className="font-serif text-[32px] font-medium italic text-indigo-600 sm:text-[40px] lg:text-[48px]">
+          <span className="font-serif text-[32px] font-medium italic leading-[100%] text-indigo-600 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
             one video
           </span>
         </h2>
@@ -118,15 +122,45 @@ export default function OneVideoSection() {
         </p>
       </Reveal>
 
-      {/* Mobile / tablet: simple stacked layout, no branch lines */}
-      <Reveal delay={0.1} y={32} className="mt-6 flex flex-col items-center gap-8 lg:hidden">
+      {/* Mobile / tablet: video connected to clips via branching lines, matching desktop */}
+      <Reveal delay={0.1} y={32} className="mt-4 flex flex-col items-center lg:hidden">
         <VideoPlayer playing={playing} setPlaying={setPlaying} className="max-w-[520px]" />
+
+        <svg viewBox="0 0 10 32" preserveAspectRatio="none" className="h-8 w-2.5" fill="none">
+          <path d="M5,0 L5,32" stroke="#e2e8f0" strokeWidth="1" />
+          <circle
+            r="1.4"
+            fill="#4f46e5"
+            className="flow-dot-path"
+            style={{ offsetPath: "path('M5,0 L5,32')" }}
+          />
+        </svg>
 
         <div className="glass-soft flex items-start rounded-[28px] p-1">
           <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
             3 days - 3 clips
           </span>
         </div>
+
+        <svg
+          viewBox="0 0 100 44"
+          preserveAspectRatio="none"
+          className="h-11 w-full max-w-[520px]"
+          fill="none"
+        >
+          {MOBILE_FORK_PATHS.map((path, i) => (
+            <path key={`base-${i}`} d={path} stroke="#e2e8f0" strokeWidth="1" />
+          ))}
+          {MOBILE_FORK_PATHS.map((path, i) => (
+            <circle
+              key={`dot-${i}`}
+              r="1.4"
+              fill="#4f46e5"
+              className="flow-dot-path"
+              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s` }}
+            />
+          ))}
+        </svg>
 
         <div className="grid w-full max-w-[520px] grid-cols-3 gap-4">
           {mobileClips.map((clip, i) => (

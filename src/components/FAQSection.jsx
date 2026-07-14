@@ -43,9 +43,9 @@ export default function FAQSection() {
 
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[540px_1fr] lg:gap-8">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[540px_1fr] lg:gap-8">
         <Reveal className="flex flex-col items-start gap-4">
-          <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:whitespace-nowrap lg:text-[48px]">
+          <h2 className="text-[32px] font-medium leading-[100%] text-slate-900 sm:text-[40px] lg:leading-[normal] lg:whitespace-nowrap lg:text-[48px]">
             Have some questions?
           </h2>
         </Reveal>

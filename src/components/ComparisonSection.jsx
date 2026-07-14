@@ -63,7 +63,7 @@ export default function ComparisonSection() {
   return (
     <section className="relative z-10 mx-auto max-w-[1240px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex flex-col items-center gap-2 text-center">
-        <h2 className="text-[32px] leading-[1.15] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
+        <h2 className="text-[32px] leading-[100%] font-medium text-slate-900 sm:text-[40px] lg:text-[48px] lg:leading-[1.15]">
           <span className="block">Three ways to get clips.</span>
           <span className="block font-serif italic text-indigo-600">
             Two are a pain
@@ -71,7 +71,7 @@ export default function ComparisonSection() {
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-6 grid w-full grid-cols-1 items-center gap-4 lg:mt-8 lg:grid-cols-3">
+      <div className="mx-auto mt-4 grid w-full grid-cols-1 items-center gap-4 lg:mt-8 lg:grid-cols-3">
         {cards.map((card, i) => (
           <motion.div
             key={card.key}

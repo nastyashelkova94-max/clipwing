@@ -23,9 +23,9 @@ export default function PricingSection() {
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex max-w-[626px] flex-col items-center gap-4 text-center">
-        <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
+        <h2 className="text-[32px] font-medium leading-[100%] text-slate-900 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
           Simple{' '}
-          <span className="font-serif text-[32px] font-medium italic text-indigo-600 sm:text-[40px] lg:text-[48px]">
+          <span className="font-serif text-[32px] font-medium italic leading-[100%] text-indigo-600 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
             pricing
           </span>
         </h2>
@@ -34,7 +34,7 @@ export default function PricingSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-6 grid max-w-[1000px] grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-2">
+      <div className="mx-auto mt-4 grid max-w-[1000px] grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -84,7 +84,7 @@ export default function PricingSection() {
               {autopilotFeatures.map((f) => (
                 <li
                   key={f}
-                  className="flex items-start gap-2 text-base text-slate-700 lg:items-center lg:whitespace-nowrap"
+                  className="flex items-center gap-2 text-base text-slate-700 lg:whitespace-nowrap"
                 >
                   <img src={circleCheck} alt="" className="h-4 w-4 shrink-0" />
                   {f}
@@ -134,7 +134,7 @@ export default function PricingSection() {
               {enterpriseFeatures.map((f) => (
                 <li
                   key={f}
-                  className="flex items-start gap-2 text-base text-slate-700 lg:items-center lg:whitespace-nowrap"
+                  className="flex items-center gap-2 text-base text-slate-700 lg:whitespace-nowrap"
                 >
                   <img src={circleCheck} alt="" className="h-4 w-4 shrink-0" />
                   {f}

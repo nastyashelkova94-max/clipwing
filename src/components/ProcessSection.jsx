@@ -71,9 +71,9 @@ export default function ProcessSection() {
   return (
     <section ref={sectionRef} className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex max-w-[626px] flex-col items-center gap-4 text-center">
-        <h2 className="text-[32px] font-medium text-slate-900 sm:text-[40px] lg:text-[48px]">
+        <h2 className="text-[32px] font-medium leading-[100%] text-slate-900 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
           From your link to ready{' '}
-          <span className="font-serif text-[32px] font-medium italic text-indigo-600 sm:text-[40px] lg:text-[48px]">
+          <span className="font-serif text-[32px] font-medium italic leading-[100%] text-indigo-600 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
             clips
           </span>
         </h2>
@@ -83,7 +83,53 @@ export default function ProcessSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-6 grid max-w-[1210px] grid-cols-1 gap-5 lg:mt-8 lg:grid-cols-[476px_1fr]">
+      {/* Mobile / tablet: each step keeps its own image right under it */}
+      <Reveal delay={0.05} className="mt-4 flex flex-col gap-4 lg:hidden">
+        {steps.map((s, i) => {
+          const isActive = i === active
+          return (
+            <motion.div
+              key={s.tab}
+              initial={false}
+              animate={{ scale: isActive ? 1 : 0.99 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="glass-soft overflow-hidden rounded-[20px] p-1"
+            >
+              <button
+                type="button"
+                onClick={() => setActive(i)}
+                className="block w-full rounded-2xl bg-white p-4 text-left"
+              >
+                <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
+                  {i + 1}. {s.title}
+                </h3>
+                {isActive && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <p className="mt-3 text-base leading-snug text-[#21234e]">
+                      {s.body}
+                    </p>
+                  </motion.div>
+                )}
+                <div className="mt-3 h-[220px] overflow-hidden rounded-2xl">
+                  <img
+                    src={s.image}
+                    alt={s.tab}
+                    className="h-full w-full object-cover object-top"
+                  />
+                </div>
+              </button>
+            </motion.div>
+          )
+        })}
+      </Reveal>
+
+      {/* Desktop: step list next to a single crossfading image */}
+      <div className="mx-auto mt-8 hidden max-w-[1210px] grid-cols-[476px_1fr] gap-5 lg:grid">
         <Reveal delay={0.05} className="flex flex-col justify-center gap-4">
           {steps.map((s, i) => {
             const isActive = i === active
@@ -93,12 +139,12 @@ export default function ProcessSection() {
                 initial={false}
                 animate={{ scale: isActive ? 1 : 0.99 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="glass-soft overflow-hidden rounded-[20px] p-1 lg:rounded-3xl lg:p-2"
+                className="glass-soft overflow-hidden rounded-3xl p-2"
               >
                 <button
                   type="button"
                   onClick={() => setActive(i)}
-                  className="w-full rounded-2xl bg-white p-4 text-left lg:p-6"
+                  className="w-full rounded-2xl bg-white p-6 text-left"
                 >
                   <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                     {i + 1}. {s.title}
@@ -121,7 +167,7 @@ export default function ProcessSection() {
           })}
         </Reveal>
 
-        <Reveal delay={0.15} className="relative h-[300px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-full">
+        <Reveal delay={0.15} className="relative h-full overflow-hidden rounded-3xl">
           <img
             src={prevImage}
             alt=""
