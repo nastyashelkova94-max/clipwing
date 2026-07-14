@@ -144,7 +144,7 @@ export default function ProcessSection() {
           })}
         </Reveal>
 
-        <Reveal delay={0.15} className="relative h-full overflow-hidden rounded-3xl">
+        <Reveal delay={0.15} className="relative h-[448px] overflow-hidden rounded-3xl">
           <img
             src={prevImage}
             alt=""
