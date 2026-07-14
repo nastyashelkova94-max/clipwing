@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Reveal from './Reveal'
 import step1 from '../assets/images/process/step-1-link.png'
@@ -33,10 +33,14 @@ const steps = [
   },
 ]
 
+const STEP_DURATION = 7
+
 const CROSSFADE_MS = 500
 
 export default function ProcessSection() {
   const [active, setActive] = useState(0)
+  const [inView, setInView] = useState(false)
+  const sectionRef = useRef(null)
   const current = steps[active]
   const [prevImage, setPrevImage] = useState(current.image)
 
@@ -45,8 +49,27 @@ export default function ProcessSection() {
     return () => clearTimeout(timer)
   }, [current.image])
 
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!inView) return
+    const timer = setTimeout(() => {
+      setActive((prev) => (prev + 1) % steps.length)
+    }, STEP_DURATION * 1000)
+    return () => clearTimeout(timer)
+  }, [active, inView])
+
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
+    <section ref={sectionRef} className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex max-w-[626px] flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium leading-[100%] text-slate-900 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
           From your link to ready{' '}
