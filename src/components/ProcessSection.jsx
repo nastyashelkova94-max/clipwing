@@ -83,7 +83,7 @@ export default function ProcessSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-6 grid max-w-[1210px] grid-cols-1 gap-5 lg:mt-8 lg:grid-cols-[400px_1fr]">
+      <div className="mx-auto mt-6 grid max-w-[1210px] grid-cols-1 gap-5 lg:mt-8 lg:grid-cols-[476px_1fr]">
         <Reveal delay={0.05} className="flex flex-col justify-center gap-4">
           {steps.map((s, i) => {
             const isActive = i === active
