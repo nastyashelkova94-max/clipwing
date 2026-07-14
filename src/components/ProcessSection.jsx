@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Reveal from './Reveal'
 import step1 from '../assets/images/process/step-1-link.png'
 import step2 from '../assets/images/process/step-2-editor.png'
@@ -80,18 +80,21 @@ export default function ProcessSection() {
                 <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                   {i + 1}. {s.title}
                 </h3>
-                {isActive && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <p className="mt-3 text-base leading-snug text-[#21234e]">
-                      {s.body}
-                    </p>
-                  </motion.div>
-                )}
+                <AnimatePresence initial={false}>
+                  {isActive && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="mt-3 text-base leading-snug text-[#21234e]">
+                        {s.body}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <div className="mt-3 h-[220px] overflow-hidden rounded-2xl">
                   <img
                     src={s.image}
@@ -126,18 +129,21 @@ export default function ProcessSection() {
                   <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                     {i + 1}. {s.title}
                   </h3>
-                  {isActive && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="mt-3 text-base leading-snug text-[#21234e]">
-                        {s.body}
-                      </p>
-                    </motion.div>
-                  )}
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <p className="mt-3 text-base leading-snug text-[#21234e]">
+                          {s.body}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </button>
               </motion.div>
             )
