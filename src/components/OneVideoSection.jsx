@@ -64,34 +64,34 @@ const mobileClips = [
 // swapped so it reads top-to-bottom instead of left-to-right. Built at a fixed
 // design width/height, then uniformly scaled to fit whatever width the mobile
 // column actually renders at (see MobileConnector's ResizeObserver).
-const M_CARD_W = 140
+// All 3 clips sit in one flat row (matching the site's normal 16px item
+// grid), sized to fill the 520px design width across 3 columns + 2 gaps.
+const M_GAP = 16
+const M_CARD_W = (520 - 2 * M_GAP) / 3
 const M_CARD_H = (M_CARD_W * 16) / 9
-const M_GAP = 20
 
 const M_ORIGIN_Y = 0
 const M_BADGE_Y = M_ORIGIN_Y + 50
 const M_SPLIT_Y = M_BADGE_Y + 50
-const M_SIDE_END_Y = M_SPLIT_Y + 40
-const M_MID_END_Y = M_SIDE_END_Y + M_CARD_H + M_GAP
+const M_ROW_Y = M_SPLIT_Y + 40
 
-const M_OFFSET = 180
-const M_CENTER_X = M_CARD_W / 2 + M_OFFSET + 10
-const M_LEFT_X = M_CENTER_X - M_OFFSET
-const M_RIGHT_X = M_CENTER_X + M_OFFSET
+const M_LEFT_X = M_CARD_W / 2
+const M_CENTER_X = M_GAP + M_CARD_W + M_LEFT_X
+const M_RIGHT_X = 2 * M_GAP + 2 * M_CARD_W + M_LEFT_X
 
-const M_DESIGN_W = M_CENTER_X * 2
-const M_DESIGN_H = M_MID_END_Y + M_CARD_H + 20
+const M_DESIGN_W = 520
+const M_DESIGN_H = M_ROW_Y + M_CARD_H + 20
 
-const mTrunkPath = `M${M_CENTER_X},${M_ORIGIN_Y} L${M_CENTER_X},${M_MID_END_Y}`
-const mLeftPath = `M${M_CENTER_X},${M_SPLIT_Y - 15} Q${M_CENTER_X},${M_SPLIT_Y} ${M_CENTER_X - 15},${M_SPLIT_Y} L${M_LEFT_X + 15},${M_SPLIT_Y} Q${M_LEFT_X},${M_SPLIT_Y} ${M_LEFT_X},${M_SPLIT_Y + 15} L${M_LEFT_X},${M_SIDE_END_Y}`
-const mRightPath = `M${M_CENTER_X},${M_SPLIT_Y - 15} Q${M_CENTER_X},${M_SPLIT_Y} ${M_CENTER_X + 15},${M_SPLIT_Y} L${M_RIGHT_X - 15},${M_SPLIT_Y} Q${M_RIGHT_X},${M_SPLIT_Y} ${M_RIGHT_X},${M_SPLIT_Y + 15} L${M_RIGHT_X},${M_SIDE_END_Y}`
+const mTrunkPath = `M${M_CENTER_X},${M_ORIGIN_Y} L${M_CENTER_X},${M_ROW_Y}`
+const mLeftPath = `M${M_CENTER_X},${M_SPLIT_Y - 15} Q${M_CENTER_X},${M_SPLIT_Y} ${M_CENTER_X - 15},${M_SPLIT_Y} L${M_LEFT_X + 15},${M_SPLIT_Y} Q${M_LEFT_X},${M_SPLIT_Y} ${M_LEFT_X},${M_SPLIT_Y + 15} L${M_LEFT_X},${M_ROW_Y}`
+const mRightPath = `M${M_CENTER_X},${M_SPLIT_Y - 15} Q${M_CENTER_X},${M_SPLIT_Y} ${M_CENTER_X + 15},${M_SPLIT_Y} L${M_RIGHT_X - 15},${M_SPLIT_Y} Q${M_RIGHT_X},${M_SPLIT_Y} ${M_RIGHT_X},${M_SPLIT_Y + 15} L${M_RIGHT_X},${M_ROW_Y}`
 
 const mBranches = [mTrunkPath, mLeftPath, mRightPath]
 
 const mClips = [
-  { x: M_LEFT_X, y: M_SIDE_END_Y, z: 10 },
-  { x: M_CENTER_X, y: M_MID_END_Y, z: 20 },
-  { x: M_RIGHT_X, y: M_SIDE_END_Y, z: 10 },
+  { x: M_LEFT_X, y: M_ROW_Y, z: 10 },
+  { x: M_CENTER_X, y: M_ROW_Y, z: 20 },
+  { x: M_RIGHT_X, y: M_ROW_Y, z: 10 },
 ]
 
 function MobileConnector({ mobileClips }) {
@@ -133,9 +133,9 @@ function MobileConnector({ mobileClips }) {
             <path key={`m-base-${i}`} d={path} stroke="#e2e8f0" strokeWidth="1" />
           ))}
 
-          <circle cx={M_LEFT_X} cy={M_SIDE_END_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
-          <circle cx={M_CENTER_X} cy={M_MID_END_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
-          <circle cx={M_RIGHT_X} cy={M_SIDE_END_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
+          <circle cx={M_LEFT_X} cy={M_ROW_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
+          <circle cx={M_CENTER_X} cy={M_ROW_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
+          <circle cx={M_RIGHT_X} cy={M_ROW_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
         </svg>
 
         {mBranches.map((path, i) => (

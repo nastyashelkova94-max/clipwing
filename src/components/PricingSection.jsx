@@ -86,7 +86,7 @@ export default function PricingSection() {
                   key={f}
                   className="flex items-start gap-2 text-base text-slate-700 lg:whitespace-nowrap"
                 >
-                  <img src={circleCheck} alt="" className="h-4 w-4 shrink-0" />
+                  <img src={circleCheck} alt="" className="mt-1 h-4 w-4 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -136,7 +136,7 @@ export default function PricingSection() {
                   key={f}
                   className="flex items-start gap-2 text-base text-slate-700 lg:whitespace-nowrap"
                 >
-                  <img src={circleCheck} alt="" className="h-4 w-4 shrink-0" />
+                  <img src={circleCheck} alt="" className="mt-1 h-4 w-4 shrink-0" />
                   {f}
                 </li>
               ))}

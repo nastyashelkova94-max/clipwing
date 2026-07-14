@@ -103,7 +103,7 @@ export default function ComparisonSection() {
                       key={point}
                       className="flex items-start gap-2 text-base text-slate-700"
                     >
-                      <img src={card.icon} alt="" className="h-4 w-4 shrink-0" />
+                      <img src={card.icon} alt="" className="mt-1 h-4 w-4 shrink-0" />
                       {point}
                     </li>
                   ))}
