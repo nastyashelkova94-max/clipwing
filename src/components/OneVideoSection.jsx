@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
 import clip1 from '../assets/images/process/clip-1.mp4'
@@ -59,9 +59,134 @@ const mobileClips = [
   { src: clip3, poster: poster3 },
 ]
 
-// Mirrors the desktop trunk-then-fork connector, drawn in percentage units so it
-// scales with the mobile grid's width regardless of viewport (grid-cols-3, gap-4).
-const MOBILE_FORK_PATHS = ['M50,0 L16.7,44', 'M50,0 L50,44', 'M50,0 L83.3,44']
+// Vertical mirror of the desktop trunk-then-fork connector: same rounded-step
+// geometry, with the trunk axis (x on desktop) and spread axis (y on desktop)
+// swapped so it reads top-to-bottom instead of left-to-right. Built at a fixed
+// design width/height, then uniformly scaled to fit whatever width the mobile
+// column actually renders at (see MobileConnector's ResizeObserver).
+const M_CARD_W = 140
+const M_CARD_H = (M_CARD_W * 16) / 9
+const M_GAP = 20
+
+const M_ORIGIN_Y = 0
+const M_BADGE_Y = M_ORIGIN_Y + 50
+const M_SPLIT_Y = M_BADGE_Y + 50
+const M_SIDE_END_Y = M_SPLIT_Y + 40
+const M_MID_END_Y = M_SIDE_END_Y + M_CARD_H + M_GAP
+
+const M_OFFSET = 180
+const M_CENTER_X = M_CARD_W / 2 + M_OFFSET + 10
+const M_LEFT_X = M_CENTER_X - M_OFFSET
+const M_RIGHT_X = M_CENTER_X + M_OFFSET
+
+const M_DESIGN_W = M_CENTER_X * 2
+const M_DESIGN_H = M_MID_END_Y + M_CARD_H + 20
+
+const mTrunkPath = `M${M_CENTER_X},${M_ORIGIN_Y} L${M_CENTER_X},${M_MID_END_Y}`
+const mLeftPath = `M${M_CENTER_X},${M_SPLIT_Y - 15} Q${M_CENTER_X},${M_SPLIT_Y} ${M_CENTER_X - 15},${M_SPLIT_Y} L${M_LEFT_X + 15},${M_SPLIT_Y} Q${M_LEFT_X},${M_SPLIT_Y} ${M_LEFT_X},${M_SPLIT_Y + 15} L${M_LEFT_X},${M_SIDE_END_Y}`
+const mRightPath = `M${M_CENTER_X},${M_SPLIT_Y - 15} Q${M_CENTER_X},${M_SPLIT_Y} ${M_CENTER_X + 15},${M_SPLIT_Y} L${M_RIGHT_X - 15},${M_SPLIT_Y} Q${M_RIGHT_X},${M_SPLIT_Y} ${M_RIGHT_X},${M_SPLIT_Y + 15} L${M_RIGHT_X},${M_SIDE_END_Y}`
+
+const mBranches = [mTrunkPath, mLeftPath, mRightPath]
+
+const mClips = [
+  { x: M_LEFT_X, y: M_SIDE_END_Y, z: 10 },
+  { x: M_CENTER_X, y: M_MID_END_Y, z: 20 },
+  { x: M_RIGHT_X, y: M_SIDE_END_Y, z: 10 },
+]
+
+function MobileConnector({ mobileClips }) {
+  const wrapperRef = useRef(null)
+  const [scale, setScale] = useState(0)
+
+  useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      setScale(entry.contentRect.width / M_DESIGN_W)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  return (
+    <div
+      ref={wrapperRef}
+      className="relative w-full max-w-[520px]"
+      style={{ height: M_DESIGN_H * scale }}
+    >
+      <div
+        className="absolute left-0 top-0"
+        style={{ width: M_DESIGN_W, height: M_DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+      >
+        <svg
+          className="absolute inset-0 h-full w-full"
+          viewBox={`0 0 ${M_DESIGN_W} ${M_DESIGN_H}`}
+          fill="none"
+        >
+          <defs>
+            <filter id="m-dot-shadow" x="-100%" y="-100%" width="300%" height="300%">
+              <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="#0f172a" floodOpacity="0.18" />
+            </filter>
+          </defs>
+
+          {mBranches.map((path, i) => (
+            <path key={`m-base-${i}`} d={path} stroke="#e2e8f0" strokeWidth="1" />
+          ))}
+
+          <circle cx={M_LEFT_X} cy={M_SIDE_END_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
+          <circle cx={M_CENTER_X} cy={M_MID_END_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
+          <circle cx={M_RIGHT_X} cy={M_SIDE_END_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#m-dot-shadow)" />
+        </svg>
+
+        {mBranches.map((path, i) => (
+          <span
+            key={`m-dot-${i}`}
+            className="flow-dot"
+            style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s` }}
+          />
+        ))}
+
+        <div
+          className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
+          style={{ left: M_CENTER_X, top: M_BADGE_Y }}
+        >
+          <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
+            3 days - 3 clips
+          </span>
+        </div>
+
+        {mClips.map((pos, i) => (
+          <div
+            key={i}
+            className="absolute -translate-x-1/2"
+            style={{ left: pos.x, top: pos.y, width: M_CARD_W, zIndex: pos.z }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="glass-soft overflow-hidden rounded-[19px] p-1 shadow-lg"
+            >
+              <div className="aspect-[9/16] overflow-hidden rounded-[15px] bg-slate-600">
+                <video
+                  src={mobileClips[i].src}
+                  poster={mobileClips[i].poster}
+                  muted
+                  loop
+                  autoPlay
+                  playsInline
+                  preload="none"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </motion.div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 function VideoPlayer({ playing, setPlaying, className = '' }) {
   return (
@@ -106,6 +231,16 @@ function VideoPlayer({ playing, setPlaying, className = '' }) {
 
 export default function OneVideoSection() {
   const [playing, setPlaying] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches
+  )
+
+  useEffect(() => {
+    const mql = window.matchMedia('(min-width: 1024px)')
+    const onChange = (e) => setIsDesktop(e.matches)
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [])
 
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
@@ -123,77 +258,19 @@ export default function OneVideoSection() {
       </Reveal>
 
       {/* Mobile / tablet: video connected to clips via branching lines, matching desktop */}
-      <Reveal delay={0.1} y={32} className="mt-4 flex flex-col items-center lg:hidden">
+      {!isDesktop && (
+      <Reveal delay={0.1} y={32} className="mt-4 flex flex-col items-center">
         <VideoPlayer playing={playing} setPlaying={setPlaying} className="max-w-[520px]" />
-
-        <svg viewBox="0 0 10 32" preserveAspectRatio="none" className="h-8 w-2.5" fill="none">
-          <path d="M5,0 L5,32" stroke="#e2e8f0" strokeWidth="1" />
-          <circle
-            r="1.4"
-            fill="#4f46e5"
-            className="flow-dot-path"
-            style={{ offsetPath: "path('M5,0 L5,32')" }}
-          />
-        </svg>
-
-        <div className="glass-soft flex items-start rounded-[28px] p-1">
-          <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
-            3 days - 3 clips
-          </span>
-        </div>
-
-        <svg
-          viewBox="0 0 100 44"
-          preserveAspectRatio="none"
-          className="h-11 w-full max-w-[520px]"
-          fill="none"
-        >
-          {MOBILE_FORK_PATHS.map((path, i) => (
-            <path key={`base-${i}`} d={path} stroke="#e2e8f0" strokeWidth="1" />
-          ))}
-          {MOBILE_FORK_PATHS.map((path, i) => (
-            <circle
-              key={`dot-${i}`}
-              r="1.4"
-              fill="#4f46e5"
-              className="flow-dot-path"
-              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s` }}
-            />
-          ))}
-        </svg>
-
-        <div className="grid w-full max-w-[520px] grid-cols-3 gap-4">
-          {mobileClips.map((clip, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.85 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="glass-soft overflow-hidden rounded-[19px] p-1 shadow-lg"
-            >
-              <div className="aspect-[9/16] overflow-hidden rounded-[15px] bg-slate-600">
-                <video
-                  src={clip.src}
-                  poster={clip.poster}
-                  muted
-                  loop
-                  autoPlay
-                  playsInline
-                  preload="none"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <MobileConnector mobileClips={mobileClips} />
       </Reveal>
+      )}
 
       {/* Desktop: video connected to clips via branching lines */}
+      {isDesktop && (
       <Reveal
         delay={0.1}
         y={32}
-        className="mt-8 hidden items-center justify-start gap-10 lg:flex"
+        className="mt-8 flex items-center justify-start gap-10"
       >
         <VideoPlayer playing={playing} setPlaying={setPlaying} className="max-w-[520px]" />
 
@@ -270,6 +347,7 @@ export default function OneVideoSection() {
           ))}
         </div>
       </Reveal>
+      )}
     </section>
   )
 }
