@@ -33,7 +33,7 @@ export default function Hero() {
         </motion.h1>
         <motion.p
           variants={item}
-          className="max-w-[449px] font-sans text-xl font-normal text-slate-900"
+          className="max-w-[449px] font-sans text-xl font-normal text-[#3f3f46]"
         >
           You send a video link. A real editor turns it into clips in 3 days. No
           hunting, no hassle

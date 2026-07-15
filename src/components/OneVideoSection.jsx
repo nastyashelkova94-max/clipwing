@@ -251,7 +251,7 @@ export default function OneVideoSection() {
             one video
           </span>
         </h2>
-        <p className="max-w-[489px] text-xl font-normal leading-tight text-slate-900">
+        <p className="max-w-[489px] text-xl font-normal leading-tight text-[#3f3f46]">
           We pick the best parts, cut them, and add captions. You get clips
           ready to post
         </p>

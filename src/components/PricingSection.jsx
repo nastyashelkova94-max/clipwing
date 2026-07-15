@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
-import circleCheck from '../assets/icons/circle-check.svg'
+import circleCheckFilled from '../assets/icons/circle-check-filled.svg'
 
 const enterpriseFeatures = [
   'Everything in Autopilot',
@@ -19,6 +19,23 @@ const autopilotFeatures = [
   'Your brand kit on every clip',
 ]
 
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none">
+      <path d="M3.5 8h9M8.5 3.5 13 8l-4.5 4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function CalendarIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none">
+      <rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export default function PricingSection() {
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
@@ -29,12 +46,12 @@ export default function PricingSection() {
             pricing
           </span>
         </h2>
-        <p className="max-w-[379px] text-xl font-normal leading-tight text-slate-900">
+        <p className="max-w-[379px] text-xl font-normal leading-tight text-[#3f3f46]">
           Start on Autopilot. Move to Enterprise when you need more
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-4 grid max-w-[1000px] grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-2">
+      <div className="mx-auto mt-4 grid max-w-[900px] grid-cols-1 gap-4 lg:mt-8 lg:gap-6 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -51,7 +68,7 @@ export default function PricingSection() {
                   Most popular
                 </span>
               </div>
-              <p className="mt-1 text-[15px] text-slate-500 lg:whitespace-nowrap">
+              <p className="mt-1 whitespace-nowrap text-[15px] text-[#52525c]">
                 A real editor on every video you send
               </p>
             </div>
@@ -61,26 +78,9 @@ export default function PricingSection() {
                 <span className="text-3xl font-semibold tracking-tight text-slate-900">
                   $299
                 </span>
-                <span className="text-base text-slate-500">/month</span>
+                <span className="text-base text-[#52525c]">/month</span>
               </p>
-            </div>
-            <div className="flex flex-col gap-3">
-              <motion.a
-                href="#"
-                whileHover={{ y: -2, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex h-12 items-center justify-center rounded-xl border border-indigo-400 bg-indigo-500 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
-              >
-                Get my clips
-              </motion.a>
-              <motion.a
-                href="#"
-                whileHover={{ y: -2, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_2px_9px_0_rgba(59,24,237,0.25)]"
-              >
-                Book a call
-              </motion.a>
+              <p className="mt-1 text-xs font-medium text-indigo-600">1 slot available</p>
             </div>
             <ul className="flex flex-col gap-3">
               {autopilotFeatures.map((f) => (
@@ -88,11 +88,31 @@ export default function PricingSection() {
                   key={f}
                   className="flex items-start gap-2 text-base text-slate-700 lg:whitespace-nowrap"
                 >
-                  <img src={circleCheck} alt="" className="mt-1 h-4 w-4 shrink-0" />
+                  <img src={circleCheckFilled} alt="" className="mt-1 h-4 w-4 shrink-0" />
                   {f}
                 </li>
               ))}
             </ul>
+            <div className="mt-auto flex flex-col gap-3">
+              <motion.a
+                href="#"
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex h-12 items-center justify-center gap-2 rounded-xl border border-indigo-400 bg-indigo-500 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
+              >
+                Get my clips
+                <ArrowIcon />
+              </motion.a>
+              <motion.a
+                href="#"
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="glass-soft flex h-12 items-center justify-center gap-2 rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_2px_9px_0_rgba(59,24,237,0.25)]"
+              >
+                <CalendarIcon />
+                Book a call
+              </motion.a>
+            </div>
           </div>
         </motion.div>
 
@@ -107,42 +127,44 @@ export default function PricingSection() {
           <div className="flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-4 lg:p-5">
             <div>
               <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Enterprise</h3>
-              <p className="mt-1 text-[15px] text-slate-500 lg:whitespace-nowrap">
+              <p className="mt-1 whitespace-nowrap text-[15px] text-[#52525c]">
                 Higher volume and full-service production for teams
               </p>
             </div>
             <p className="text-3xl font-semibold tracking-tight text-slate-900">
               Custom
             </p>
-            <div className="flex flex-col gap-3">
-              <motion.a
-                href="#"
-                whileHover={{ y: -2, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex h-12 items-center justify-center rounded-xl border border-indigo-400 bg-indigo-500 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
-              >
-                See Enterprise
-              </motion.a>
-              <motion.a
-                href="#"
-                whileHover={{ y: -2, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_2px_9px_0_rgba(59,24,237,0.25)]"
-              >
-                Book a call
-              </motion.a>
-            </div>
             <ul className="flex flex-col gap-3">
               {enterpriseFeatures.map((f) => (
                 <li
                   key={f}
                   className="flex items-start gap-2 text-base text-slate-700 lg:whitespace-nowrap"
                 >
-                  <img src={circleCheck} alt="" className="mt-1 h-4 w-4 shrink-0" />
+                  <img src={circleCheckFilled} alt="" className="mt-1 h-4 w-4 shrink-0" />
                   {f}
                 </li>
               ))}
             </ul>
+            <div className="mt-auto flex flex-col gap-3">
+              <motion.a
+                href="#"
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex h-12 items-center justify-center gap-2 rounded-xl bg-slate-900 text-base font-medium text-white"
+              >
+                See Enterprise
+                <ArrowIcon />
+              </motion.a>
+              <motion.a
+                href="#"
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="glass-soft flex h-12 items-center justify-center gap-2 rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_2px_9px_0_rgba(59,24,237,0.25)]"
+              >
+                <CalendarIcon />
+                Book a call
+              </motion.a>
+            </div>
           </div>
         </motion.div>
       </div>

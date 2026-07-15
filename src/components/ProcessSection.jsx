@@ -77,7 +77,7 @@ export default function ProcessSection() {
             clips
           </span>
         </h2>
-        <p className="max-w-[518px] text-xl font-normal leading-tight text-slate-900">
+        <p className="max-w-[518px] text-xl font-normal leading-tight text-[#3f3f46]">
           Send a link and a hand-picked editor takes it from there. All in one
           app
         </p>
