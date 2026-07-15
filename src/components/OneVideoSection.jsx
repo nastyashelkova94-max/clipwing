@@ -14,11 +14,8 @@ const YOUTUBE_START = 8
 const CARD_W = 190
 const CARD_H = (CARD_W * 16) / 9
 
-// Flex gap between the video player and this box is 40px (gap-10). CONTAINER_EXTEND
-// shifts the whole box (via negative margin) leftward into that gap so its left edge
-// sits flush against the video player's frame; local x=0 below is that flush edge,
-// used consistently by both the SVG and the plain-div cards/badge so nothing misaligns.
-const CONTAINER_EXTEND = 40
+// x=0 is the branch box's flush left edge, positioned directly against the
+// video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
 // Sequence along the trunk: video -> line -> badge -> line -> fork into 3 branches -> cards.
@@ -189,6 +186,124 @@ function MobileConnector({ mobileClips }) {
   )
 }
 
+// Desktop video + branch composition, built at a fixed design size and then
+// uniformly scaled to fit whatever width is actually available (same trick as
+// MobileConnector). Without this, the layout overflows the section at the
+// narrow end of the desktop range (e.g. 1024px, iPad landscape).
+const DESKTOP_VIDEO_W = 600
+const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
+const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + TOTAL_W
+const DESKTOP_DESIGN_H = Math.max(DESKTOP_VIDEO_H, VB_H)
+const DESKTOP_VIDEO_TOP = (DESKTOP_DESIGN_H - DESKTOP_VIDEO_H) / 2
+const DESKTOP_BRANCH_TOP = (DESKTOP_DESIGN_H - VB_H) / 2
+
+function DesktopVideoBranch({ playing, setPlaying }) {
+  const wrapperRef = useRef(null)
+  const [scale, setScale] = useState(0)
+
+  useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      setScale(Math.min(1, entry.contentRect.width / DESKTOP_DESIGN_W))
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  return (
+    <div ref={wrapperRef} className="relative w-full" style={{ height: DESKTOP_DESIGN_H * scale }}>
+      <div
+        className="absolute left-0 top-0"
+        style={{ width: DESKTOP_DESIGN_W, height: DESKTOP_DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+      >
+        <div className="absolute left-0" style={{ top: DESKTOP_VIDEO_TOP, width: DESKTOP_VIDEO_W }}>
+          <VideoPlayer playing={playing} setPlaying={setPlaying} />
+        </div>
+
+        <div
+          className="absolute"
+          style={{ left: DESKTOP_VIDEO_W, top: DESKTOP_BRANCH_TOP, width: TOTAL_W, height: VB_H }}
+        >
+          <svg
+            className="absolute inset-0 h-full w-full"
+            viewBox={`0 0 ${TOTAL_W} ${VB_H}`}
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <filter id="dot-shadow" x="-100%" y="-100%" width="300%" height="300%">
+                <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="#0f172a" floodOpacity="0.18" />
+              </filter>
+            </defs>
+
+            {branches.map((path, i) => (
+              <path key={`base-${i}`} d={path} stroke="#e2e8f0" strokeWidth="1" />
+            ))}
+
+            <circle cx={SIDE_END_X} cy={TOP_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
+            <circle cx={MID_END_X} cy={MID_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
+            <circle cx={SIDE_END_X} cy={BOTTOM_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
+          </svg>
+
+          {branches.map((path, i) => (
+            <span
+              key={`dot-${i}`}
+              className="flow-dot"
+              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s` }}
+            />
+          ))}
+
+          <div
+            className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
+            style={{ left: BADGE_X, top: MID_Y }}
+          >
+            <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
+              3 days - 3 clips
+            </span>
+          </div>
+
+          {clips.map((clip, i) => (
+            <div
+              key={i}
+              className="absolute"
+              style={{
+                left: clip.x,
+                top: clip.y,
+                width: clip.width,
+                zIndex: clip.z,
+                transform: `translateY(-50%) rotate(${clip.rotate}deg)`,
+              }}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.85 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ scale: 1.06 }}
+                className="glass-soft overflow-hidden rounded-[19px] p-1 shadow-lg"
+              >
+                <div className="aspect-[9/16] overflow-hidden rounded-[15px] bg-slate-600">
+                  <video
+                    src={clip.src}
+                    poster={clip.poster}
+                    muted
+                    loop
+                    autoPlay
+                    playsInline
+                    preload="none"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </motion.div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function VideoPlayer({ playing, setPlaying, className = '' }) {
   return (
     <div className={`glass-soft w-full shrink-0 overflow-hidden rounded-[20px] p-1 lg:rounded-[33px] lg:p-2.5 ${className}`}>
@@ -268,91 +383,8 @@ export default function OneVideoSection() {
 
       {/* Desktop: video connected to clips via branching lines */}
       {isDesktop && (
-      <Reveal
-        delay={0.1}
-        y={32}
-        className="mt-8 flex items-center justify-start gap-10"
-      >
-        <VideoPlayer playing={playing} setPlaying={setPlaying} className="max-w-[600px]" />
-
-        <div
-          className="relative shrink-0"
-          style={{ width: TOTAL_W, height: VB_H, marginLeft: -CONTAINER_EXTEND }}
-        >
-          <svg
-            className="absolute inset-0 h-full w-full"
-            viewBox={`0 0 ${TOTAL_W} ${VB_H}`}
-            fill="none"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <filter id="dot-shadow" x="-100%" y="-100%" width="300%" height="300%">
-                <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="#0f172a" floodOpacity="0.18" />
-              </filter>
-            </defs>
-
-            {branches.map((path, i) => (
-              <path key={`base-${i}`} d={path} stroke="#e2e8f0" strokeWidth="1" />
-            ))}
-
-            <circle cx={SIDE_END_X} cy={TOP_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
-            <circle cx={MID_END_X} cy={MID_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
-            <circle cx={SIDE_END_X} cy={BOTTOM_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
-          </svg>
-
-          {branches.map((path, i) => (
-            <span
-              key={`dot-${i}`}
-              className="flow-dot"
-              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s` }}
-            />
-          ))}
-
-          <div
-            className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
-            style={{ left: BADGE_X, top: MID_Y }}
-          >
-            <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
-              3 days - 3 clips
-            </span>
-          </div>
-
-          {clips.map((clip, i) => (
-            <div
-              key={i}
-              className="absolute"
-              style={{
-                left: clip.x,
-                top: clip.y,
-                width: clip.width,
-                zIndex: clip.z,
-                transform: `translateY(-50%) rotate(${clip.rotate}deg)`,
-              }}
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.85 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ scale: 1.06 }}
-                className="glass-soft overflow-hidden rounded-[19px] p-1 shadow-lg"
-              >
-                <div className="aspect-[9/16] overflow-hidden rounded-[15px] bg-slate-600">
-                  <video
-                    src={clip.src}
-                    poster={clip.poster}
-                    muted
-                    loop
-                    autoPlay
-                    playsInline
-                    preload="none"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              </motion.div>
-            </div>
-          ))}
-        </div>
+      <Reveal delay={0.1} y={32} className="mt-8">
+        <DesktopVideoBranch playing={playing} setPlaying={setPlaying} />
       </Reveal>
       )}
     </section>

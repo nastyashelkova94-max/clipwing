@@ -17,7 +17,7 @@ const cards = [
     title: (
       <>
         AI <span className="text-slate-500 line-through">Clippers</span>{' '}
-        <span className="inline-block -rotate-2 font-serif italic text-indigo-600">
+        <span className="inline-block -rotate-2 font-serif italic text-indigo-600/50">
           Sloppers
         </span>
       </>
