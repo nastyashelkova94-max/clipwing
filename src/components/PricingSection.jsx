@@ -44,11 +44,13 @@ export default function PricingSection() {
           className="glass-indigo relative rounded-[20px] p-1 lg:rounded-3xl lg:p-2"
         >
           <div className="relative flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-4 lg:p-5">
-            <span className="absolute right-6 top-6 rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-600">
-              Most popular
-            </span>
             <div>
-              <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Autopilot</h3>
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Autopilot</h3>
+                <span className="shrink-0 rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-600">
+                  Most popular
+                </span>
+              </div>
               <p className="mt-1 text-[15px] text-slate-500 lg:whitespace-nowrap">
                 A real editor on every video you send
               </p>

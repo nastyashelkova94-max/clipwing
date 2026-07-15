@@ -190,8 +190,8 @@ function MobileConnector({ mobileClips }) {
 
 function VideoPlayer({ playing, setPlaying, className = '' }) {
   return (
-    <div className={`glass-soft w-full shrink-0 overflow-hidden rounded-[33px] p-2.5 ${className}`}>
-      <div className="relative aspect-video overflow-hidden rounded-[22px] bg-slate-900">
+    <div className={`glass-soft w-full shrink-0 overflow-hidden rounded-[20px] p-1 lg:rounded-[33px] lg:p-2.5 ${className}`}>
+      <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-900 lg:rounded-[22px]">
         {playing ? (
           <iframe
             className="absolute inset-0 h-full w-full"
