@@ -11,10 +11,10 @@ import poster3 from '../assets/images/process/clip-3-poster.jpg'
 const YOUTUBE_ID = 'znq6o26snJs'
 const YOUTUBE_START = 8
 
-const CARD_W = 170
+const CARD_W = 130
 const CARD_H = (CARD_W * 16) / 9
 
-const GAP = 28
+const GAP = 18
 
 // Flex gap between the video player and this box is 40px (gap-10). CONTAINER_EXTEND
 // shifts the whole box (via negative margin) leftward into that gap so its left edge
@@ -24,12 +24,13 @@ const CONTAINER_EXTEND = 40
 const ORIGIN_X = 0
 
 // Sequence along the trunk: video -> line -> badge -> line -> fork into 3 branches -> cards
-const BADGE_X = ORIGIN_X + 99
-const SPLIT_X = BADGE_X + 99
-const SIDE_END_X = SPLIT_X + 60
+// (kept compact: shorter runs and a tighter vertical spread than the original layout)
+const BADGE_X = ORIGIN_X + 75
+const SPLIT_X = BADGE_X + 70
+const SIDE_END_X = SPLIT_X + 45
 const MID_END_X = SIDE_END_X + CARD_W + GAP
 
-const OFFSET = 165
+const OFFSET = 120
 const CENTER_Y = CARD_H / 2 + OFFSET + 15
 const TOP_Y = CENTER_Y - OFFSET
 const MID_Y = CENTER_Y
