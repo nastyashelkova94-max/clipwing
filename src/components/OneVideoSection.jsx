@@ -30,8 +30,8 @@ const H_SPREAD = 140
 const RIGHT_X = LEFT_X + H_SPREAD
 const MID_END_X = LEFT_X + 75
 
-const LIFT_LEFT = 70
-const LIFT_RIGHT = 45
+const LIFT_LEFT = 78
+const LIFT_RIGHT = 68
 const DROP_FRONT = 70
 
 const TRUNK_Y = CARD_H / 2 + Math.max(LIFT_LEFT, DROP_FRONT) + 20
