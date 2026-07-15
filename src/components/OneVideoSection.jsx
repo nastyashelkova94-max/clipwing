@@ -11,10 +11,8 @@ import poster3 from '../assets/images/process/clip-3-poster.jpg'
 const YOUTUBE_ID = 'znq6o26snJs'
 const YOUTUBE_START = 8
 
-const CARD_W = 130
+const CARD_W = 190
 const CARD_H = (CARD_W * 16) / 9
-
-const GAP = 18
 
 // Flex gap between the video player and this box is 40px (gap-10). CONTAINER_EXTEND
 // shifts the whole box (via negative margin) leftward into that gap so its left edge
@@ -23,14 +21,16 @@ const GAP = 18
 const CONTAINER_EXTEND = 40
 const ORIGIN_X = 0
 
-// Sequence along the trunk: video -> line -> badge -> line -> fork into 3 branches -> cards
-// (kept compact: shorter runs and a tighter vertical spread than the original layout)
-const BADGE_X = ORIGIN_X + 75
-const SPLIT_X = BADGE_X + 70
-const SIDE_END_X = SPLIT_X + 45
-const MID_END_X = SIDE_END_X + CARD_W + GAP
+// Sequence along the trunk: video -> line -> badge -> line -> fork into 3 branches -> cards.
+// The 3 branches converge tightly (small offsets) so the cards land as an overlapping
+// fan (front card nudged forward, side cards peeking out top/bottom, rotated via CSS)
+// instead of being spread far apart.
+const BADGE_X = ORIGIN_X + 90
+const SPLIT_X = BADGE_X + 80
+const SIDE_END_X = SPLIT_X + 55
+const MID_END_X = SIDE_END_X + 40
 
-const OFFSET = 120
+const OFFSET = 55
 const CENTER_Y = CARD_H / 2 + OFFSET + 15
 const TOP_Y = CENTER_Y - OFFSET
 const MID_Y = CENTER_Y
@@ -49,9 +49,9 @@ const bottomPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${
 const branches = [trunkPath, topPath, bottomPath]
 
 const clips = [
-  { src: clip1, poster: poster1, x: SIDE_END_X, y: TOP_Y, width: CARD_W, z: 10 },
-  { src: clip2, poster: poster2, x: MID_END_X, y: MID_Y, width: CARD_W, z: 20 },
-  { src: clip3, poster: poster3, x: SIDE_END_X, y: BOTTOM_Y, width: CARD_W, z: 10 },
+  { src: clip1, poster: poster1, x: SIDE_END_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -8 },
+  { src: clip2, poster: poster2, x: MID_END_X, y: MID_Y, width: CARD_W, z: 20, rotate: 0 },
+  { src: clip3, poster: poster3, x: SIDE_END_X, y: BOTTOM_Y, width: CARD_W, z: 10, rotate: 8 },
 ]
 
 const mobileClips = [
@@ -273,7 +273,7 @@ export default function OneVideoSection() {
         y={32}
         className="mt-8 flex items-center justify-start gap-10"
       >
-        <VideoPlayer playing={playing} setPlaying={setPlaying} className="max-w-[520px]" />
+        <VideoPlayer playing={playing} setPlaying={setPlaying} className="max-w-[600px]" />
 
         <div
           className="relative shrink-0"
@@ -320,8 +320,14 @@ export default function OneVideoSection() {
           {clips.map((clip, i) => (
             <div
               key={i}
-              className="absolute -translate-y-1/2"
-              style={{ left: clip.x, top: clip.y, width: clip.width, zIndex: clip.z }}
+              className="absolute"
+              style={{
+                left: clip.x,
+                top: clip.y,
+                width: clip.width,
+                zIndex: clip.z,
+                transform: `translateY(-50%) rotate(${clip.rotate}deg)`,
+              }}
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.85 }}
