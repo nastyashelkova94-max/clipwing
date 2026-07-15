@@ -132,7 +132,7 @@ export default function PricingSection() {
                 href="#"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-base font-medium text-slate-500"
+                className="flex h-12 items-center justify-center rounded-xl border border-slate-300 bg-slate-200 text-base font-medium text-slate-700"
               >
                 See Enterprise
               </motion.a>

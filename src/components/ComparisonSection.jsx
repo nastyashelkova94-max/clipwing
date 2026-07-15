@@ -91,7 +91,11 @@ export default function ComparisonSection() {
                 className={`w-full object-cover ${card.imageHeight}`}
               />
               <div className="flex flex-col items-start gap-6 p-4 text-left lg:px-4 lg:py-8">
-                <h3 className="flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-slate-900">
+                <h3
+                  className={`flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight ${
+                    card.highlighted ? 'text-slate-900' : 'text-slate-500'
+                  }`}
+                >
                   {card.highlighted && (
                     <img src={logoMark} alt="" className="h-6 w-6" />
                   )}
@@ -101,7 +105,9 @@ export default function ComparisonSection() {
                   {card.points.map((point) => (
                     <li
                       key={point}
-                      className="flex items-start gap-2 text-base text-slate-700"
+                      className={`flex items-start gap-2 text-base ${
+                        card.highlighted ? 'text-slate-700' : 'text-slate-500'
+                      }`}
                     >
                       <img src={card.icon} alt="" className="mt-1 h-4 w-4 shrink-0" />
                       {point}
