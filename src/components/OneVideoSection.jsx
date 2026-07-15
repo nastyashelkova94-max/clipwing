@@ -19,36 +19,37 @@ const CARD_H = (CARD_W * 16) / 9
 const ORIGIN_X = 0
 
 // Sequence along the trunk: video -> line -> badge -> line -> fork into 3 branches -> cards.
-// The 3 branches converge tightly (small offsets) so the cards land as an overlapping
-// fan (front card nudged forward, side cards peeking out top/bottom, rotated via CSS)
-// instead of being spread far apart.
+// Matches the reference fan: two rotated cards peek out above and to either side,
+// while the front (unrotated, highest z-index) card sits lower and between them,
+// so all 3 stay clearly readable instead of stacking directly on top of each other.
 const BADGE_X = ORIGIN_X + 90
 const SPLIT_X = BADGE_X + 80
-const SIDE_END_X = SPLIT_X + 55
-const MID_END_X = SIDE_END_X + 40
+const LEFT_X = SPLIT_X + 55
+const H_SPREAD = 140
+const RIGHT_X = LEFT_X + H_SPREAD
+const MID_END_X = LEFT_X + 75
 
-const OFFSET = 55
-const CENTER_Y = CARD_H / 2 + OFFSET + 15
-const TOP_Y = CENTER_Y - OFFSET
-const MID_Y = CENTER_Y
-const BOTTOM_Y = CENTER_Y + OFFSET
+const V_LIFT = 90
+const MID_Y = CARD_H / 2 + V_LIFT + 20
+const TOP_Y = MID_Y - V_LIFT
+const BOTTOM_Y = MID_Y - V_LIFT * 0.72
 
-const TOTAL_W = MID_END_X + CARD_W + 20
-const VB_H = CENTER_Y * 2
+const TOTAL_W = RIGHT_X + CARD_W + 20
+const VB_H = MID_Y + CARD_H / 2 + 20
 
 // Simple straight line from the main video to the badge (and on through to the
-// mid card, since it's the same straight track). Top/bottom branches only pick
-// up after the fork, so this stretch is drawn once instead of three times.
+// front card, since it's the same straight track). The other two branches peek
+// upward off this trunk line before reaching their own card.
 const trunkPath = `M${ORIGIN_X},${MID_Y} L${MID_END_X},${MID_Y}`
-const topPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${MID_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${SIDE_END_X},${TOP_Y}`
-const bottomPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${MID_Y + 15} L${SPLIT_X},${BOTTOM_Y - 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${SIDE_END_X},${BOTTOM_Y}`
+const topPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${MID_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
+const bottomPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${MID_Y - 15} L${SPLIT_X},${BOTTOM_Y + 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
 
 const branches = [trunkPath, topPath, bottomPath]
 
 const clips = [
-  { src: clip1, poster: poster1, x: SIDE_END_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -8 },
-  { src: clip2, poster: poster2, x: MID_END_X, y: MID_Y, width: CARD_W, z: 20, rotate: 0 },
-  { src: clip3, poster: poster3, x: SIDE_END_X, y: BOTTOM_Y, width: CARD_W, z: 10, rotate: 8 },
+  { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -10 },
+  { src: clip2, poster: poster2, x: MID_END_X, y: MID_Y, width: CARD_W, z: 20, rotate: 3 },
+  { src: clip3, poster: poster3, x: RIGHT_X, y: BOTTOM_Y, width: CARD_W, z: 10, rotate: 12 },
 ]
 
 const mobileClips = [
@@ -241,9 +242,9 @@ function DesktopVideoBranch({ playing, setPlaying }) {
               <path key={`base-${i}`} d={path} stroke="#e2e8f0" strokeWidth="1" />
             ))}
 
-            <circle cx={SIDE_END_X} cy={TOP_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
+            <circle cx={LEFT_X} cy={TOP_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
             <circle cx={MID_END_X} cy={MID_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
-            <circle cx={SIDE_END_X} cy={BOTTOM_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
+            <circle cx={RIGHT_X} cy={BOTTOM_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
           </svg>
 
           {branches.map((path, i) => (

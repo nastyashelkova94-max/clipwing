@@ -35,7 +35,7 @@ export default function PricingSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-4 grid max-w-[900px] grid-cols-1 gap-4 lg:mt-8 lg:items-start lg:gap-6 lg:grid-cols-2">
+      <div className="mx-auto mt-4 grid max-w-[900px] grid-cols-1 gap-4 lg:mt-8 lg:items-center lg:gap-6 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -132,7 +132,7 @@ export default function PricingSection() {
                 href="#"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex h-12 items-center justify-center rounded-xl border border-slate-400 bg-slate-300 text-base font-medium text-slate-800"
+                className="flex h-12 items-center justify-center rounded-xl border border-slate-800 bg-slate-800 text-base font-medium text-white"
               >
                 See Enterprise
               </motion.a>
