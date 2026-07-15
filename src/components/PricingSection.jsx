@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
-import circleCheckFilled from '../assets/icons/circle-check-filled.svg'
+import circleCheck from '../assets/icons/circle-check.svg'
+import circleCheckGray from '../assets/icons/circle-check-gray.svg'
 
 const enterpriseFeatures = [
   'Everything in Autopilot',
@@ -18,23 +19,6 @@ const autopilotFeatures = [
   'Post to your socials from the app',
   'Your brand kit on every clip',
 ]
-
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none">
-      <path d="M3.5 8h9M8.5 3.5 13 8l-4.5 4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function CalendarIcon() {
-  return (
-    <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none">
-      <rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-    </svg>
-  )
-}
 
 export default function PricingSection() {
   return (
@@ -88,7 +72,7 @@ export default function PricingSection() {
                   key={f}
                   className="flex items-start gap-2 text-base text-slate-700 lg:whitespace-nowrap"
                 >
-                  <img src={circleCheckFilled} alt="" className="mt-1 h-4 w-4 shrink-0" />
+                  <img src={circleCheck} alt="" className="mt-1 h-4 w-4 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -98,18 +82,16 @@ export default function PricingSection() {
                 href="#"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex h-12 items-center justify-center gap-2 rounded-xl border border-indigo-400 bg-indigo-500 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
+                className="flex h-12 items-center justify-center rounded-xl border border-indigo-400 bg-indigo-500 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
               >
                 Get my clips
-                <ArrowIcon />
               </motion.a>
               <motion.a
                 href="#"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="glass-soft flex h-12 items-center justify-center gap-2 rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_2px_9px_0_rgba(59,24,237,0.25)]"
+                className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)]"
               >
-                <CalendarIcon />
                 Book a call
               </motion.a>
             </div>
@@ -138,9 +120,9 @@ export default function PricingSection() {
               {enterpriseFeatures.map((f) => (
                 <li
                   key={f}
-                  className="flex items-start gap-2 text-base text-slate-700 lg:whitespace-nowrap"
+                  className="flex items-start gap-2 text-base text-slate-500 lg:whitespace-nowrap"
                 >
-                  <img src={circleCheckFilled} alt="" className="mt-1 h-4 w-4 shrink-0" />
+                  <img src={circleCheckGray} alt="" className="mt-1 h-4 w-4 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -150,18 +132,16 @@ export default function PricingSection() {
                 href="#"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex h-12 items-center justify-center gap-2 rounded-xl bg-slate-900 text-base font-medium text-white"
+                className="flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-base font-medium text-slate-500"
               >
                 See Enterprise
-                <ArrowIcon />
               </motion.a>
               <motion.a
                 href="#"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="glass-soft flex h-12 items-center justify-center gap-2 rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_2px_9px_0_rgba(59,24,237,0.25)]"
+                className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)]"
               >
-                <CalendarIcon />
                 Book a call
               </motion.a>
             </div>
