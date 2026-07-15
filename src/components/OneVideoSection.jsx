@@ -18,10 +18,11 @@ const CARD_H = (CARD_W * 16) / 9
 // video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
-// Sequence along the trunk: video -> line -> badge -> line -> fork into 3 branches -> cards.
+// Sequence along the trunk: video -> line -> badge -> fork into 3 branches -> cards.
 // Matches the reference fan: two rotated cards peek out above and to either side,
-// while the front (unrotated, highest z-index) card sits lower and between them,
-// so all 3 stay clearly readable instead of stacking directly on top of each other.
+// while the front (unrotated, highest z-index) card sits lower and between them.
+// The badge sits at the vertical center of the whole cluster, with branches
+// peeling off up-left, up-right, and down to the front card.
 const BADGE_X = ORIGIN_X + 90
 const SPLIT_X = BADGE_X + 80
 const LEFT_X = SPLIT_X + 55
@@ -29,22 +30,27 @@ const H_SPREAD = 140
 const RIGHT_X = LEFT_X + H_SPREAD
 const MID_END_X = LEFT_X + 75
 
-const V_LIFT = 90
-const MID_Y = CARD_H / 2 + V_LIFT + 20
-const TOP_Y = MID_Y - V_LIFT
-const BOTTOM_Y = MID_Y - V_LIFT * 0.72
+const LIFT_LEFT = 70
+const LIFT_RIGHT = 45
+const DROP_FRONT = 70
+
+const TRUNK_Y = CARD_H / 2 + Math.max(LIFT_LEFT, DROP_FRONT) + 20
+const TOP_Y = TRUNK_Y - LIFT_LEFT
+const BOTTOM_Y = TRUNK_Y - LIFT_RIGHT
+const MID_Y = TRUNK_Y + DROP_FRONT
 
 const TOTAL_W = RIGHT_X + CARD_W + 20
 const VB_H = MID_Y + CARD_H / 2 + 20
 
-// Simple straight line from the main video to the badge (and on through to the
-// front card, since it's the same straight track). The other two branches peek
-// upward off this trunk line before reaching their own card.
-const trunkPath = `M${ORIGIN_X},${MID_Y} L${MID_END_X},${MID_Y}`
-const topPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${MID_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
-const bottomPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${MID_Y - 15} L${SPLIT_X},${BOTTOM_Y + 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
+// Trunk runs from the video to the fork point (centered on the cluster), then
+// splits into 3 curved branches: two peel upward to the back cards, one dips
+// down to the front card.
+const trunkPath = `M${ORIGIN_X},${TRUNK_Y} L${SPLIT_X},${TRUNK_Y}`
+const topPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
+const bottomPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${BOTTOM_Y + 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
+const frontPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${MID_Y - 15} Q${SPLIT_X},${MID_Y} ${SPLIT_X + 15},${MID_Y} L${MID_END_X},${MID_Y}`
 
-const branches = [trunkPath, topPath, bottomPath]
+const branches = [trunkPath, topPath, bottomPath, frontPath]
 
 const clips = [
   { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -10 },
@@ -257,7 +263,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
 
           <div
             className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
-            style={{ left: BADGE_X, top: MID_Y }}
+            style={{ left: BADGE_X, top: TRUNK_Y }}
           >
             <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
               3 days - 3 clips
