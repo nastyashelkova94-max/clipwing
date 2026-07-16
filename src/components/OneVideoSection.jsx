@@ -29,18 +29,16 @@ const BADGE_X = ORIGIN_X + STUB
 const BADGE_TO_FORK = 175
 const SPLIT_X = BADGE_X + BADGE_TO_FORK
 const LEFT_X = SPLIT_X + 55
-const H_SPREAD = 190
+const H_SPREAD = 120
 const RIGHT_X = LEFT_X + H_SPREAD
 const MID_END_X = LEFT_X + H_SPREAD / 2
 
-// Symmetric fan: both back cards sit level with each other, lower and
-// rotated outward; the front card is centered higher, on top, and unrotated.
-const FAN_OFFSET = 55
-
-const TRUNK_Y = CARD_H / 2 + FAN_OFFSET + 20
-const TOP_Y = TRUNK_Y + FAN_OFFSET
-const BOTTOM_Y = TRUNK_Y + FAN_OFFSET
-const MID_Y = TRUNK_Y - FAN_OFFSET
+// All 3 cards sit level with each other (mirroring MobileConnector's flat
+// row), differentiated only by x-position and rotation.
+const TRUNK_Y = CARD_H / 2 + 20
+const TOP_Y = TRUNK_Y
+const BOTTOM_Y = TRUNK_Y
+const MID_Y = TRUNK_Y
 
 const TOTAL_W = RIGHT_X + CARD_W + 20
 // Symmetric around TRUNK_Y by construction, so the fork/badge sits exactly at
@@ -48,9 +46,9 @@ const TOTAL_W = RIGHT_X + CARD_W + 20
 const VB_H = TRUNK_Y * 2
 
 const stubPath = `M${ORIGIN_X},${TRUNK_Y} L${BADGE_X},${TRUNK_Y}`
-const midPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${MID_Y + 15} Q${SPLIT_X},${MID_Y} ${SPLIT_X + 15},${MID_Y} L${MID_END_X},${MID_Y}`
-const topPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${TOP_Y - 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
-const bottomPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${BOTTOM_Y - 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
+const midPath = `M${SPLIT_X},${TRUNK_Y} L${MID_END_X},${MID_Y}`
+const topPath = `M${SPLIT_X},${TRUNK_Y} L${LEFT_X},${TOP_Y}`
+const bottomPath = `M${SPLIT_X},${TRUNK_Y} L${RIGHT_X},${BOTTOM_Y}`
 
 const branches = [stubPath, midPath, topPath, bottomPath]
 
