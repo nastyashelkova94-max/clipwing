@@ -18,14 +18,16 @@ const CARD_H = (CARD_W * 16) / 9
 // video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
-// Sequence along the trunk: video -> short 10px stub -> badge -> stub -> fork
-// into 3 branches (top, middle, bottom) -> cards, mirroring MobileConnector's
-// trunk-then-fork structure. The fork point (and badge) sit at the exact
-// vertical center of the branch box, which lines it up with the video's own
-// center too.
+// Sequence along the trunk: video -> short 10px stub -> badge (left-aligned,
+// so it never overlaps the video) -> fork into 3 branches (top, middle,
+// bottom) -> cards, mirroring MobileConnector's trunk-then-fork structure.
+// The fork point sits at the exact vertical center of the branch box, which
+// lines it up with the video's own center too.
 const STUB = 10
 const BADGE_X = ORIGIN_X + STUB
-const SPLIT_X = BADGE_X + 50
+// Clears the badge's own rendered width (~155px) plus a small gap before the fork.
+const BADGE_TO_FORK = 175
+const SPLIT_X = BADGE_X + BADGE_TO_FORK
 const LEFT_X = SPLIT_X + 55
 const H_SPREAD = 190
 const RIGHT_X = LEFT_X + H_SPREAD
@@ -196,9 +198,9 @@ function MobileConnector({ mobileClips }) {
 // uniformly scaled to fit whatever width is actually available (same trick as
 // MobileConnector). Without this, the layout overflows the section at the
 // narrow end of the desktop range (e.g. 1024px, iPad landscape).
-// Video is sized at 2/3 of the fan-matched width (matching the fan's height
+// Video is scaled down from the fan-matched width (matching the fan's height
 // exactly made the video too large).
-const DESKTOP_VIDEO_W = ((VB_H - 20) * 16) / 9 / 1.5
+const DESKTOP_VIDEO_W = ((VB_H - 20) * 16) / 9 / 1.8
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
 const DESKTOP_VIDEO_GAP = 0
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
@@ -264,7 +266,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
           ))}
 
           <div
-            className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
+            className="glass-soft absolute flex -translate-y-1/2 items-start rounded-[28px] p-1"
             style={{ left: BADGE_X, top: TRUNK_Y }}
           >
             <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
