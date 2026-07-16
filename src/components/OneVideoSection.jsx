@@ -22,8 +22,8 @@ const ORIGIN_X = 0
 // Simple straight line from the video to the badge and on through to the front
 // card (same straight track, at the front card's own height) — the other two
 // branches peel upward off this trunk line before reaching their own card.
-const BADGE_X = ORIGIN_X + 90
-const SPLIT_X = BADGE_X + 80
+const BADGE_X = ORIGIN_X + 45
+const SPLIT_X = BADGE_X + 450
 const LEFT_X = SPLIT_X + 55
 const H_SPREAD = 140
 const RIGHT_X = LEFT_X + H_SPREAD
@@ -192,7 +192,7 @@ function MobileConnector({ mobileClips }) {
 // narrow end of the desktop range (e.g. 1024px, iPad landscape).
 const DESKTOP_VIDEO_W = 520
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
-const DESKTOP_VIDEO_GAP = 70
+const DESKTOP_VIDEO_GAP = 40
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
 const DESKTOP_DESIGN_H = Math.max(DESKTOP_VIDEO_H, VB_H)
 const DESKTOP_VIDEO_TOP = (DESKTOP_DESIGN_H - DESKTOP_VIDEO_H) / 2
