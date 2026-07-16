@@ -24,7 +24,8 @@ const ORIGIN_X = 0
 // The badge sits centered exactly halfway between the video and the cards.
 const LEFT_X = 260
 const BADGE_X = LEFT_X / 2
-const BADGE_HALF_W = 80
+// Half the badge's own rendered width (~112px) now that it's smaller.
+const BADGE_HALF_W = 58
 
 const TRUNK_Y = CARD_H / 2 + 20
 const VB_H = TRUNK_Y * 2
@@ -47,7 +48,7 @@ const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${LEFT_X},${TRUNK_Y}`
 // badge it peels off into a full loop around its oval outline before
 // rejoining the straight line on the other side.
 const LOOP_RX = BADGE_HALF_W + 10
-const LOOP_RY = 40
+const LOOP_RY = 28
 const LOOP_ENTRY_X = BADGE_X - LOOP_RX
 const LOOP_EXIT_X = BADGE_X + LOOP_RX
 const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${LEFT_X},${TRUNK_Y}`
@@ -202,7 +203,7 @@ function MobileConnector({ mobileClips }) {
 const VIDEO_TUNED_CARD_H = (190 * 16) / 9
 const VIDEO_TUNED_VB_H = (VIDEO_TUNED_CARD_H / 2 + 80 + 20) * 2
 // Halved, then bumped back up a bit after feedback that it got too small.
-const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 1.5
+const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 1.2
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
 const DESKTOP_VIDEO_GAP = 0
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
@@ -264,7 +265,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
             style={{ left: BADGE_X, top: TRUNK_Y }}
           >
-            <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
+            <span className="whitespace-nowrap rounded-3xl bg-white px-3 py-2 text-sm font-normal text-[#3f3f46] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
               3 days - 3 clips
             </span>
           </div>
@@ -309,8 +310,8 @@ function DesktopVideoBranch({ playing, setPlaying }) {
 
 function VideoPlayer({ playing, setPlaying, className = '' }) {
   return (
-    <div className={`glass-soft w-full shrink-0 overflow-hidden rounded-[20px] p-1 lg:rounded-[33px] lg:p-2.5 ${className}`}>
-      <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-900 lg:rounded-[22px]">
+    <div className={`glass-soft w-full shrink-0 overflow-hidden rounded-[20px] p-1 lg:rounded-[19px] lg:p-1 lg:shadow-lg ${className}`}>
+      <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-900 lg:rounded-[15px]">
         {playing ? (
           <iframe
             className="absolute inset-0 h-full w-full"
