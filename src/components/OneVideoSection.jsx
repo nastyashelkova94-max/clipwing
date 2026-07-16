@@ -11,7 +11,7 @@ import poster3 from '../assets/images/process/clip-3-poster.jpg'
 const YOUTUBE_ID = 'znq6o26snJs'
 const YOUTUBE_START = 8
 
-const CARD_W = 190
+const CARD_W = 230
 const CARD_H = (CARD_W * 16) / 9
 
 // x=0 is the branch box's flush left edge, positioned directly against the
@@ -21,19 +21,17 @@ const ORIGIN_X = 0
 // One arrow travels from the video, arcs around the "3 days - 3 clips"
 // badge, and reaches the cards, which start piled up (tight overlap, tilted)
 // and straighten into an evenly spaced, unrotated row once the arrow arrives.
-const STUB = 10
-const BADGE_X = ORIGIN_X + STUB
-// Clears the badge's own rendered width (~155px) plus a small gap.
-const BADGE_TO_FORK = 175
-const CARDS_X = BADGE_X + BADGE_TO_FORK
-const LEFT_X = CARDS_X + 55
+// The badge sits centered exactly halfway between the video and the cards.
+const LEFT_X = 260
+const BADGE_X = LEFT_X / 2
+const BADGE_HALF_W = 80
 
 const TRUNK_Y = CARD_H / 2 + 20
 const VB_H = TRUNK_Y * 2
 
 // Piled (initial) spacing: tight overlap. Spread (post-arrow) spacing: cards
 // sit edge to edge with a 10px gap. The leftmost card is the shared anchor.
-const H_SPREAD_PILE = 120
+const H_SPREAD_PILE = 145
 const GAP = 10
 const H_SPREAD_APART = CARD_W + GAP
 
@@ -42,10 +40,11 @@ const RIGHT_X_APART = LEFT_X + 2 * H_SPREAD_APART
 // TOTAL_W must fit the widest (spread) state.
 const TOTAL_W = RIGHT_X_APART + CARD_W + 20
 
-// A single bezier arc dipping below the trunk line to pass under the badge,
-// then leveling out to arrive right at the front of the card pile.
+// A single bezier arc dipping below the trunk line to pass around the badge
+// (control points sit just past its left/right edges), then leveling out to
+// arrive right at the front of the card pile.
 const ARROW_BULGE = 35
-const arrowPath = `M${ORIGIN_X},${TRUNK_Y} C ${BADGE_X},${TRUNK_Y + ARROW_BULGE} ${BADGE_X + 160},${TRUNK_Y + ARROW_BULGE} ${LEFT_X},${TRUNK_Y}`
+const arrowPath = `M${ORIGIN_X},${TRUNK_Y} C ${BADGE_X - BADGE_HALF_W},${TRUNK_Y + ARROW_BULGE} ${BADGE_X + BADGE_HALF_W},${TRUNK_Y + ARROW_BULGE} ${LEFT_X},${TRUNK_Y}`
 
 const clips = [
   { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: LEFT_X, apartX: LEFT_X, pileRotate: -3 },
@@ -194,8 +193,10 @@ function MobileConnector({ mobileClips }) {
 // narrow end of the desktop range (e.g. 1024px, iPad landscape).
 // Video size was tuned against the fan's earlier (taller) height and is
 // frozen here so making the fan more compact doesn't shrink the video too.
-const VIDEO_TUNED_VB_H = (CARD_H / 2 + 80 + 20) * 2
-const DESKTOP_VIDEO_W = ((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8
+const VIDEO_TUNED_CARD_H = (190 * 16) / 9
+const VIDEO_TUNED_VB_H = (VIDEO_TUNED_CARD_H / 2 + 80 + 20) * 2
+// Halved again per feedback that it was still too large next to the cards.
+const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 2
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
 const DESKTOP_VIDEO_GAP = 0
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
@@ -254,7 +255,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
           />
 
           <div
-            className="glass-soft absolute flex -translate-y-1/2 items-start rounded-[28px] p-1"
+            className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
             style={{ left: BADGE_X, top: TRUNK_Y }}
           >
             <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
