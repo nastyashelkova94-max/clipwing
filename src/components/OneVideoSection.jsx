@@ -18,42 +18,43 @@ const CARD_H = (CARD_W * 16) / 9
 // video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
-// Sequence along the trunk: video -> line -> badge -> short stub -> fork into
-// 2 branches -> back cards. Matches the wireframe: only the two back cards
-// get a drawn connector: the front card just sits in the fan with no line of
-// its own. The fork point (and badge) sit at the exact vertical center of the
-// branch box, which lines it up with the video's own center too.
-const BADGE_X = ORIGIN_X + 90
-const SPLIT_X = BADGE_X + 80
+// Sequence along the trunk: video -> short 10px stub -> badge -> stub -> fork
+// into 3 branches (top, middle, bottom) -> cards, mirroring MobileConnector's
+// trunk-then-fork structure. The fork point (and badge) sit at the exact
+// vertical center of the branch box, which lines it up with the video's own
+// center too.
+const STUB = 10
+const BADGE_X = ORIGIN_X + STUB
+const SPLIT_X = BADGE_X + 50
 const LEFT_X = SPLIT_X + 55
 const H_SPREAD = 190
 const RIGHT_X = LEFT_X + H_SPREAD
 const MID_END_X = LEFT_X + H_SPREAD / 2
 
-const LIFT_LEFT = 90
-const LIFT_RIGHT = 65
-const DROP_FRONT = 95
+// Symmetric fan: both back cards sit level with each other and rotate
+// oppositely, the front card is centered lower and unrotated.
+const FAN_OFFSET = 80
 
-const TRUNK_Y = CARD_H / 2 + Math.max(LIFT_LEFT, LIFT_RIGHT, DROP_FRONT) + 20
-const TOP_Y = TRUNK_Y - LIFT_LEFT
-const BOTTOM_Y = TRUNK_Y - LIFT_RIGHT
-const MID_Y = TRUNK_Y + DROP_FRONT
+const TRUNK_Y = CARD_H / 2 + FAN_OFFSET + 20
+const TOP_Y = TRUNK_Y - FAN_OFFSET
+const BOTTOM_Y = TRUNK_Y - FAN_OFFSET
+const MID_Y = TRUNK_Y + FAN_OFFSET
 
 const TOTAL_W = RIGHT_X + CARD_W + 20
 // Symmetric around TRUNK_Y by construction, so the fork/badge sits exactly at
 // the branch box's vertical center (and therefore the video's too).
 const VB_H = TRUNK_Y * 2
 
-const trunkPath = `M${ORIGIN_X},${TRUNK_Y} L${SPLIT_X},${TRUNK_Y}`
+const midPath = `M${ORIGIN_X},${TRUNK_Y} L${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${MID_Y - 15} Q${SPLIT_X},${MID_Y} ${SPLIT_X + 15},${MID_Y} L${MID_END_X},${MID_Y}`
 const topPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
 const bottomPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${BOTTOM_Y + 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
 
-const branches = [trunkPath, topPath, bottomPath]
+const branches = [midPath, topPath, bottomPath]
 
 const clips = [
-  { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -6 },
-  { src: clip2, poster: poster2, x: MID_END_X, y: MID_Y, width: CARD_W, z: 20, rotate: 3 },
-  { src: clip3, poster: poster3, x: RIGHT_X, y: BOTTOM_Y, width: CARD_W, z: 10, rotate: 7 },
+  { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -3 },
+  { src: clip2, poster: poster2, x: MID_END_X, y: MID_Y, width: CARD_W, z: 20, rotate: 0 },
+  { src: clip3, poster: poster3, x: RIGHT_X, y: BOTTOM_Y, width: CARD_W, z: 10, rotate: 3 },
 ]
 
 const mobileClips = [
@@ -195,9 +196,11 @@ function MobileConnector({ mobileClips }) {
 // uniformly scaled to fit whatever width is actually available (same trick as
 // MobileConnector). Without this, the layout overflows the section at the
 // narrow end of the desktop range (e.g. 1024px, iPad landscape).
-const DESKTOP_VIDEO_W = 560
+// Video is sized at 2/3 of the fan-matched width (matching the fan's height
+// exactly made the video too large).
+const DESKTOP_VIDEO_W = ((VB_H - 20) * 16) / 9 / 1.5
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
-const DESKTOP_VIDEO_GAP = 70
+const DESKTOP_VIDEO_GAP = 0
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
 const DESKTOP_DESIGN_H = Math.max(DESKTOP_VIDEO_H, VB_H)
 const DESKTOP_VIDEO_TOP = (DESKTOP_DESIGN_H - DESKTOP_VIDEO_H) / 2
@@ -248,6 +251,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             ))}
 
             <circle cx={LEFT_X} cy={TOP_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
+            <circle cx={MID_END_X} cy={MID_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
             <circle cx={RIGHT_X} cy={BOTTOM_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
           </svg>
 
