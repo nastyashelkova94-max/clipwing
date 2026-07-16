@@ -18,44 +18,39 @@ const CARD_H = (CARD_W * 16) / 9
 // video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
-// Sequence along the trunk: video -> short 10px stub (its own branch) ->
-// badge (left-aligned, so it never overlaps the video) -> fork into 3 more
-// branches (top, middle, bottom), one per card -- 4 branches total, each with
-// its own animated dot. The fork point sits at the exact vertical center of
-// the branch box, which lines it up with the video's own center too.
+// One arrow travels from the video, arcs around the "3 days - 3 clips"
+// badge, and reaches the cards, which start piled up (tight overlap, tilted)
+// and straighten into an evenly spaced, unrotated row once the arrow arrives.
 const STUB = 10
 const BADGE_X = ORIGIN_X + STUB
-// Clears the badge's own rendered width (~155px) plus a small gap before the fork.
+// Clears the badge's own rendered width (~155px) plus a small gap.
 const BADGE_TO_FORK = 175
-const SPLIT_X = BADGE_X + BADGE_TO_FORK
-const LEFT_X = SPLIT_X + 55
-const H_SPREAD = 120
-const RIGHT_X = LEFT_X + H_SPREAD
-const MID_END_X = LEFT_X + H_SPREAD / 2
+const CARDS_X = BADGE_X + BADGE_TO_FORK
+const LEFT_X = CARDS_X + 55
 
-// All 3 cards sit level with each other (mirroring MobileConnector's flat
-// row), differentiated only by x-position and rotation.
 const TRUNK_Y = CARD_H / 2 + 20
-const TOP_Y = TRUNK_Y
-const BOTTOM_Y = TRUNK_Y
-const MID_Y = TRUNK_Y
-
-const TOTAL_W = RIGHT_X + CARD_W + 20
-// Symmetric around TRUNK_Y by construction, so the fork/badge sits exactly at
-// the branch box's vertical center (and therefore the video's too).
 const VB_H = TRUNK_Y * 2
 
-const stubPath = `M${ORIGIN_X},${TRUNK_Y} L${BADGE_X},${TRUNK_Y}`
-const midPath = `M${SPLIT_X},${TRUNK_Y} L${MID_END_X},${MID_Y}`
-const topPath = `M${SPLIT_X},${TRUNK_Y} L${LEFT_X},${TOP_Y}`
-const bottomPath = `M${SPLIT_X},${TRUNK_Y} L${RIGHT_X},${BOTTOM_Y}`
+// Piled (initial) spacing: tight overlap. Spread (post-arrow) spacing: cards
+// sit edge to edge with a 10px gap. The leftmost card is the shared anchor.
+const H_SPREAD_PILE = 120
+const GAP = 10
+const H_SPREAD_APART = CARD_W + GAP
 
-const branches = [stubPath, midPath, topPath, bottomPath]
+const RIGHT_X_PILE = LEFT_X + H_SPREAD_PILE
+const RIGHT_X_APART = LEFT_X + 2 * H_SPREAD_APART
+// TOTAL_W must fit the widest (spread) state.
+const TOTAL_W = RIGHT_X_APART + CARD_W + 20
+
+// A single bezier arc dipping below the trunk line to pass under the badge,
+// then leveling out to arrive right at the front of the card pile.
+const ARROW_BULGE = 35
+const arrowPath = `M${ORIGIN_X},${TRUNK_Y} C ${BADGE_X},${TRUNK_Y + ARROW_BULGE} ${BADGE_X + 160},${TRUNK_Y + ARROW_BULGE} ${LEFT_X},${TRUNK_Y}`
 
 const clips = [
-  { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -3 },
-  { src: clip2, poster: poster2, x: MID_END_X, y: MID_Y, width: CARD_W, z: 20, rotate: 0 },
-  { src: clip3, poster: poster3, x: RIGHT_X, y: BOTTOM_Y, width: CARD_W, z: 10, rotate: 3 },
+  { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: LEFT_X, apartX: LEFT_X, pileRotate: -3 },
+  { src: clip2, poster: poster2, width: CARD_W, z: 20, pileX: LEFT_X + H_SPREAD_PILE / 2, apartX: LEFT_X + H_SPREAD_APART, pileRotate: 0 },
+  { src: clip3, poster: poster3, width: CARD_W, z: 10, pileX: RIGHT_X_PILE, apartX: RIGHT_X_APART, pileRotate: 3 },
 ]
 
 const mobileClips = [
@@ -211,6 +206,7 @@ const DESKTOP_BRANCH_TOP = (DESKTOP_DESIGN_H - VB_H) / 2
 function DesktopVideoBranch({ playing, setPlaying }) {
   const wrapperRef = useRef(null)
   const [scale, setScale] = useState(0)
+  const [isSpread, setIsSpread] = useState(false)
 
   useEffect(() => {
     const el = wrapperRef.current
@@ -243,27 +239,19 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             preserveAspectRatio="none"
           >
             <defs>
-              <filter id="dot-shadow" x="-100%" y="-100%" width="300%" height="300%">
-                <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="#0f172a" floodOpacity="0.18" />
-              </filter>
+              <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#cbd5e1" />
+              </marker>
             </defs>
 
-            {branches.map((path, i) => (
-              <path key={`base-${i}`} d={path} stroke="#e2e8f0" strokeWidth="1" />
-            ))}
-
-            <circle cx={LEFT_X} cy={TOP_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
-            <circle cx={MID_END_X} cy={MID_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
-            <circle cx={RIGHT_X} cy={BOTTOM_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
+            <path d={arrowPath} stroke="#e2e8f0" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
           </svg>
 
-          {branches.map((path, i) => (
-            <span
-              key={`dot-${i}`}
-              className="flow-dot"
-              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s` }}
-            />
-          ))}
+          <span
+            className="arrow-dot"
+            style={{ offsetPath: `path('${arrowPath}')` }}
+            onAnimationEnd={() => setIsSpread(true)}
+          />
 
           <div
             className="glass-soft absolute flex -translate-y-1/2 items-start rounded-[28px] p-1"
@@ -275,16 +263,13 @@ function DesktopVideoBranch({ playing, setPlaying }) {
           </div>
 
           {clips.map((clip, i) => (
-            <div
+            <motion.div
               key={i}
               className="absolute"
-              style={{
-                left: clip.x,
-                top: clip.y,
-                width: clip.width,
-                zIndex: clip.z,
-                transform: `translateY(-50%) rotate(${clip.rotate}deg)`,
-              }}
+              style={{ top: TRUNK_Y, width: clip.width, zIndex: clip.z }}
+              initial={{ left: clip.pileX, rotate: clip.pileRotate, y: '-50%' }}
+              animate={{ left: isSpread ? clip.apartX : clip.pileX, rotate: isSpread ? 0 : clip.pileRotate, y: '-50%' }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.85 }}
@@ -307,7 +292,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
                   />
                 </div>
               </motion.div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
