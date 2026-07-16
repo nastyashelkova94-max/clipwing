@@ -30,11 +30,12 @@ const RIGHT_X = LEFT_X + H_SPREAD
 const MID_END_X = LEFT_X + H_SPREAD / 2
 
 const LIFT = 75
+const DROP_FRONT = 45
 
 const TRUNK_Y = CARD_H / 2 + LIFT + 20
 const TOP_Y = TRUNK_Y - LIFT
 const BOTTOM_Y = TRUNK_Y - LIFT
-const MID_Y = TRUNK_Y + LIFT
+const MID_Y = TRUNK_Y + DROP_FRONT
 
 const TOTAL_W = RIGHT_X + CARD_W + 20
 const VB_H = MID_Y + CARD_H / 2 + 20
@@ -47,9 +48,9 @@ const frontPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X}
 const branches = [trunkPath, topPath, bottomPath, frontPath]
 
 const clips = [
-  { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -10 },
+  { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -6 },
   { src: clip2, poster: poster2, x: MID_END_X, y: MID_Y, width: CARD_W, z: 20, rotate: 3 },
-  { src: clip3, poster: poster3, x: RIGHT_X, y: BOTTOM_Y, width: CARD_W, z: 10, rotate: 12 },
+  { src: clip3, poster: poster3, x: RIGHT_X, y: BOTTOM_Y, width: CARD_W, z: 10, rotate: 7 },
 ]
 
 const mobileClips = [
@@ -191,7 +192,7 @@ function MobileConnector({ mobileClips }) {
 // uniformly scaled to fit whatever width is actually available (same trick as
 // MobileConnector). Without this, the layout overflows the section at the
 // narrow end of the desktop range (e.g. 1024px, iPad landscape).
-const DESKTOP_VIDEO_W = 520
+const DESKTOP_VIDEO_W = 560
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
 const DESKTOP_VIDEO_GAP = 70
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
