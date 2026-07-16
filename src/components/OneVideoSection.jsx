@@ -35,7 +35,7 @@ const MID_END_X = LEFT_X + H_SPREAD / 2
 
 // Symmetric fan: both back cards sit level with each other and rotate
 // oppositely, the front card is centered lower and unrotated.
-const FAN_OFFSET = 80
+const FAN_OFFSET = 55
 
 const TRUNK_Y = CARD_H / 2 + FAN_OFFSET + 20
 const TOP_Y = TRUNK_Y - FAN_OFFSET
@@ -198,9 +198,10 @@ function MobileConnector({ mobileClips }) {
 // uniformly scaled to fit whatever width is actually available (same trick as
 // MobileConnector). Without this, the layout overflows the section at the
 // narrow end of the desktop range (e.g. 1024px, iPad landscape).
-// Video is scaled down from the fan-matched width (matching the fan's height
-// exactly made the video too large).
-const DESKTOP_VIDEO_W = ((VB_H - 20) * 16) / 9 / 1.8
+// Video size was tuned against the fan's earlier (taller) height and is
+// frozen here so making the fan more compact doesn't shrink the video too.
+const VIDEO_TUNED_VB_H = (CARD_H / 2 + 80 + 20) * 2
+const DESKTOP_VIDEO_W = ((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
 const DESKTOP_VIDEO_GAP = 0
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
@@ -241,6 +242,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             viewBox={`0 0 ${TOTAL_W} ${VB_H}`}
             fill="none"
             preserveAspectRatio="none"
+            style={{ zIndex: 15 }}
           >
             <defs>
               <filter id="dot-shadow" x="-100%" y="-100%" width="300%" height="300%">
@@ -261,7 +263,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             <span
               key={`dot-${i}`}
               className="flow-dot"
-              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s` }}
+              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s`, zIndex: 15 }}
             />
           ))}
 
