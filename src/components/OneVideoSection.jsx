@@ -18,32 +18,33 @@ const CARD_H = (CARD_W * 16) / 9
 // video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
-// Sequence along the trunk: video -> line -> badge -> line -> fork into 2 branches -> cards.
-// Simple straight line from the video to the badge and on through to the front
-// card (same straight track, at the front card's own height) — the other two
-// branches peel upward off this trunk line before reaching their own card.
+// Sequence along the trunk: video -> line -> badge -> fork into 3 branches -> cards.
+// The fork sits at the vertical center of the cluster (badge centered), with
+// three equal-length branches: two peel up to the back cards, one dips down
+// to the front card — same lift/drop amount on all three for even spacing.
 const BADGE_X = ORIGIN_X + 90
 const SPLIT_X = BADGE_X + 80
 const LEFT_X = SPLIT_X + 55
-const H_SPREAD = 160
+const H_SPREAD = 190
 const RIGHT_X = LEFT_X + H_SPREAD
-const MID_END_X = LEFT_X + 85
+const MID_END_X = LEFT_X + H_SPREAD / 2
 
-const LIFT_LEFT = 78
-const LIFT_RIGHT = 68
+const LIFT = 75
 
-const MID_Y = CARD_H / 2 + Math.max(LIFT_LEFT, LIFT_RIGHT) + 20
-const TOP_Y = MID_Y - LIFT_LEFT
-const BOTTOM_Y = MID_Y - LIFT_RIGHT
+const TRUNK_Y = CARD_H / 2 + LIFT + 20
+const TOP_Y = TRUNK_Y - LIFT
+const BOTTOM_Y = TRUNK_Y - LIFT
+const MID_Y = TRUNK_Y + LIFT
 
 const TOTAL_W = RIGHT_X + CARD_W + 20
 const VB_H = MID_Y + CARD_H / 2 + 20
 
-const trunkPath = `M${ORIGIN_X},${MID_Y} L${MID_END_X},${MID_Y}`
-const topPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${MID_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
-const bottomPath = `M${SPLIT_X - 15},${MID_Y} Q${SPLIT_X},${MID_Y} ${SPLIT_X},${MID_Y - 15} L${SPLIT_X},${BOTTOM_Y + 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
+const trunkPath = `M${ORIGIN_X},${TRUNK_Y} L${SPLIT_X},${TRUNK_Y}`
+const topPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
+const bottomPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${BOTTOM_Y + 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
+const frontPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${MID_Y - 15} Q${SPLIT_X},${MID_Y} ${SPLIT_X + 15},${MID_Y} L${MID_END_X},${MID_Y}`
 
-const branches = [trunkPath, topPath, bottomPath]
+const branches = [trunkPath, topPath, bottomPath, frontPath]
 
 const clips = [
   { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -10 },
@@ -257,7 +258,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
 
           <div
             className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
-            style={{ left: BADGE_X, top: MID_Y }}
+            style={{ left: BADGE_X, top: TRUNK_Y }}
           >
             <span className="whitespace-nowrap rounded-3xl bg-white px-4 py-3 text-base font-medium text-[#0F172A] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
               3 days - 3 clips
