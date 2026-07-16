@@ -18,11 +18,11 @@ const CARD_H = (CARD_W * 16) / 9
 // video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
-// Sequence along the trunk: video -> short 10px stub -> badge (left-aligned,
-// so it never overlaps the video) -> fork into 3 branches (top, middle,
-// bottom) -> cards, mirroring MobileConnector's trunk-then-fork structure.
-// The fork point sits at the exact vertical center of the branch box, which
-// lines it up with the video's own center too.
+// Sequence along the trunk: video -> short 10px stub (its own branch) ->
+// badge (left-aligned, so it never overlaps the video) -> fork into 3 more
+// branches (top, middle, bottom), one per card -- 4 branches total, each with
+// its own animated dot. The fork point sits at the exact vertical center of
+// the branch box, which lines it up with the video's own center too.
 const STUB = 10
 const BADGE_X = ORIGIN_X + STUB
 // Clears the badge's own rendered width (~155px) plus a small gap before the fork.
@@ -33,25 +33,26 @@ const H_SPREAD = 190
 const RIGHT_X = LEFT_X + H_SPREAD
 const MID_END_X = LEFT_X + H_SPREAD / 2
 
-// Symmetric fan: both back cards sit level with each other and rotate
-// oppositely, the front card is centered lower and unrotated.
+// Symmetric fan: both back cards sit level with each other, lower and
+// rotated outward; the front card is centered higher, on top, and unrotated.
 const FAN_OFFSET = 55
 
 const TRUNK_Y = CARD_H / 2 + FAN_OFFSET + 20
-const TOP_Y = TRUNK_Y - FAN_OFFSET
-const BOTTOM_Y = TRUNK_Y - FAN_OFFSET
-const MID_Y = TRUNK_Y + FAN_OFFSET
+const TOP_Y = TRUNK_Y + FAN_OFFSET
+const BOTTOM_Y = TRUNK_Y + FAN_OFFSET
+const MID_Y = TRUNK_Y - FAN_OFFSET
 
 const TOTAL_W = RIGHT_X + CARD_W + 20
 // Symmetric around TRUNK_Y by construction, so the fork/badge sits exactly at
 // the branch box's vertical center (and therefore the video's too).
 const VB_H = TRUNK_Y * 2
 
-const midPath = `M${ORIGIN_X},${TRUNK_Y} L${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${MID_Y - 15} Q${SPLIT_X},${MID_Y} ${SPLIT_X + 15},${MID_Y} L${MID_END_X},${MID_Y}`
-const topPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
-const bottomPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${BOTTOM_Y + 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
+const stubPath = `M${ORIGIN_X},${TRUNK_Y} L${BADGE_X},${TRUNK_Y}`
+const midPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${MID_Y + 15} Q${SPLIT_X},${MID_Y} ${SPLIT_X + 15},${MID_Y} L${MID_END_X},${MID_Y}`
+const topPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${TOP_Y - 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
+const bottomPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${BOTTOM_Y - 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
 
-const branches = [midPath, topPath, bottomPath]
+const branches = [stubPath, midPath, topPath, bottomPath]
 
 const clips = [
   { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -3 },
