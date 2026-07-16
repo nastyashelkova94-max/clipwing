@@ -40,11 +40,17 @@ const RIGHT_X_APART = LEFT_X + 2 * H_SPREAD_APART
 // TOTAL_W must fit the widest (spread) state.
 const TOTAL_W = RIGHT_X_APART + CARD_W + 20
 
-// A single bezier arc dipping below the trunk line to pass around the badge
-// (control points sit just past its left/right edges), then leveling out to
-// arrive right at the front of the card pile.
-const ARROW_BULGE = 35
-const arrowPath = `M${ORIGIN_X},${TRUNK_Y} C ${BADGE_X - BADGE_HALF_W},${TRUNK_Y + ARROW_BULGE} ${BADGE_X + BADGE_HALF_W},${TRUNK_Y + ARROW_BULGE} ${LEFT_X},${TRUNK_Y}`
+// The visible arrow is a plain straight line from the video to the cards.
+const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${LEFT_X},${TRUNK_Y}`
+
+// The animated dot follows that same straight line, except right at the
+// badge it peels off into a full loop around its oval outline before
+// rejoining the straight line on the other side.
+const LOOP_RX = BADGE_HALF_W + 10
+const LOOP_RY = 40
+const LOOP_ENTRY_X = BADGE_X - LOOP_RX
+const LOOP_EXIT_X = BADGE_X + LOOP_RX
+const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${LEFT_X},${TRUNK_Y}`
 
 const clips = [
   { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: LEFT_X, apartX: LEFT_X, pileRotate: -3 },
@@ -195,8 +201,8 @@ function MobileConnector({ mobileClips }) {
 // frozen here so making the fan more compact doesn't shrink the video too.
 const VIDEO_TUNED_CARD_H = (190 * 16) / 9
 const VIDEO_TUNED_VB_H = (VIDEO_TUNED_CARD_H / 2 + 80 + 20) * 2
-// Halved again per feedback that it was still too large next to the cards.
-const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 2
+// Halved, then bumped back up a bit after feedback that it got too small.
+const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 1.5
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
 const DESKTOP_VIDEO_GAP = 0
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
@@ -245,12 +251,12 @@ function DesktopVideoBranch({ playing, setPlaying }) {
               </marker>
             </defs>
 
-            <path d={arrowPath} stroke="#e2e8f0" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
+            <path d={straightPath} stroke="#e2e8f0" strokeWidth="1.5" markerEnd="url(#arrowhead)" />
           </svg>
 
           <span
             className="arrow-dot"
-            style={{ offsetPath: `path('${arrowPath}')` }}
+            style={{ offsetPath: `path('${dotPath}')` }}
             onAnimationEnd={() => setIsSpread(true)}
           />
 
