@@ -18,10 +18,11 @@ const CARD_H = (CARD_W * 16) / 9
 // video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
-// Sequence along the trunk: video -> line -> badge -> fork into 3 branches -> cards.
-// The fork sits at the vertical center of the cluster (badge centered), with
-// three equal-length branches: two peel up to the back cards, one dips down
-// to the front card — same lift/drop amount on all three for even spacing.
+// Sequence along the trunk: video -> line -> badge -> short stub -> fork into
+// 2 branches -> back cards. Matches the wireframe: only the two back cards
+// get a drawn connector: the front card just sits in the fan with no line of
+// its own. The fork point (and badge) sit at the exact vertical center of the
+// branch box, which lines it up with the video's own center too.
 const BADGE_X = ORIGIN_X + 90
 const SPLIT_X = BADGE_X + 80
 const LEFT_X = SPLIT_X + 55
@@ -29,23 +30,25 @@ const H_SPREAD = 190
 const RIGHT_X = LEFT_X + H_SPREAD
 const MID_END_X = LEFT_X + H_SPREAD / 2
 
-const LIFT = 75
-const DROP_FRONT = 45
+const LIFT_LEFT = 90
+const LIFT_RIGHT = 65
+const DROP_FRONT = 95
 
-const TRUNK_Y = CARD_H / 2 + LIFT + 20
-const TOP_Y = TRUNK_Y - LIFT
-const BOTTOM_Y = TRUNK_Y - LIFT
+const TRUNK_Y = CARD_H / 2 + Math.max(LIFT_LEFT, LIFT_RIGHT, DROP_FRONT) + 20
+const TOP_Y = TRUNK_Y - LIFT_LEFT
+const BOTTOM_Y = TRUNK_Y - LIFT_RIGHT
 const MID_Y = TRUNK_Y + DROP_FRONT
 
 const TOTAL_W = RIGHT_X + CARD_W + 20
-const VB_H = MID_Y + CARD_H / 2 + 20
+// Symmetric around TRUNK_Y by construction, so the fork/badge sits exactly at
+// the branch box's vertical center (and therefore the video's too).
+const VB_H = TRUNK_Y * 2
 
 const trunkPath = `M${ORIGIN_X},${TRUNK_Y} L${SPLIT_X},${TRUNK_Y}`
 const topPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${TOP_Y + 15} Q${SPLIT_X},${TOP_Y} ${SPLIT_X + 15},${TOP_Y} L${LEFT_X},${TOP_Y}`
 const bottomPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y - 15} L${SPLIT_X},${BOTTOM_Y + 15} Q${SPLIT_X},${BOTTOM_Y} ${SPLIT_X + 15},${BOTTOM_Y} L${RIGHT_X},${BOTTOM_Y}`
-const frontPath = `M${SPLIT_X - 15},${TRUNK_Y} Q${SPLIT_X},${TRUNK_Y} ${SPLIT_X},${TRUNK_Y + 15} L${SPLIT_X},${MID_Y - 15} Q${SPLIT_X},${MID_Y} ${SPLIT_X + 15},${MID_Y} L${MID_END_X},${MID_Y}`
 
-const branches = [trunkPath, topPath, bottomPath, frontPath]
+const branches = [trunkPath, topPath, bottomPath]
 
 const clips = [
   { src: clip1, poster: poster1, x: LEFT_X, y: TOP_Y, width: CARD_W, z: 10, rotate: -6 },
@@ -245,7 +248,6 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             ))}
 
             <circle cx={LEFT_X} cy={TOP_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
-            <circle cx={MID_END_X} cy={MID_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
             <circle cx={RIGHT_X} cy={BOTTOM_Y} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1" filter="url(#dot-shadow)" />
           </svg>
 
