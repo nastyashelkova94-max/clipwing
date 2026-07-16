@@ -243,7 +243,6 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             viewBox={`0 0 ${TOTAL_W} ${VB_H}`}
             fill="none"
             preserveAspectRatio="none"
-            style={{ zIndex: 15 }}
           >
             <defs>
               <filter id="dot-shadow" x="-100%" y="-100%" width="300%" height="300%">
@@ -264,7 +263,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             <span
               key={`dot-${i}`}
               className="flow-dot"
-              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s`, zIndex: 15 }}
+              style={{ offsetPath: `path('${path}')`, animationDelay: `${i}s` }}
             />
           ))}
 
