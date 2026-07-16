@@ -215,6 +215,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
   const wrapperRef = useRef(null)
   const [scale, setScale] = useState(0)
   const [isSpread, setIsSpread] = useState(false)
+  const [inView, setInView] = useState(false)
 
   useEffect(() => {
     const el = wrapperRef.current
@@ -224,6 +225,22 @@ function DesktopVideoBranch({ playing, setPlaying }) {
     })
     ro.observe(el)
     return () => ro.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -256,7 +273,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
           </svg>
 
           <span
-            className="arrow-dot"
+            className={`arrow-dot ${inView ? 'is-running' : ''}`}
             style={{ offsetPath: `path('${dotPath}')` }}
             onAnimationEnd={() => setIsSpread(true)}
           />
