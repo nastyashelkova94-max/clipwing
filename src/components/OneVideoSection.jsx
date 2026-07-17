@@ -11,7 +11,7 @@ import poster3 from '../assets/images/process/clip-3-poster.jpg'
 const YOUTUBE_ID = 'znq6o26snJs'
 const YOUTUBE_START = 8
 
-const CARD_W = 230
+const CARD_W = 250
 const CARD_H = (CARD_W * 16) / 9
 
 // x=0 is the branch box's flush left edge, positioned directly against the
@@ -48,13 +48,13 @@ const BADGE_HALF_W = 58
 const LOOP_RX = BADGE_HALF_W + 4
 const LOOP_RY = 28
 
-// The arrow's straight lead-in (video to where it starts looping the badge)
-// is a fixed 50px. The badge sits centered on the loop, and everything else
-// (badge, loop, pile) is centered off of that: the badge is exactly halfway
-// between the video and the piled cards' front edge.
-const ARROW_LEAD_IN = 50
-const BADGE_X = ARROW_LEAD_IN + LOOP_RX
-const PILE_LEFT_X = BADGE_X * 2
+// The piled cluster is centered within the box's own width (rather than
+// hugging the left edge), so it shrinks or grows automatically as CARD_W,
+// H_SPREAD_PILE, etc. change. The badge sits exactly halfway between the
+// video and the piled cards' front edge.
+const PILE_SPAN_W = H_SPREAD_PILE + CARD_W
+const PILE_LEFT_X = (TOTAL_W - PILE_SPAN_W) / 2
+const BADGE_X = PILE_LEFT_X / 2
 
 const RIGHT_X_PILE = PILE_LEFT_X + H_SPREAD_PILE
 
@@ -229,6 +229,7 @@ const DESKTOP_BRANCH_TOP = (DESKTOP_DESIGN_H - VB_H) / 2
 function DesktopVideoBranch({ playing, setPlaying }) {
   const wrapperRef = useRef(null)
   const [scale, setScale] = useState(0)
+  const [availWidth, setAvailWidth] = useState(0)
   const [isSpread, setIsSpread] = useState(false)
   const [inView, setInView] = useState(false)
 
@@ -236,11 +237,17 @@ function DesktopVideoBranch({ playing, setPlaying }) {
     const el = wrapperRef.current
     if (!el) return
     const ro = new ResizeObserver(([entry]) => {
-      setScale(Math.min(1, entry.contentRect.width / DESKTOP_DESIGN_W))
+      const w = entry.contentRect.width
+      setAvailWidth(w)
+      setScale(Math.min(1, w / DESKTOP_DESIGN_W))
     })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
+
+  // Centers the content when it's narrower than the available width
+  // (scale is clamped to 1) instead of leaving it pinned to the left edge.
+  const contentLeft = Math.max(0, (availWidth - DESKTOP_DESIGN_W * scale) / 2)
 
   useEffect(() => {
     const el = wrapperRef.current
@@ -261,8 +268,8 @@ function DesktopVideoBranch({ playing, setPlaying }) {
   return (
     <div ref={wrapperRef} className="relative w-full" style={{ height: DESKTOP_DESIGN_H * scale }}>
       <div
-        className="absolute left-0 top-0"
-        style={{ width: DESKTOP_DESIGN_W, height: DESKTOP_DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+        className="absolute top-0"
+        style={{ left: contentLeft, width: DESKTOP_DESIGN_W, height: DESKTOP_DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
       >
         <div className="absolute left-0" style={{ top: DESKTOP_VIDEO_TOP, width: DESKTOP_VIDEO_W }}>
           <VideoPlayer playing={playing} setPlaying={setPlaying} />
