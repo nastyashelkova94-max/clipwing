@@ -108,7 +108,7 @@ function CommentIcon(props) {
 function TopBar({ onBack }) {
   return (
     <div className="flex h-11 shrink-0 items-center gap-2 border-b border-slate-100 px-4">
-      <Logo className="h-4" />
+      <Logo className="h-2!" />
       <button
         type="button"
         onClick={onBack}
@@ -167,18 +167,18 @@ function TaskCard({ onClick, tag }) {
       className="overflow-hidden rounded-lg border border-slate-200 bg-white text-left shadow-[0_2px_4px_0_rgba(100,116,139,0.1)] transition-transform hover:-translate-y-0.5"
     >
       <img src={cardThumbnail} alt="" className="h-24 w-full object-cover" />
-      <div className="flex flex-col gap-2 p-2">
-        <p className="text-sm font-medium leading-snug text-slate-900">
+      <div className="flex flex-col gap-1.5 p-2">
+        <p className="text-xs font-medium leading-snug text-slate-900">
           Shipping AI features — June webinar
         </p>
         <div className="flex flex-wrap items-center gap-1">
-          <span className="flex items-center gap-1 rounded-full border border-slate-200 px-2 py-0.5 text-sm text-slate-600">
-            <ClapperIcon className="size-4 shrink-0 text-slate-600" />
+          <span className="flex items-center gap-1 rounded-full border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-600">
+            <ClapperIcon className="size-3 shrink-0 text-slate-600" />
             3 clips requested
           </span>
-          <span className="rounded-full border border-slate-200 px-2 py-0.5 text-sm text-slate-600">{tag}</span>
+          <span className="rounded-full border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-600">{tag}</span>
         </div>
-        <p className="text-sm text-slate-600">Edited 2 days ago</p>
+        <p className="text-[10px] text-slate-600">Edited 2 days ago</p>
       </div>
     </button>
   )
@@ -427,43 +427,44 @@ export default function HeroPrototype() {
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal y={32} className="glass-soft relative overflow-hidden rounded-[24px] p-[9px]">
-        <div
-          ref={wrapperRef}
-          className="relative w-full overflow-hidden rounded-[16px] bg-white select-none"
-          style={{ height: DESIGN_H * scale }}
-        >
+        <div ref={wrapperRef} className="relative w-full">
           <div
-            className="absolute left-0 top-0"
-            style={{ width: DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+            className="relative overflow-hidden rounded-[16px] bg-white select-none"
+            style={{ width: DESIGN_W * scale, height: DESIGN_H * scale }}
           >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={screen}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="h-[580px] overflow-hidden"
-              >
-                {screen === 'board' && (
-                  <BoardScreen
-                    approved={approved}
-                    onOpenReview={() => setScreen('review')}
-                    onOpenDone={() => setScreen('done')}
-                  />
-                )}
-                {screen === 'review' && (
-                  <ReviewScreen
-                    onBack={() => setScreen('board')}
-                    comments={comments}
-                    onAddComment={handleAddComment}
-                    approved={approved}
-                    onApprove={handleApprove}
-                  />
-                )}
-                {screen === 'done' && <DoneScreen onBack={() => setScreen('board')} />}
-              </motion.div>
-            </AnimatePresence>
+            <div
+              className="absolute left-0 top-0"
+              style={{ width: DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={screen}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="h-[580px] overflow-hidden"
+                >
+                  {screen === 'board' && (
+                    <BoardScreen
+                      approved={approved}
+                      onOpenReview={() => setScreen('review')}
+                      onOpenDone={() => setScreen('done')}
+                    />
+                  )}
+                  {screen === 'review' && (
+                    <ReviewScreen
+                      onBack={() => setScreen('board')}
+                      comments={comments}
+                      onAddComment={handleAddComment}
+                      approved={approved}
+                      onApprove={handleApprove}
+                    />
+                  )}
+                  {screen === 'done' && <DoneScreen onBack={() => setScreen('board')} />}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </Reveal>
