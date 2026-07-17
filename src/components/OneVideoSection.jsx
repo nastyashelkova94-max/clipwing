@@ -22,11 +22,7 @@ const ORIGIN_X = 0
 // badge, and reaches the cards, which start piled up (tight overlap, tilted,
 // staggered vertically to match the reference screenshot) and straighten
 // into an evenly spaced, unrotated row once the arrow arrives.
-// The badge sits centered exactly halfway between the video and the cards.
 const LEFT_X = 260
-const BADGE_X = LEFT_X / 2
-// Half the badge's own rendered width (~112px) now that it's smaller.
-const BADGE_HALF_W = 58
 
 // Piled: card 2 (middle) sits lowest/frontmost, card 3 (right) highest.
 // Spread: cards 1 & 3 land on the same row; card 2 stays 40px below them.
@@ -43,13 +39,23 @@ const H_SPREAD_PILE = 145
 const GAP = 6
 const H_SPREAD_APART = CARD_W + GAP
 
-const RIGHT_X_PILE = LEFT_X + H_SPREAD_PILE
 const RIGHT_X_APART = LEFT_X + 2 * H_SPREAD_APART
 // TOTAL_W must fit the widest (spread) state.
 const TOTAL_W = RIGHT_X_APART + CARD_W + 20
 
-// The visible arrow is a plain straight line from the video to the cards.
-const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${LEFT_X},${TRUNK_Y}`
+// The piled cluster is centered in the box (instead of hugging the left
+// edge, flush with the arrow's old endpoint) -- the arrow and badge follow
+// it, since that's where they need to point during the piled phase.
+const PILE_SPAN_W = H_SPREAD_PILE + CARD_W
+const PILE_LEFT_X = (TOTAL_W - PILE_SPAN_W) / 2
+const BADGE_X = PILE_LEFT_X / 2
+// Half the badge's own rendered width (~112px) now that it's smaller.
+const BADGE_HALF_W = 58
+
+const RIGHT_X_PILE = PILE_LEFT_X + H_SPREAD_PILE
+
+// The visible arrow is a plain straight line from the video to the pile.
+const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${PILE_LEFT_X},${TRUNK_Y}`
 
 // The animated dot follows that same straight line, except right at the
 // badge it peels off into a full loop around its oval outline before
@@ -58,12 +64,12 @@ const LOOP_RX = BADGE_HALF_W + 10
 const LOOP_RY = 28
 const LOOP_ENTRY_X = BADGE_X - LOOP_RX
 const LOOP_EXIT_X = BADGE_X + LOOP_RX
-const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${LEFT_X},${TRUNK_Y}`
+const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${PILE_LEFT_X},${TRUNK_Y}`
 
 const clips = [
-  { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: LEFT_X, pileY: TRUNK_Y, pileRotate: 3, apartX: LEFT_X, apartY: TRUNK_Y },
-  { src: clip2, poster: poster2, width: CARD_W, z: 20, pileX: LEFT_X + H_SPREAD_PILE / 2, pileY: TRUNK_Y + PILE_MID_DROP, pileRotate: -1.5, apartX: LEFT_X + H_SPREAD_APART, apartY: TRUNK_Y + APART_MID_DROP },
-  { src: clip3, poster: poster3, width: CARD_W, z: 10, pileX: RIGHT_X_PILE, pileY: TRUNK_Y - PILE_RIGHT_LIFT, pileRotate: -7, apartX: RIGHT_X_APART, apartY: TRUNK_Y },
+  { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: PILE_LEFT_X, pileY: TRUNK_Y, pileRotate: -7, apartX: LEFT_X, apartY: TRUNK_Y },
+  { src: clip2, poster: poster2, width: CARD_W, z: 20, pileX: PILE_LEFT_X + H_SPREAD_PILE / 2, pileY: TRUNK_Y + PILE_MID_DROP, pileRotate: -1.5, apartX: LEFT_X + H_SPREAD_APART, apartY: TRUNK_Y + APART_MID_DROP },
+  { src: clip3, poster: poster3, width: CARD_W, z: 10, pileX: RIGHT_X_PILE, pileY: TRUNK_Y - PILE_RIGHT_LIFT, pileRotate: 3, apartX: RIGHT_X_APART, apartY: TRUNK_Y },
 ]
 
 const mobileClips = [
