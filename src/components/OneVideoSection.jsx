@@ -11,21 +11,18 @@ import poster3 from '../assets/images/process/clip-3-poster.jpg'
 const YOUTUBE_ID = 'znq6o26snJs'
 const YOUTUBE_START = 8
 
-const CARD_W = 250
+const CARD_W = 280
 const CARD_H = (CARD_W * 16) / 9
 
 // x=0 is the branch box's flush left edge, positioned directly against the
 // video's right edge by DesktopVideoBranch (see below).
 const ORIGIN_X = 0
 
-// One arrow travels from the video, arcs around the "3 days - 3 clips"
-// badge, and reaches the cards, which start piled up (tight overlap, tilted,
-// staggered vertically to match the reference screenshot) and straighten
-// into an evenly spaced, unrotated row once the arrow arrives.
-const LEFT_X = 260
-
-// Piled: card 2 (middle) sits lowest/frontmost, card 3 (right) highest.
-// Spread: cards 1 & 3 land on the same row; card 2 stays 40px below them.
+// Sequence: video -> 40px -> badge (centered on a loop around it) -> 40px
+// fixed trail -> then a variable stretch that reaches the cards, which start
+// piled up (tight overlap, tilted, staggered vertically to match the
+// reference screenshot) and straighten into an evenly spaced, unrotated row
+// once the arrow arrives.
 const PILE_MID_DROP = 70
 const PILE_RIGHT_LIFT = 50
 const APART_MID_DROP = 40
@@ -33,31 +30,44 @@ const APART_MID_DROP = 40
 const TRUNK_Y = CARD_H / 2 + PILE_RIGHT_LIFT + 20
 const VB_H = TRUNK_Y + PILE_MID_DROP + CARD_H / 2 + 20
 
-// Piled (initial) spacing: tight overlap. Spread (post-arrow) spacing: cards
-// sit edge to edge with a 6px gap. The leftmost card is the shared anchor.
-const H_SPREAD_PILE = 175
+// Piled (initial) spacing: overlapping but not cramped. Spread (post-arrow)
+// spacing: cards sit edge to edge with a 6px gap.
+const H_SPREAD_PILE = 215
 const GAP = 6
 const H_SPREAD_APART = CARD_W + GAP
-
-const RIGHT_X_APART = LEFT_X + 2 * H_SPREAD_APART
-// TOTAL_W must fit the widest (spread) state.
-const TOTAL_W = RIGHT_X_APART + CARD_W + 20
 
 // Half the badge's own rendered width (~112px).
 const BADGE_HALF_W = 58
 const LOOP_RX = BADGE_HALF_W + 4
 const LOOP_RY = 28
 
-// The arrow's straight lead-in (video to where it starts looping the badge)
-// is a fixed 160px. The badge sits exactly halfway between the video and
-// the piled cards' center (not their left/front edge), and the pile itself
-// is positioned so that center lands where the badge rule says it should.
-const PILE_SPAN_W = H_SPREAD_PILE + CARD_W
-const ARROW_LEAD_IN = 160
+const ARROW_LEAD_IN = 40
+const TRAIL_STUB = 40
 const BADGE_X = ARROW_LEAD_IN + LOOP_RX
-const PILE_CENTER_X = BADGE_X * 2
-const PILE_LEFT_X = PILE_CENTER_X - PILE_SPAN_W / 2
+const LOOP_ENTRY_X = BADGE_X - LOOP_RX
+const LOOP_EXIT_X = BADGE_X + LOOP_RX
+// Where the fixed arrow apparatus ends and the cards' own zone begins.
+const CARDS_ZONE_START = LOOP_EXIT_X + TRAIL_STUB
 
+// Both the piled and spread card layouts are centered within this same
+// zone (instead of hugging its left edge), so neither reads as pinned left.
+const CONTAINER_PAD = 20
+const APART_SPAN_W = 2 * H_SPREAD_APART + CARD_W
+const PILE_SPAN_W = H_SPREAD_PILE + CARD_W
+const CARDS_ZONE_W = APART_SPAN_W + 2 * CONTAINER_PAD
+// TOTAL_W must fit the widest (spread) state, plus its own padding.
+const TOTAL_W = CARDS_ZONE_START + CARDS_ZONE_W
+
+// Spread layout: card 2 (middle) is the anchor cards 1 & 3 radiate out
+// from, H_SPREAD_APART to either side.
+const APART_LEFT_X = CARDS_ZONE_START + CONTAINER_PAD
+const APART_CENTER_X = APART_LEFT_X + H_SPREAD_APART
+const APART_RIGHT_X = APART_LEFT_X + 2 * H_SPREAD_APART
+
+// Piled layout: card 2 (middle) sits lowest/frontmost, card 3 (right)
+// highest, centered as a block within the same cards zone as the spread.
+const PILE_LEFT_X = CARDS_ZONE_START + (CARDS_ZONE_W - PILE_SPAN_W) / 2
+const PILE_CENTER_X = PILE_LEFT_X + PILE_SPAN_W / 2
 const RIGHT_X_PILE = PILE_LEFT_X + H_SPREAD_PILE
 
 // The visible arrow is a plain straight line from the video to the middle
@@ -66,15 +76,14 @@ const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${PILE_CENTER_X},${TRUNK_Y}`
 
 // The animated dot follows that same straight line, except right at the
 // badge it peels off into a full loop around its oval outline before
-// rejoining the straight line on the other side.
-const LOOP_ENTRY_X = BADGE_X - LOOP_RX
-const LOOP_EXIT_X = BADGE_X + LOOP_RX
-const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${PILE_CENTER_X},${TRUNK_Y}`
+// rejoining the straight line (the fixed 40px trail, then the variable
+// stretch to the pile's center) on the other side.
+const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${CARDS_ZONE_START},${TRUNK_Y} L${PILE_CENTER_X},${TRUNK_Y}`
 
 const clips = [
-  { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: PILE_LEFT_X, pileY: TRUNK_Y, pileRotate: -7, apartX: LEFT_X, apartY: TRUNK_Y },
-  { src: clip2, poster: poster2, width: CARD_W, z: 20, pileX: PILE_LEFT_X + H_SPREAD_PILE / 2, pileY: TRUNK_Y + PILE_MID_DROP, pileRotate: -1.5, apartX: LEFT_X + H_SPREAD_APART, apartY: TRUNK_Y + APART_MID_DROP },
-  { src: clip3, poster: poster3, width: CARD_W, z: 10, pileX: RIGHT_X_PILE, pileY: TRUNK_Y - PILE_RIGHT_LIFT, pileRotate: 3, apartX: RIGHT_X_APART, apartY: TRUNK_Y },
+  { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: PILE_LEFT_X, pileY: TRUNK_Y, pileRotate: -7, apartX: APART_LEFT_X, apartY: TRUNK_Y },
+  { src: clip2, poster: poster2, width: CARD_W, z: 20, pileX: PILE_LEFT_X + H_SPREAD_PILE / 2, pileY: TRUNK_Y + PILE_MID_DROP, pileRotate: -1.5, apartX: APART_CENTER_X, apartY: TRUNK_Y + APART_MID_DROP },
+  { src: clip3, poster: poster3, width: CARD_W, z: 10, pileX: RIGHT_X_PILE, pileY: TRUNK_Y - PILE_RIGHT_LIFT, pileRotate: 3, apartX: APART_RIGHT_X, apartY: TRUNK_Y },
 ]
 
 const mobileClips = [
