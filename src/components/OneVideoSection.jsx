@@ -36,8 +36,9 @@ const H_SPREAD_PILE = 265
 const GAP = 6
 const H_SPREAD_APART = CARD_W + GAP
 
-// Half the badge's own rendered width (~112px).
-const BADGE_HALF_W = 58
+// Half the badge's own rendered width (~162px), now that its text matches
+// the subtitle style and is bigger.
+const BADGE_HALF_W = 81
 const LOOP_RX = BADGE_HALF_W + 4
 const LOOP_RY = 28
 
@@ -316,7 +317,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             className="glass-soft absolute flex -translate-x-1/2 -translate-y-1/2 items-start rounded-[28px] p-1"
             style={{ left: BADGE_X, top: TRUNK_Y }}
           >
-            <span className="whitespace-nowrap rounded-3xl bg-white px-3 py-2 text-sm font-normal text-[#3f3f46] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
+            <span className="whitespace-nowrap rounded-3xl bg-white px-5 py-3 text-xl font-normal leading-tight text-[#3f3f46] shadow-[inset_0_1px_5px_0_rgba(255,255,255,0.25)]">
               3 days - 3 clips
             </span>
           </div>
