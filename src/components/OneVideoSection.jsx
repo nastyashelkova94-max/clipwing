@@ -35,7 +35,7 @@ const VB_H = TRUNK_Y + PILE_MID_DROP + CARD_H / 2 + 20
 
 // Piled (initial) spacing: tight overlap. Spread (post-arrow) spacing: cards
 // sit edge to edge with a 6px gap. The leftmost card is the shared anchor.
-const H_SPREAD_PILE = 155
+const H_SPREAD_PILE = 175
 const GAP = 6
 const H_SPREAD_APART = CARD_W + GAP
 
@@ -43,14 +43,18 @@ const RIGHT_X_APART = LEFT_X + 2 * H_SPREAD_APART
 // TOTAL_W must fit the widest (spread) state.
 const TOTAL_W = RIGHT_X_APART + CARD_W + 20
 
-// The piled cluster is centered in the box (instead of hugging the left
-// edge, flush with the arrow's old endpoint) -- the arrow and badge follow
-// it, since that's where they need to point during the piled phase.
-const PILE_SPAN_W = H_SPREAD_PILE + CARD_W
-const PILE_LEFT_X = (TOTAL_W - PILE_SPAN_W) / 2
-const BADGE_X = PILE_LEFT_X / 2
-// Half the badge's own rendered width (~112px) now that it's smaller.
+// Half the badge's own rendered width (~112px).
 const BADGE_HALF_W = 58
+const LOOP_RX = BADGE_HALF_W + 4
+const LOOP_RY = 28
+
+// The arrow's straight lead-in (video to where it starts looping the badge)
+// is a fixed 50px. The badge sits centered on the loop, and everything else
+// (badge, loop, pile) is centered off of that: the badge is exactly halfway
+// between the video and the piled cards' front edge.
+const ARROW_LEAD_IN = 50
+const BADGE_X = ARROW_LEAD_IN + LOOP_RX
+const PILE_LEFT_X = BADGE_X * 2
 
 const RIGHT_X_PILE = PILE_LEFT_X + H_SPREAD_PILE
 
@@ -60,8 +64,6 @@ const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${PILE_LEFT_X},${TRUNK_Y}`
 // The animated dot follows that same straight line, except right at the
 // badge it peels off into a full loop around its oval outline before
 // rejoining the straight line on the other side.
-const LOOP_RX = BADGE_HALF_W + 4
-const LOOP_RY = 28
 const LOOP_ENTRY_X = BADGE_X - LOOP_RX
 const LOOP_EXIT_X = BADGE_X + LOOP_RX
 const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${PILE_LEFT_X},${TRUNK_Y}`
@@ -216,7 +218,7 @@ function MobileConnector({ mobileClips }) {
 const VIDEO_TUNED_CARD_H = (190 * 16) / 9
 const VIDEO_TUNED_VB_H = (VIDEO_TUNED_CARD_H / 2 + 80 + 20) * 2
 // Halved, then bumped back up a bit after feedback that it got too small.
-const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 1.2 + 10
+const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 1.2 + 30
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
 const DESKTOP_VIDEO_GAP = 0
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
