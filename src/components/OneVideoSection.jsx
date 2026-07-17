@@ -19,21 +19,28 @@ const CARD_H = (CARD_W * 16) / 9
 const ORIGIN_X = 0
 
 // One arrow travels from the video, arcs around the "3 days - 3 clips"
-// badge, and reaches the cards, which start piled up (tight overlap, tilted)
-// and straighten into an evenly spaced, unrotated row once the arrow arrives.
+// badge, and reaches the cards, which start piled up (tight overlap, tilted,
+// staggered vertically to match the reference screenshot) and straighten
+// into an evenly spaced, unrotated row once the arrow arrives.
 // The badge sits centered exactly halfway between the video and the cards.
 const LEFT_X = 260
 const BADGE_X = LEFT_X / 2
 // Half the badge's own rendered width (~112px) now that it's smaller.
 const BADGE_HALF_W = 58
 
-const TRUNK_Y = CARD_H / 2 + 20
-const VB_H = TRUNK_Y * 2
+// Piled: card 2 (middle) sits lowest/frontmost, card 3 (right) highest.
+// Spread: cards 1 & 3 land on the same row; card 2 stays 40px below them.
+const PILE_MID_DROP = 70
+const PILE_RIGHT_LIFT = 50
+const APART_MID_DROP = 40
+
+const TRUNK_Y = CARD_H / 2 + PILE_RIGHT_LIFT + 20
+const VB_H = TRUNK_Y + PILE_MID_DROP + CARD_H / 2 + 20
 
 // Piled (initial) spacing: tight overlap. Spread (post-arrow) spacing: cards
-// sit edge to edge with a 10px gap. The leftmost card is the shared anchor.
+// sit edge to edge with a 6px gap. The leftmost card is the shared anchor.
 const H_SPREAD_PILE = 145
-const GAP = 10
+const GAP = 6
 const H_SPREAD_APART = CARD_W + GAP
 
 const RIGHT_X_PILE = LEFT_X + H_SPREAD_PILE
@@ -54,9 +61,9 @@ const LOOP_EXIT_X = BADGE_X + LOOP_RX
 const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${LEFT_X},${TRUNK_Y}`
 
 const clips = [
-  { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: LEFT_X, apartX: LEFT_X, pileRotate: -3 },
-  { src: clip2, poster: poster2, width: CARD_W, z: 20, pileX: LEFT_X + H_SPREAD_PILE / 2, apartX: LEFT_X + H_SPREAD_APART, pileRotate: 0 },
-  { src: clip3, poster: poster3, width: CARD_W, z: 10, pileX: RIGHT_X_PILE, apartX: RIGHT_X_APART, pileRotate: 3 },
+  { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: LEFT_X, pileY: TRUNK_Y, pileRotate: 3, apartX: LEFT_X, apartY: TRUNK_Y },
+  { src: clip2, poster: poster2, width: CARD_W, z: 20, pileX: LEFT_X + H_SPREAD_PILE / 2, pileY: TRUNK_Y + PILE_MID_DROP, pileRotate: -1.5, apartX: LEFT_X + H_SPREAD_APART, apartY: TRUNK_Y + APART_MID_DROP },
+  { src: clip3, poster: poster3, width: CARD_W, z: 10, pileX: RIGHT_X_PILE, pileY: TRUNK_Y - PILE_RIGHT_LIFT, pileRotate: -7, apartX: RIGHT_X_APART, apartY: TRUNK_Y },
 ]
 
 const mobileClips = [
@@ -291,9 +298,14 @@ function DesktopVideoBranch({ playing, setPlaying }) {
             <motion.div
               key={i}
               className="absolute"
-              style={{ top: TRUNK_Y, width: clip.width, zIndex: clip.z }}
-              initial={{ left: clip.pileX, rotate: clip.pileRotate, y: '-50%' }}
-              animate={{ left: isSpread ? clip.apartX : clip.pileX, rotate: isSpread ? 0 : clip.pileRotate, y: '-50%' }}
+              style={{ width: clip.width, zIndex: clip.z }}
+              initial={{ left: clip.pileX, top: clip.pileY, rotate: clip.pileRotate, y: '-50%' }}
+              animate={{
+                left: isSpread ? clip.apartX : clip.pileX,
+                top: isSpread ? clip.apartY : clip.pileY,
+                rotate: isSpread ? 0 : clip.pileRotate,
+                y: '-50%',
+              }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               <motion.div
