@@ -1,6 +1,6 @@
 import Header from './components/Header'
 import Hero from './components/Hero'
-import ShowcaseDemo from './components/ShowcaseDemo'
+import HeroPrototype from './components/HeroPrototype'
 import OneVideoSection from './components/OneVideoSection'
 import ProcessSection from './components/ProcessSection'
 import ComparisonSection from './components/ComparisonSection'
@@ -41,7 +41,7 @@ export default function App() {
         ))}
 
         <Hero />
-        <ShowcaseDemo />
+        <HeroPrototype />
         <OneVideoSection />
         <ProcessSection />
         <ComparisonSection />
