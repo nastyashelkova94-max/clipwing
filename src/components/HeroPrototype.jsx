@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Reveal from './Reveal'
 import Logo from './Logo'
@@ -107,8 +107,8 @@ function CommentIcon(props) {
 
 function TopBar({ onBack }) {
   return (
-    <div className="flex h-14 shrink-0 items-center gap-2 border-b border-slate-100 px-4">
-      <Logo className="h-6" />
+    <div className="flex h-11 shrink-0 items-center gap-2 border-b border-slate-100 px-4">
+      <Logo className="h-4" />
       <button
         type="button"
         onClick={onBack}
@@ -118,14 +118,19 @@ function TopBar({ onBack }) {
         <span className="text-slate-900">My First Project</span>
       </button>
       <div className="flex-1" />
-      <BellIcon className="size-4 text-slate-500" />
+      <span className="relative">
+        <BellIcon className="size-4 text-slate-500" />
+        <span className="absolute -right-1 -top-1 grid size-3 place-items-center rounded-full bg-red-500 text-[8px] font-medium text-white">
+          1
+        </span>
+      </span>
     </div>
   )
 }
 
 function VideoFrame({ clip, playing, onToggle, className = '' }) {
   return (
-    <div className={`relative aspect-[9/16] w-full max-w-[220px] overflow-hidden bg-slate-800 ${className}`}>
+    <div className={`relative aspect-[9/16] h-[200px] overflow-hidden bg-slate-800 ${className}`}>
       <video
         src={clip.src}
         poster={clip.poster}
@@ -141,11 +146,11 @@ function VideoFrame({ clip, playing, onToggle, className = '' }) {
         onClick={onToggle}
         className="absolute inset-0 grid place-items-center"
       >
-        <span className="grid size-12 place-items-center rounded-full bg-white/90 shadow-lg">
-          <PlayIcon className="ml-0.5 size-5 text-slate-900" />
+        <span className="grid size-10 place-items-center rounded-full bg-white/90 shadow-lg">
+          <PlayIcon className="ml-0.5 size-4 text-slate-900" />
         </span>
       </button>
-      <span className="absolute bottom-2 right-2 rounded bg-white px-1.5 py-0.5 text-xs font-medium text-slate-900">
+      <span className="absolute bottom-1.5 right-1.5 rounded bg-white px-1.5 py-0.5 text-xs font-medium text-slate-900">
         {clip.duration}
       </span>
     </div>
@@ -159,7 +164,7 @@ function TaskCard({ onClick, tag }) {
       onClick={onClick}
       className="overflow-hidden rounded-lg border border-slate-200 bg-white text-left shadow-[0_2px_4px_0_rgba(100,116,139,0.1)] transition-transform hover:-translate-y-0.5"
     >
-      <img src={cardThumbnail} alt="" className="h-36 w-full object-cover" />
+      <img src={cardThumbnail} alt="" className="h-24 w-full object-cover" />
       <div className="flex flex-col gap-2 p-2">
         <p className="text-sm font-medium leading-snug text-slate-900">
           Shipping AI features — June webinar
@@ -188,23 +193,18 @@ function BoardScreen({ approved, onOpenReview, onOpenDone }) {
   return (
     <div className="flex flex-col">
       <TopBar />
-      <div className="hidden items-center justify-between gap-3 border-b border-slate-100 px-4 py-3 sm:flex">
-        <p className="max-w-[520px] truncate text-sm text-slate-500">
-          Weekly podcast about tech startups. Brand guidelines: keep clips energetic, under 60 seconds
-        </p>
-        <div className="flex shrink-0 items-center gap-2">
-          <button type="button" className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm text-slate-900">
-            <PenIcon className="size-3.5" /> Edit
-          </button>
-          <button type="button" className="flex items-center gap-1.5 rounded-lg bg-indigo-500 px-3 py-1.5 text-sm font-medium text-white">
-            + New Task
-          </button>
-        </div>
+      <div className="flex items-center justify-end gap-2 px-4 pt-3">
+        <button type="button" className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm text-slate-900">
+          <PenIcon className="size-3.5" /> Edit
+        </button>
+        <button type="button" className="flex items-center gap-1.5 rounded-lg bg-indigo-500 px-3 py-1.5 text-sm font-medium text-white">
+          + New Task
+        </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 overflow-x-auto p-4 lg:grid-cols-4">
+      <div className="grid grid-cols-4 gap-3 p-4">
         {columns.map((col) => (
-          <div key={col.title} className="flex min-h-[220px] flex-col gap-3 rounded-2xl bg-slate-50 p-3">
+          <div key={col.title} className="flex min-h-[180px] flex-col gap-3 rounded-2xl bg-slate-50 p-3">
             <div className="flex items-center gap-2 px-1">
               <h4 className="text-sm font-medium text-slate-900">{col.title}</h4>
               <span className="text-xs text-slate-400">{col.count}</span>
@@ -246,7 +246,7 @@ function ReviewScreen({ onBack, comments, onAddComment, approved, onApprove }) {
   return (
     <div className="flex flex-col">
       <TopBar onBack={onBack} />
-      <div className="grid grid-cols-1 gap-4 p-4 lg:grid-cols-[1fr_320px]">
+      <div className="grid grid-cols-[1fr_320px] gap-4 p-4">
         <div className="overflow-hidden rounded-xl bg-white">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div className="flex items-center gap-2">
@@ -299,7 +299,7 @@ function ReviewScreen({ onBack, comments, onAddComment, approved, onApprove }) {
             <div className="h-1.5 flex-1 rounded-full bg-slate-200">
               <div className="h-full w-1/3 rounded-full bg-slate-900" />
             </div>
-            <span className="tabular-nums">{clip.duration}</span>
+            <span className="tabular-nums">0:10</span>
             <VolumeIcon className="size-4 shrink-0" />
             <span>1x</span>
           </div>
@@ -338,7 +338,7 @@ function ReviewScreen({ onBack, comments, onAddComment, approved, onApprove }) {
           </div>
 
           <form onSubmit={submitComment} className="flex items-center gap-2 rounded-lg bg-slate-50 p-2">
-            <span className="rounded bg-indigo-200 px-2 py-1 text-sm text-indigo-700">2:35</span>
+            <span className="rounded bg-indigo-200 px-2 py-1 text-sm text-indigo-700">0:05</span>
             <input
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
@@ -365,11 +365,11 @@ function DoneScreen({ onBack }) {
           <DownloadIcon className="size-3.5" /> Download All
         </button>
       </div>
-      <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-3 gap-4 p-4">
         {clips.map((clip, i) => (
           <div key={i} className="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm">
             <div className="flex justify-center bg-black py-4">
-              <VideoFrame clip={clip} playing={false} onToggle={() => {}} className="max-w-none" />
+              <VideoFrame clip={clip} playing={false} onToggle={() => {}} />
             </div>
             <div className="flex flex-col gap-1 p-4">
               <p className="text-sm font-medium text-slate-900">{clip.title}</p>
@@ -388,11 +388,30 @@ function DoneScreen({ onBack }) {
   )
 }
 
+// Built at a fixed design size and uniformly scaled to fit whatever width is
+// actually available (same trick as OneVideoSection's DesktopVideoBranch).
+// This keeps the app frame a static, non-scrolling window with the exact
+// same layout at every viewport width, instead of reflowing/stacking on
+// narrow screens.
+const DESIGN_W = 1152
+const DESIGN_H = 500
+
 export default function HeroPrototype() {
   const [screen, setScreen] = useState('board')
   const [approved, setApproved] = useState(false)
   const [comments, setComments] = useState([])
-  const containerRef = useRef(null)
+  const wrapperRef = useRef(null)
+  const [scale, setScale] = useState(0)
+
+  useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      setScale(Math.min(1, entry.contentRect.width / DESIGN_W))
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   function handleAddComment(text) {
     setComments((prev) => [...prev, { text, time: 'now' }])
@@ -400,43 +419,50 @@ export default function HeroPrototype() {
 
   function handleApprove() {
     setApproved(true)
+    setScreen('board')
   }
 
   return (
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal y={32} className="glass-soft relative overflow-hidden rounded-[24px] p-[9px]">
         <div
-          ref={containerRef}
-          className="relative h-[660px] overflow-y-auto overflow-x-hidden rounded-[16px] bg-white select-none"
+          ref={wrapperRef}
+          className="relative w-full overflow-hidden rounded-[16px] bg-white select-none"
+          style={{ height: DESIGN_H * scale }}
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={screen}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="min-h-[660px]"
-            >
-              {screen === 'board' && (
-                <BoardScreen
-                  approved={approved}
-                  onOpenReview={() => setScreen('review')}
-                  onOpenDone={() => setScreen('done')}
-                />
-              )}
-              {screen === 'review' && (
-                <ReviewScreen
-                  onBack={() => setScreen('board')}
-                  comments={comments}
-                  onAddComment={handleAddComment}
-                  approved={approved}
-                  onApprove={handleApprove}
-                />
-              )}
-              {screen === 'done' && <DoneScreen onBack={() => setScreen('board')} />}
-            </motion.div>
-          </AnimatePresence>
+          <div
+            className="absolute left-0 top-0"
+            style={{ width: DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={screen}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="h-[500px] overflow-hidden"
+              >
+                {screen === 'board' && (
+                  <BoardScreen
+                    approved={approved}
+                    onOpenReview={() => setScreen('review')}
+                    onOpenDone={() => setScreen('done')}
+                  />
+                )}
+                {screen === 'review' && (
+                  <ReviewScreen
+                    onBack={() => setScreen('board')}
+                    comments={comments}
+                    onAddComment={handleAddComment}
+                    approved={approved}
+                    onApprove={handleApprove}
+                  />
+                )}
+                {screen === 'done' && <DoneScreen onBack={() => setScreen('board')} />}
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </Reveal>
     </section>
