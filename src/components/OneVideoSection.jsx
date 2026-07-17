@@ -32,7 +32,7 @@ const VB_H = TRUNK_Y + PILE_MID_DROP + CARD_H / 2 + 20
 
 // Piled (initial) spacing: overlapping but not cramped. Spread (post-arrow)
 // spacing: cards sit edge to edge with a 6px gap.
-const H_SPREAD_PILE = 215
+const H_SPREAD_PILE = 265
 const GAP = 6
 const H_SPREAD_APART = CARD_W + GAP
 
