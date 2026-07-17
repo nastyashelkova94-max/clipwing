@@ -15,6 +15,8 @@ const clips = [
   { title: 'Email Test', duration: '0:58', src: clip3, poster: poster3 },
 ]
 
+const cardThumbnail = 'https://i.ytimg.com/vi/znq6o26snJs/maxresdefault.jpg'
+
 function BellIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -150,6 +152,31 @@ function VideoFrame({ clip, playing, onToggle, className = '' }) {
   )
 }
 
+function TaskCard({ onClick, tag }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="overflow-hidden rounded-lg border border-slate-200 bg-white text-left shadow-[0_2px_4px_0_rgba(100,116,139,0.1)] transition-transform hover:-translate-y-0.5"
+    >
+      <img src={cardThumbnail} alt="" className="h-36 w-full object-cover" />
+      <div className="flex flex-col gap-2 p-2">
+        <p className="text-sm font-medium leading-snug text-slate-900">
+          Shipping AI features — June webinar
+        </p>
+        <div className="flex flex-wrap items-center gap-1">
+          <span className="flex items-center gap-1 rounded-full border border-slate-200 px-2 py-0.5 text-sm text-slate-600">
+            <ClapperIcon className="size-4 shrink-0 text-slate-600" />
+            3 clips requested
+          </span>
+          <span className="rounded-full border border-slate-200 px-2 py-0.5 text-sm text-slate-600">{tag}</span>
+        </div>
+        <p className="text-sm text-slate-600">Edited 2 days ago</p>
+      </div>
+    </button>
+  )
+}
+
 function BoardScreen({ approved, onOpenReview, onOpenDone }) {
   const columns = [
     { title: 'To Do', count: 0 },
@@ -184,45 +211,11 @@ function BoardScreen({ approved, onOpenReview, onOpenDone }) {
             </div>
 
             {col.title === 'Pending Review' && !approved && (
-              <button
-                type="button"
-                onClick={onOpenReview}
-                className="overflow-hidden rounded-xl border border-slate-100 bg-white text-left shadow-sm transition-transform hover:-translate-y-0.5"
-              >
-                <img src={poster1} alt="" className="h-24 w-full object-cover" />
-                <div className="flex flex-col gap-2 p-3">
-                  <p className="text-sm font-medium leading-snug text-slate-900">
-                    Shipping AI features — June webinar
-                  </p>
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                    <ClapperIcon className="size-3.5 shrink-0 text-slate-400" />
-                    <span>3 clips requested</span>
-                    <span className="rounded-full border border-slate-200 px-2 py-0.5">Clips Review</span>
-                  </div>
-                  <p className="text-xs text-slate-400">Edited 2 days ago</p>
-                </div>
-              </button>
+              <TaskCard onClick={onOpenReview} tag="Clips Review" />
             )}
 
             {col.title === 'Done' && approved && (
-              <button
-                type="button"
-                onClick={onOpenDone}
-                className="overflow-hidden rounded-xl border border-slate-100 bg-white text-left shadow-sm transition-transform hover:-translate-y-0.5"
-              >
-                <img src={poster1} alt="" className="h-24 w-full object-cover" />
-                <div className="flex flex-col gap-2 p-3">
-                  <p className="text-sm font-medium leading-snug text-slate-900">
-                    Shipping AI features — June webinar
-                  </p>
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                    <ClapperIcon className="size-3.5 shrink-0 text-slate-400" />
-                    <span>3 clips requested</span>
-                    <span className="rounded-full border border-slate-200 px-2 py-0.5">Done</span>
-                  </div>
-                  <p className="text-xs text-slate-400">Edited 2 days ago</p>
-                </div>
-              </button>
+              <TaskCard onClick={onOpenDone} tag="Done" />
             )}
 
             {col.count === 0 && (
@@ -414,7 +407,7 @@ export default function HeroPrototype() {
       <Reveal y={32} className="glass-soft relative overflow-hidden rounded-[24px] p-[9px]">
         <div
           ref={containerRef}
-          className="relative overflow-hidden rounded-[16px] bg-white select-none"
+          className="relative h-[660px] overflow-y-auto overflow-x-hidden rounded-[16px] bg-white select-none"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -423,6 +416,7 @@ export default function HeroPrototype() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="min-h-[660px]"
             >
               {screen === 'board' && (
                 <BoardScreen
