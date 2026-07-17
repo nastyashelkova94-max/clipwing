@@ -128,7 +128,7 @@ function TopBar({ onBack }) {
   )
 }
 
-function VideoFrame({ clip, playing, onToggle, className = '' }) {
+function VideoFrame({ clip, playing, onToggle, showDuration = true, className = '' }) {
   return (
     <div className={`relative aspect-[9/16] h-[200px] overflow-hidden bg-slate-800 ${className}`}>
       <video
@@ -150,9 +150,11 @@ function VideoFrame({ clip, playing, onToggle, className = '' }) {
           <PlayIcon className="ml-0.5 size-4 text-slate-900" />
         </span>
       </button>
-      <span className="absolute bottom-1.5 right-1.5 rounded bg-white px-1.5 py-0.5 text-xs font-medium text-slate-900">
-        {clip.duration}
-      </span>
+      {showDuration && (
+        <span className="absolute bottom-1.5 right-1.5 rounded bg-white px-1.5 py-0.5 text-xs font-medium text-slate-900">
+          {clip.duration}
+        </span>
+      )}
     </div>
   )
 }
@@ -290,7 +292,7 @@ function ReviewScreen({ onBack, comments, onAddComment, approved, onApprove }) {
           </div>
 
           <div className="flex justify-center bg-black py-4">
-            <VideoFrame clip={clip} playing={playing} onToggle={() => setPlaying((p) => !p)} />
+            <VideoFrame clip={clip} playing={playing} onToggle={() => setPlaying((p) => !p)} showDuration={false} />
           </div>
 
           <div className="flex items-center gap-3 pt-3 text-sm text-slate-900">
@@ -393,8 +395,8 @@ function DoneScreen({ onBack }) {
 // This keeps the app frame a static, non-scrolling window with the exact
 // same layout at every viewport width, instead of reflowing/stacking on
 // narrow screens.
-const DESIGN_W = 1152
-const DESIGN_H = 500
+const DESIGN_W = 952
+const DESIGN_H = 580
 
 export default function HeroPrototype() {
   const [screen, setScreen] = useState('board')
@@ -441,7 +443,7 @@ export default function HeroPrototype() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="h-[500px] overflow-hidden"
+                className="h-[580px] overflow-hidden"
               >
                 {screen === 'board' && (
                   <BoardScreen
