@@ -35,7 +35,7 @@ const VB_H = TRUNK_Y + PILE_MID_DROP + CARD_H / 2 + 20
 
 // Piled (initial) spacing: tight overlap. Spread (post-arrow) spacing: cards
 // sit edge to edge with a 6px gap. The leftmost card is the shared anchor.
-const H_SPREAD_PILE = 145
+const H_SPREAD_PILE = 155
 const GAP = 6
 const H_SPREAD_APART = CARD_W + GAP
 
@@ -60,7 +60,7 @@ const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${PILE_LEFT_X},${TRUNK_Y}`
 // The animated dot follows that same straight line, except right at the
 // badge it peels off into a full loop around its oval outline before
 // rejoining the straight line on the other side.
-const LOOP_RX = BADGE_HALF_W + 10
+const LOOP_RX = BADGE_HALF_W + 4
 const LOOP_RY = 28
 const LOOP_ENTRY_X = BADGE_X - LOOP_RX
 const LOOP_EXIT_X = BADGE_X + LOOP_RX
@@ -216,7 +216,7 @@ function MobileConnector({ mobileClips }) {
 const VIDEO_TUNED_CARD_H = (190 * 16) / 9
 const VIDEO_TUNED_VB_H = (VIDEO_TUNED_CARD_H / 2 + 80 + 20) * 2
 // Halved, then bumped back up a bit after feedback that it got too small.
-const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 1.2
+const DESKTOP_VIDEO_W = (((VIDEO_TUNED_VB_H - 20) * 16) / 9 / 1.8) / 1.2 + 10
 const DESKTOP_VIDEO_H = (DESKTOP_VIDEO_W * 9) / 16 + 20
 const DESKTOP_VIDEO_GAP = 0
 const DESKTOP_DESIGN_W = DESKTOP_VIDEO_W + DESKTOP_VIDEO_GAP + TOTAL_W
