@@ -429,7 +429,7 @@ export default function HeroPrototype() {
       <Reveal y={32} className="glass-soft relative overflow-hidden rounded-[24px] p-[9px]">
         <div ref={wrapperRef} className="relative w-full">
           <div
-            className="relative overflow-hidden rounded-[16px] bg-white select-none"
+            className="relative mx-auto overflow-hidden rounded-[16px] bg-white select-none"
             style={{ width: DESIGN_W * scale, height: DESIGN_H * scale }}
           >
             <div
