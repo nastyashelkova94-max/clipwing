@@ -121,5 +121,5 @@ body {
 }
 
 .arrow-dot.is-running {
-  animation: arrow-travel 3.2s cubic-bezier(0.65, 0, 0.35, 1) 0.4s 1 both;
+  animation: arrow-travel 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.4s 1 both;
 }

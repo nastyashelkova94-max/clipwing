@@ -42,7 +42,7 @@ const BADGE_HALF_W = 81
 const LOOP_RX = BADGE_HALF_W + 4
 const LOOP_RY = 28
 
-const ARROW_LEAD_IN = 40
+const ARROW_LEAD_IN = 50
 const TRAIL_STUB = 40
 const BADGE_X = ARROW_LEAD_IN + LOOP_RX
 const LOOP_ENTRY_X = BADGE_X - LOOP_RX
