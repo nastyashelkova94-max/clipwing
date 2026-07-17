@@ -32,7 +32,7 @@ const VB_H = TRUNK_Y + PILE_MID_DROP + CARD_H / 2 + 20
 
 // Piled (initial) spacing: overlapping but not cramped. Spread (post-arrow)
 // spacing: cards sit edge to edge with a 6px gap.
-const H_SPREAD_PILE = 265
+const H_SPREAD_PILE = 280
 const GAP = 6
 const H_SPREAD_APART = CARD_W + GAP
 
@@ -80,6 +80,25 @@ const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${PILE_CENTER_X},${TRUNK_Y}`
 // rejoining the straight line (the fixed 40px trail, then the variable
 // stretch to the pile's center) on the other side.
 const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${CARDS_ZONE_START},${TRUNK_Y} L${PILE_CENTER_X},${TRUNK_Y}`
+
+// How far (as a fraction of the dot's full travel) it has to go before it
+// reaches the first card, so the pile can spread out right when the dot
+// touches it instead of waiting for the whole animation to finish.
+const ELLIPSE_PERIMETER = (() => {
+  const a = LOOP_RX
+  const b = LOOP_RY
+  const h = ((a - b) / (a + b)) ** 2
+  return Math.PI * (a + b) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)))
+})()
+const PATH_LEN_TO_LOOP = LOOP_ENTRY_X - ORIGIN_X
+const PATH_LEN_TO_TRAIL_END = PATH_LEN_TO_LOOP + ELLIPSE_PERIMETER + (CARDS_ZONE_START - LOOP_EXIT_X)
+const PATH_LEN_TO_FIRST_CARD = PATH_LEN_TO_TRAIL_END + (PILE_LEFT_X - CARDS_ZONE_START)
+const PATH_LEN_TOTAL = PATH_LEN_TO_TRAIL_END + (PILE_CENTER_X - CARDS_ZONE_START)
+const FIRST_CARD_FRACTION = PATH_LEN_TO_FIRST_CARD / PATH_LEN_TOTAL
+
+// Must match the CSS animation's own delay/duration (see .arrow-dot.is-running).
+const ARROW_DELAY_MS = 400
+const ARROW_DURATION_MS = 4000
 
 const clips = [
   { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: PILE_LEFT_X, pileY: TRUNK_Y, pileRotate: -7, apartX: APART_LEFT_X, apartY: TRUNK_Y },
@@ -278,6 +297,14 @@ function DesktopVideoBranch({ playing, setPlaying }) {
     return () => observer.disconnect()
   }, [])
 
+  // Cards spread out as soon as the dot touches the first one, not once the
+  // whole (much longer) trip to the last card has finished.
+  useEffect(() => {
+    if (!inView) return
+    const timer = setTimeout(() => setIsSpread(true), ARROW_DELAY_MS + ARROW_DURATION_MS * FIRST_CARD_FRACTION)
+    return () => clearTimeout(timer)
+  }, [inView])
+
   return (
     <div ref={wrapperRef} className="relative w-full" style={{ height: DESKTOP_DESIGN_H * scale }}>
       <div
@@ -310,7 +337,6 @@ function DesktopVideoBranch({ playing, setPlaying }) {
           <span
             className={`arrow-dot ${inView ? 'is-running' : ''}`}
             style={{ offsetPath: `path('${dotPath}')` }}
-            onAnimationEnd={() => setIsSpread(true)}
           />
 
           <div
