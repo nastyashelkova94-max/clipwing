@@ -48,25 +48,28 @@ const BADGE_HALF_W = 58
 const LOOP_RX = BADGE_HALF_W + 4
 const LOOP_RY = 28
 
-// The piled cluster is centered within the box's own width (rather than
-// hugging the left edge), so it shrinks or grows automatically as CARD_W,
-// H_SPREAD_PILE, etc. change. The badge sits exactly halfway between the
-// video and the piled cards' front edge.
+// The arrow's straight lead-in (video to where it starts looping the badge)
+// is a fixed 160px. The badge sits exactly halfway between the video and
+// the piled cards' center (not their left/front edge), and the pile itself
+// is positioned so that center lands where the badge rule says it should.
 const PILE_SPAN_W = H_SPREAD_PILE + CARD_W
-const PILE_LEFT_X = (TOTAL_W - PILE_SPAN_W) / 2
-const BADGE_X = PILE_LEFT_X / 2
+const ARROW_LEAD_IN = 160
+const BADGE_X = ARROW_LEAD_IN + LOOP_RX
+const PILE_CENTER_X = BADGE_X * 2
+const PILE_LEFT_X = PILE_CENTER_X - PILE_SPAN_W / 2
 
 const RIGHT_X_PILE = PILE_LEFT_X + H_SPREAD_PILE
 
-// The visible arrow is a plain straight line from the video to the pile.
-const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${PILE_LEFT_X},${TRUNK_Y}`
+// The visible arrow is a plain straight line from the video to the middle
+// of the piled cards (not their left edge).
+const straightPath = `M${ORIGIN_X},${TRUNK_Y} L${PILE_CENTER_X},${TRUNK_Y}`
 
 // The animated dot follows that same straight line, except right at the
 // badge it peels off into a full loop around its oval outline before
 // rejoining the straight line on the other side.
 const LOOP_ENTRY_X = BADGE_X - LOOP_RX
 const LOOP_EXIT_X = BADGE_X + LOOP_RX
-const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${PILE_LEFT_X},${TRUNK_Y}`
+const dotPath = `M${ORIGIN_X},${TRUNK_Y} L${LOOP_ENTRY_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_EXIT_X},${TRUNK_Y} A${LOOP_RX},${LOOP_RY} 0 1,1 ${LOOP_ENTRY_X},${TRUNK_Y} L${PILE_CENTER_X},${TRUNK_Y}`
 
 const clips = [
   { src: clip1, poster: poster1, width: CARD_W, z: 10, pileX: PILE_LEFT_X, pileY: TRUNK_Y, pileRotate: -7, apartX: LEFT_X, apartY: TRUNK_Y },
