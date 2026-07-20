@@ -56,7 +56,7 @@ export default function Hero() {
             whileTap={{ scale: 0.97 }}
             className="glass-soft flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-300! px-6 py-3 text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)]"
           >
-            See examples
+            Book a call
           </motion.a>
         </div>
         <p className="text-base text-slate-500">Free to sign up</p>
