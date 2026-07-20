@@ -4,19 +4,19 @@ import Logo from './Logo'
 import chevronDown from '../assets/icons/chevron-down.svg'
 
 const navLinks = [
-  { label: 'Pricing' },
-  { label: 'Video production' },
+  { label: 'Pricing', href: 'https://clipwing.pro/pricing' },
+  { label: 'Video production', href: 'https://clipwing.pro/custom-video-production' },
   { label: 'Autopilot' },
-  { label: 'SaaS launch video' },
+  { label: 'SaaS launch video', href: 'https://clipwing.pro/saas-launch-video' },
   { label: 'Free tools', hasChevron: true },
 ]
 
 const freeTools = [
-  'All',
-  'Promo video generator',
-  'ProductHunt promo video generator',
-  'Subtitles generator',
-  'YouTube transcript generator',
+  { label: 'All', href: 'https://clipwing.pro/all' },
+  { label: 'Promo video generator' },
+  { label: 'ProductHunt promo video generator' },
+  { label: 'Subtitles generator' },
+  { label: 'YouTube transcript generator' },
 ]
 
 export default function Header() {
@@ -57,7 +57,9 @@ export default function Header() {
         }`}
       >
         <div className="flex items-center gap-3">
-          <Logo />
+          <a href="https://clipwing.pro/">
+            <Logo />
+          </a>
         </div>
 
         <nav className="hidden items-center gap-6 lg:flex">
@@ -96,11 +98,11 @@ export default function Header() {
                   >
                     {freeTools.map((tool) => (
                       <a
-                        key={tool}
-                        href="#"
+                        key={tool.label}
+                        href={tool.href ?? '#'}
                         className="block px-4 py-3 text-base text-slate-900 transition-colors hover:text-indigo-600"
                       >
-                        {tool}
+                        {tool.label}
                       </a>
                     ))}
                   </motion.div>
@@ -109,7 +111,7 @@ export default function Header() {
             ) : (
               <a
                 key={link.label}
-                href="#"
+                href={link.href ?? '#'}
                 className="text-base text-slate-900 transition-colors hover:text-indigo-600"
               >
                 {link.label}
@@ -166,7 +168,7 @@ export default function Header() {
             link.hasChevron ? null : (
               <a
                 key={link.label}
-                href="#"
+                href={link.href ?? '#'}
                 className="rounded-xl px-2 py-3 text-base text-slate-900 transition-colors hover:text-indigo-600"
               >
                 {link.label}
@@ -175,11 +177,11 @@ export default function Header() {
           )}
           {freeTools.map((tool) => (
             <a
-              key={tool}
-              href="#"
+              key={tool.label}
+              href={tool.href ?? '#'}
               className="rounded-xl px-2 py-3 text-base text-slate-900 transition-colors hover:text-indigo-600"
             >
-              {tool}
+              {tool.label}
             </a>
           ))}
           <a
