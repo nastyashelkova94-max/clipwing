@@ -13,10 +13,10 @@ const navLinks = [
 
 const freeTools = [
   { label: 'All', href: 'https://clipwing.pro/all' },
-  { label: 'Promo video generator' },
-  { label: 'ProductHunt promo video generator' },
-  { label: 'Subtitles generator' },
-  { label: 'YouTube transcript generator' },
+  { label: 'Promo video generator', href: 'https://clipwing.pro/promo-video-generator' },
+  { label: 'ProductHunt promo video generator', href: 'https://clipwing.pro/producthunt-promo-video-generator' },
+  { label: 'Subtitles generator', href: 'https://clipwing.pro/subtitles-generator' },
+  { label: 'YouTube transcript generator', href: 'https://clipwing.pro/youtube-transcript-generator' },
 ]
 
 export default function Header() {
