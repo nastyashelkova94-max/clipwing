@@ -59,7 +59,7 @@ export default function Hero() {
             Book a call
           </motion.a>
         </div>
-        <p className="text-base text-slate-500">Free to sign up</p>
+        <p className="text-base text-slate-500">No credit card required</p>
       </motion.div>
     </motion.section>
   )
