@@ -95,10 +95,17 @@ export default function ProcessSection() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="glass-soft overflow-hidden rounded-[20px] p-1"
             >
-              <button
-                type="button"
+              <div
+                role="button"
+                tabIndex={0}
                 onClick={() => setActive(i)}
-                className="block w-full rounded-2xl bg-white p-4 text-left"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setActive(i)
+                  }
+                }}
+                className="block w-full cursor-pointer rounded-2xl bg-white p-4 text-left"
               >
                 <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                   {i + 1}. {s.title}
@@ -125,7 +132,7 @@ export default function ProcessSection() {
                     className="h-full w-full object-cover object-top"
                   />
                 </div>
-              </button>
+              </div>
             </motion.div>
           )
         })}
@@ -144,10 +151,17 @@ export default function ProcessSection() {
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="glass-soft overflow-hidden rounded-3xl p-2"
               >
-                <button
-                  type="button"
+                <div
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setActive(i)}
-                  className="w-full rounded-2xl bg-white p-6 text-left"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setActive(i)
+                    }
+                  }}
+                  className="w-full cursor-pointer rounded-2xl bg-white p-6 text-left"
                 >
                   <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">
                     {i + 1}. {s.title}
@@ -167,7 +181,7 @@ export default function ProcessSection() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </button>
+                </div>
               </motion.div>
             )
           })}
