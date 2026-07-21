@@ -6,28 +6,32 @@ import socialTikTok from '../assets/icons/social-tiktok.png'
 import socialYoutube from '../assets/icons/social-youtube.png'
 
 const browse = [
-  'Pricing',
-  'Affiliates',
-  'Blog',
-  'Terms and Conditions',
-  'Privacy Policy',
-  'Refund Policy',
+  { label: 'Pricing', href: 'https://clipwing.pro/pricing' },
+  { label: 'Affiliates', href: 'https://clipwing.pro/affiliates' },
+  { label: 'Blog', href: 'https://clipwing.pro/blog' },
+  { label: 'Terms and Conditions', href: 'https://clipwing.pro/terms-and-conditions' },
+  { label: 'Privacy Policy', href: 'https://clipwing.pro/privacy-policy' },
+  { label: 'Refund Policy', href: 'https://clipwing.pro/refund-policy' },
 ]
 
 const freeTools = [
-  'All',
-  'Promo video generator',
-  'ProductHunt promo video generator',
-  'Subtitles generator',
-  'YouTube transcript generator',
+  { label: 'All', href: 'https://clipwing.pro/all' },
+  { label: 'Promo video generator', href: 'https://clipwing.pro/promo-video-generator' },
+  { label: 'ProductHunt promo video generator', href: 'https://clipwing.pro/producthunt-promo-video-generator' },
+  { label: 'Subtitles generator', href: 'https://clipwing.pro/subtitles-generator' },
+  { label: 'YouTube transcript generator', href: 'https://clipwing.pro/youtube-transcript-generator' },
 ]
 
-const services = ['Video production', 'SaaS launch video', 'Autopilot']
+const services = [
+  { label: 'Video production', href: 'https://clipwing.pro/custom-video-production' },
+  { label: 'SaaS launch video', href: 'https://clipwing.pro/saas-launch-video' },
+  { label: 'Autopilot' },
+]
 
 const socials = [
-  { label: 'X', icon: socialX },
-  { label: 'TikTok', icon: socialTikTok },
-  { label: 'YouTube', icon: socialYoutube },
+  { label: 'X', icon: socialX, href: 'https://x.com/clip_wing' },
+  { label: 'TikTok', icon: socialTikTok, href: 'https://www.tiktok.com/@clipwing.pro' },
+  { label: 'YouTube', icon: socialYoutube, href: 'https://www.youtube.com/@clipwing' },
 ]
 
 function FooterColumn({ title, items }) {
@@ -36,11 +40,11 @@ function FooterColumn({ title, items }) {
       <h4 className="text-sm font-medium text-slate-900">{title}</h4>
       {items.map((item) => (
         <a
-          key={item}
-          href="#"
+          key={item.label}
+          href={item.href ?? '#'}
           className="whitespace-nowrap text-sm text-slate-900/70 transition-colors hover:text-indigo-600"
         >
-          {item}
+          {item.label}
         </a>
       ))}
     </div>
@@ -61,12 +65,13 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               {socials.map((s) => (
-                <span
+                <a
                   key={s.label}
+                  href={s.href}
                   className="flex h-14 w-14 items-center justify-center rounded-lg bg-white"
                 >
                   <img src={s.icon} alt={s.label} className="h-9 w-9" />
-                </span>
+                </a>
               ))}
             </div>
           </div>
