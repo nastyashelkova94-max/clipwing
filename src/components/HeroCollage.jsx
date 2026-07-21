@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useDragControls } from 'framer-motion'
+import { motion } from 'framer-motion'
 import clipReview from '../assets/images/hero-collage/clip-review.png'
 import newTask from '../assets/images/hero-collage/new-task.png'
 import postSetting from '../assets/images/hero-collage/post-setting.png'
@@ -11,41 +11,24 @@ const DESIGN_W = 1000
 const DESIGN_H = 456
 
 const cards = [
-  { src: clipReview, w: 615, left: 205, top: 60, rotate: -1.5, z: 20 },
-  { src: newTask, w: 233, left: 35, top: 150, rotate: -6, z: 10 },
-  { src: postSetting, w: 172, left: 788, top: 168, rotate: 2, z: 10 },
-  { src: notification, w: 175, left: 795, top: 20, rotate: -3, z: 30 },
+  { src: clipReview, w: 615, left: 205, top: 60, z: 10 },
+  { src: newTask, w: 233, left: 35, top: 150, z: 20 },
+  { src: postSetting, w: 172, left: 788, top: 168, z: 20 },
+  { src: notification, w: 175, left: 795, top: 20, z: 30 },
 ]
 
-function GripIcon(props) {
-  return (
-    <svg viewBox="0 0 16 16" fill="currentColor" {...props}>
-      <circle cx="5" cy="3" r="1.3" />
-      <circle cx="11" cy="3" r="1.3" />
-      <circle cx="5" cy="8" r="1.3" />
-      <circle cx="11" cy="8" r="1.3" />
-      <circle cx="5" cy="13" r="1.3" />
-      <circle cx="11" cy="13" r="1.3" />
-    </svg>
-  )
-}
-
 function DraggableCard({ card }) {
-  const controls = useDragControls()
-
   return (
     <motion.div
       drag
-      dragControls={controls}
-      dragListener={false}
       dragMomentum={false}
       dragElastic={0.08}
       whileDrag={{ scale: 1.04, zIndex: 40 }}
-      initial={{ opacity: 0, scale: 0.92, rotate: card.rotate }}
-      whileInView={{ opacity: 1, scale: 1, rotate: card.rotate }}
+      initial={{ opacity: 0, scale: 0.92 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="group absolute"
+      className="absolute cursor-grab active:cursor-grabbing"
       style={{ left: card.left, top: card.top, width: card.w, zIndex: card.z, touchAction: 'none' }}
     >
       <img
@@ -54,14 +37,6 @@ function DraggableCard({ card }) {
         draggable={false}
         className="pointer-events-none w-full select-none rounded-xl shadow-[0_20px_45px_-10px_rgba(15,23,42,0.35)]"
       />
-      <button
-        type="button"
-        onPointerDown={(e) => controls.start(e)}
-        className="glass-soft absolute -right-2.5 -top-2.5 grid size-8 cursor-grab place-items-center rounded-full text-slate-600 opacity-0 shadow-md transition-opacity active:cursor-grabbing group-hover:opacity-100"
-        aria-label="Drag to move"
-      >
-        <GripIcon className="size-4" />
-      </button>
     </motion.div>
   )
 }
@@ -83,7 +58,7 @@ export default function HeroCollage() {
   return (
     <div
       ref={wrapperRef}
-      className="relative mx-auto w-full max-w-[960px]"
+      className="relative mx-auto w-full max-w-[1000px]"
       style={{ height: DESIGN_H * scale }}
     >
       <div
