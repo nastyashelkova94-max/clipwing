@@ -11,7 +11,7 @@ const DESIGN_W = 2000
 const DESIGN_H = 1130
 
 const cards = [
-  { src: clipReview, w: 1637, left: 182, top: 80, z: 10 },
+  { src: clipReview, w: 1637, left: 182, top: 80, z: 10, locked: true },
   { src: newTask, w: 527, left: 0, top: 317, z: 20 },
   { src: postSetting, w: 438, left: 1562, top: 350, z: 20 },
   { src: notification, w: 471, left: 1529, top: 8, z: 30 },
@@ -20,16 +20,16 @@ const cards = [
 function DraggableCard({ card }) {
   return (
     <motion.div
-      drag
+      drag={!card.locked}
       dragMomentum={false}
       dragElastic={0.08}
-      whileDrag={{ scale: 1.04, zIndex: 40 }}
+      whileDrag={card.locked ? undefined : { scale: 1.04, zIndex: 40 }}
       initial={{ opacity: 0, scale: 0.92 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute cursor-grab active:cursor-grabbing"
-      style={{ left: card.left, top: card.top, width: card.w, zIndex: card.z, touchAction: 'none' }}
+      className={`absolute ${card.locked ? '' : 'cursor-grab active:cursor-grabbing'}`}
+      style={{ left: card.left, top: card.top, width: card.w, zIndex: card.z, touchAction: card.locked ? undefined : 'none' }}
     >
       <img
         src={card.src}
