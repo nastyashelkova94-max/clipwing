@@ -7,14 +7,14 @@ import notification from '../assets/images/hero-collage/notification.png'
 
 // Fixed design size, scaled to fit (same trick used elsewhere on the site),
 // so the collage keeps the same relative layout at every viewport width.
-const DESIGN_W = 1740
-const DESIGN_H = 870
+const DESIGN_W = 2000
+const DESIGN_H = 1130
 
 const cards = [
-  { src: clipReview, w: 1088, left: 305, top: 120, z: 10 },
-  { src: newTask, w: 351, left: 46, top: 277, z: 20 },
-  { src: postSetting, w: 299, left: 1349, top: 299, z: 20 },
-  { src: notification, w: 316, left: 1332, top: 72, z: 30 },
+  { src: clipReview, w: 1637, left: 182, top: 80, z: 10 },
+  { src: newTask, w: 527, left: 0, top: 317, z: 20 },
+  { src: postSetting, w: 438, left: 1562, top: 350, z: 20 },
+  { src: notification, w: 471, left: 1529, top: 8, z: 30 },
 ]
 
 function DraggableCard({ card }) {
@@ -58,7 +58,7 @@ export default function HeroCollage() {
   return (
     <div
       ref={wrapperRef}
-      className="relative mx-auto w-full max-w-[1740px]"
+      className="relative mx-auto w-full max-w-[2000px]"
       style={{ height: DESIGN_H * scale }}
     >
       <div
