@@ -68,7 +68,7 @@ export default function Footer() {
                 <a
                   key={s.label}
                   href={s.href}
-                  className="flex h-28 w-28 items-center justify-center rounded-lg bg-white"
+                  className="flex h-14 w-14 items-center justify-center rounded-lg bg-white"
                 >
                   <img src={s.icon} alt={s.label} className="h-[72px] w-[72px]" />
                 </a>
