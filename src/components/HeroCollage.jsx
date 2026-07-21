@@ -12,7 +12,7 @@ const DESIGN_H = 1130
 
 const cards = [
   { src: clipReview, w: 1637, left: 182, top: 80, z: 10, locked: true },
-  { src: newTask, w: 527, left: -30, top: 317, z: 20 },
+  { src: newTask, w: 527, left: -30, top: 223, z: 20 },
   { src: postSetting, w: 438, left: 1562, top: 350, z: 20 },
   { src: notification, w: 471, left: 1529, top: 8, z: 30 },
 ]
