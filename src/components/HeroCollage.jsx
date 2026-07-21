@@ -17,13 +17,12 @@ const cards = [
   { src: notification, w: 471, left: 1529, top: 8, z: 30 },
 ]
 
-function DraggableCard({ card, containerRef }) {
+function DraggableCard({ card }) {
   return (
     <motion.div
       drag={!card.locked}
       dragMomentum={false}
       dragElastic={0.08}
-      dragConstraints={containerRef}
       whileDrag={card.locked ? undefined : { scale: 1.04, zIndex: 40 }}
       whileHover={card.locked ? undefined : { scale: 1.03, y: -6, zIndex: 40 }}
       initial={{ opacity: 0, scale: 0.92 }}
@@ -45,7 +44,6 @@ function DraggableCard({ card, containerRef }) {
 
 export default function HeroCollage() {
   const wrapperRef = useRef(null)
-  const containerRef = useRef(null)
   const [scale, setScale] = useState(0)
 
   useEffect(() => {
@@ -65,12 +63,11 @@ export default function HeroCollage() {
       style={{ height: DESIGN_H * scale }}
     >
       <div
-        ref={containerRef}
         className="absolute left-0 top-0"
         style={{ width: DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
       >
         {cards.map((card, i) => (
-          <DraggableCard key={i} card={card} containerRef={containerRef} />
+          <DraggableCard key={i} card={card} />
         ))}
       </div>
     </div>
