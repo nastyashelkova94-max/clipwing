@@ -63,7 +63,7 @@ export default function Hero() {
         <p className="text-base text-slate-500">No credit card required</p>
       </motion.div>
 
-      <div className="w-full pt-8">
+      <div className="-mt-2 w-full lg:mt-0">
         <HeroCollage />
       </div>
     </motion.section>
