@@ -10,8 +10,6 @@ import notification from '../assets/images/hero-collage/notification.png'
 const DESIGN_W = 1150
 const DESIGN_H = 600
 
-const frame = { left: 150, top: 70, w: 850, h: 500 }
-
 const cards = [
   { src: clipReview, w: 780, left: 190, top: 90, z: 10 },
   { src: newTask, w: 290, left: 30, top: 260, z: 20 },
@@ -67,10 +65,6 @@ export default function HeroCollage() {
         className="absolute left-0 top-0"
         style={{ width: DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}
       >
-        <div
-          className="glass absolute rounded-[40px]"
-          style={{ left: frame.left, top: frame.top, width: frame.w, height: frame.h, zIndex: 0 }}
-        />
         {cards.map((card, i) => (
           <DraggableCard key={i} card={card} />
         ))}
