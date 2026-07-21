@@ -24,6 +24,7 @@ function DraggableCard({ card }) {
       dragMomentum={false}
       dragElastic={0.08}
       whileDrag={card.locked ? undefined : { scale: 1.04, zIndex: 40 }}
+      whileHover={card.locked ? undefined : { scale: 1.03, y: -6, zIndex: 40 }}
       initial={{ opacity: 0, scale: 0.92 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
