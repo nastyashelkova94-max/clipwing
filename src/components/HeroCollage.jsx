@@ -37,7 +37,7 @@ function DraggableCard({ card }) {
         src={card.src}
         alt=""
         draggable={false}
-        className="pointer-events-none w-full select-none rounded-xl shadow-[0_20px_45px_-10px_rgba(15,23,42,0.35)]"
+        className="pointer-events-none w-full select-none"
       />
     </motion.div>
   )
