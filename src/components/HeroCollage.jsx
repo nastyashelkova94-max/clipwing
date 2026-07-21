@@ -14,7 +14,7 @@ const DESIGN_H = 1130
 // reposition or make it draggable when adjusting the other cards.
 const cards = [
   { src: clipReview, w: 1637, left: 182, top: 80, z: 10, locked: true },
-  { src: newTask, w: 527, left: -195, top: 317, z: 20 },
+  { src: newTask, w: 527, left: -175, top: 317, z: 20 },
   { src: postSetting, w: 438, left: 1562, top: 350, z: 20 },
   { src: notification, w: 471, left: 1529, top: 8, z: 30 },
 ]
