@@ -25,7 +25,7 @@ export default function FinalCtaSection() {
             rel="noopener noreferrer"
             whileHover={{ y: -3, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
+            className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3]"
           >
             Get my clips
           </motion.a>
@@ -35,7 +35,7 @@ export default function FinalCtaSection() {
             rel="noopener noreferrer"
             whileHover={{ y: -3, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="glass-soft flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-300! px-6 py-3 text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)]"
+            className="glass-soft flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-300! px-6 py-3 text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)] transition-colors hover:bg-[#6565F0]/30"
           >
             Book a call
           </motion.a>
