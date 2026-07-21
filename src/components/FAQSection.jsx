@@ -63,10 +63,17 @@ export default function FAQSection() {
                 whileHover={{ y: -2 }}
                 className="glass-soft overflow-hidden rounded-[20px] p-1 lg:rounded-3xl lg:p-2"
               >
-                <button
-                  type="button"
+                <div
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setOpenIndex(isOpen ? -1 : i)}
-                  className="w-full rounded-2xl bg-white p-4 text-left lg:p-6"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setOpenIndex(isOpen ? -1 : i)
+                    }
+                  }}
+                  className="w-full cursor-pointer rounded-2xl bg-white p-4 text-left lg:p-6"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <h3 className="text-xl font-medium leading-[100%] text-[#21234e]">{faq.q}</h3>
@@ -91,7 +98,7 @@ export default function FAQSection() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </button>
+                </div>
               </motion.div>
             )
           })}

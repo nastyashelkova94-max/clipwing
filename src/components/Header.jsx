@@ -47,10 +47,10 @@ export default function Header() {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="sticky top-0 z-30 flex flex-col items-center px-6 py-6 lg:px-10"
+      className="pointer-events-none sticky top-0 z-30 flex flex-col items-center px-6 py-6 lg:px-10"
     >
       <div
-        className={`flex w-full items-center justify-between transition-all duration-300 ${
+        className={`pointer-events-auto flex w-full items-center justify-between transition-all duration-300 ${
           scrolled
             ? 'glass max-w-[1140px] rounded-[26px] p-[10px]'
             : 'max-w-[1300px]'
@@ -162,7 +162,7 @@ export default function Header() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="glass mt-3 flex w-full max-w-[1140px] flex-col gap-1 rounded-3xl p-4 lg:hidden"
+          className="pointer-events-auto glass mt-3 flex w-full max-w-[1140px] flex-col gap-1 rounded-3xl p-4 lg:hidden"
         >
           {navLinks.map((link) =>
             link.hasChevron ? null : (
