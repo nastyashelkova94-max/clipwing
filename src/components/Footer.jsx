@@ -68,6 +68,8 @@ export default function Footer() {
                 <a
                   key={s.label}
                   href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex h-14 w-14 items-center justify-center rounded-lg bg-white"
                 >
                   <img src={s.icon} alt={s.label} className="h-10 w-10" />

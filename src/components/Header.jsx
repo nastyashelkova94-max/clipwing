@@ -123,7 +123,6 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <motion.a
             href="#"
-            whileHover={{ y: -2, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="hidden h-12 whitespace-nowrap rounded-xl border border-indigo-400 bg-indigo-500 px-4 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3] sm:flex sm:items-center sm:justify-center"
           >

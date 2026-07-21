@@ -81,7 +81,6 @@ export default function PricingSection() {
                 href="https://auto.clipwing.pro/"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex h-12 items-center justify-center rounded-xl border border-indigo-400 bg-indigo-500 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3]"
               >
@@ -91,7 +90,6 @@ export default function PricingSection() {
                 href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)] transition-colors hover:bg-[#6565F0]/30"
               >
@@ -135,7 +133,6 @@ export default function PricingSection() {
                 href="https://clipwing.pro/custom-video-production"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex h-12 items-center justify-center rounded-xl border border-slate-800 bg-slate-800 text-base font-medium text-white transition-colors hover:bg-[#0F172A]"
               >
@@ -145,7 +142,6 @@ export default function PricingSection() {
                 href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)] transition-colors hover:bg-[#6565F0]/30"
               >
