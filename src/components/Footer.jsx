@@ -70,7 +70,7 @@ export default function Footer() {
                   href={s.href}
                   className="flex h-14 w-14 items-center justify-center rounded-lg bg-white"
                 >
-                  <img src={s.icon} alt={s.label} className="h-[72px] w-[72px] max-w-none" />
+                  <img src={s.icon} alt={s.label} className="h-10 w-10" />
                 </a>
               ))}
             </div>
