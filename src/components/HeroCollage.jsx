@@ -7,19 +7,16 @@ import notification from '../assets/images/hero-collage/notification.png'
 
 // Fixed design size, scaled to fit (same trick used elsewhere on the site),
 // so the collage keeps the same relative layout at every viewport width.
-const DESIGN_W = 2300
+const DESIGN_W = 2000
 const DESIGN_H = 1130
 
 // Card 1 is centered in the canvas and locked — keep it that way, don't
-// reposition or make it draggable when adjusting the other cards. The
-// canvas is wider than card 1's footprint on both sides so New Task can
-// sit further left (overlapping card 1 far less) without ever getting
-// clipped by the page's overflow-hidden ancestor at any breakpoint.
+// reposition or make it draggable when adjusting the other cards.
 const cards = [
-  { src: clipReview, w: 1637, left: 332, top: 80, z: 10, locked: true },
-  { src: newTask, w: 527, left: 5, top: 317, z: 20 },
-  { src: postSetting, w: 438, left: 1712, top: 350, z: 20 },
-  { src: notification, w: 471, left: 1679, top: 8, z: 30 },
+  { src: clipReview, w: 1637, left: 182, top: 80, z: 10, locked: true },
+  { src: newTask, w: 527, left: -195, top: 317, z: 20 },
+  { src: postSetting, w: 438, left: 1562, top: 350, z: 20 },
+  { src: notification, w: 471, left: 1529, top: 8, z: 30 },
 ]
 
 function DraggableCard({ card }) {
@@ -64,7 +61,7 @@ export default function HeroCollage() {
   return (
     <div
       ref={wrapperRef}
-      className="relative mx-auto w-full max-w-[2300px]"
+      className="relative mx-auto w-full max-w-[2000px]"
       style={{ height: DESIGN_H * scale }}
     >
       <div
