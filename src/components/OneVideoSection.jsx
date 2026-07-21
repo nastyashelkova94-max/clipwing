@@ -219,7 +219,7 @@ function MobileConnector({ mobileClips }) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="glass-soft overflow-hidden rounded-[19px] p-1 shadow-lg"
+              className="glass-soft overflow-hidden rounded-[21px] p-2 shadow-lg"
             >
               <div className="aspect-[9/16] overflow-hidden rounded-[15px] bg-slate-600">
                 <video
@@ -368,7 +368,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ scale: 1.06 }}
-                className="glass-soft overflow-hidden rounded-[19px] p-1 shadow-lg"
+                className="glass-soft overflow-hidden rounded-[21px] p-2 shadow-lg"
               >
                 <div className="aspect-[9/16] overflow-hidden rounded-[15px] bg-slate-600">
                   <video
@@ -393,7 +393,7 @@ function DesktopVideoBranch({ playing, setPlaying }) {
 
 function VideoPlayer({ playing, setPlaying, className = '' }) {
   return (
-    <div className={`glass-soft w-full shrink-0 overflow-hidden rounded-[20px] p-1 lg:rounded-[19px] lg:p-1 lg:shadow-lg ${className}`}>
+    <div className={`glass-soft w-full shrink-0 overflow-hidden rounded-[22px] p-2 lg:rounded-[21px] lg:p-2 lg:shadow-lg ${className}`}>
       <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-900 lg:rounded-[15px]">
         {playing ? (
           <iframe
