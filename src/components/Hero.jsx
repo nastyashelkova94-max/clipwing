@@ -41,7 +41,7 @@ export default function Hero() {
         </motion.p>
       </div>
 
-      <motion.div variants={item} className="flex flex-col items-center gap-4">
+      <motion.div variants={item} className="flex w-full flex-col items-center gap-4">
         <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:flex-nowrap sm:items-center sm:justify-center">
           <motion.a
             href="https://auto.clipwing.pro/"
