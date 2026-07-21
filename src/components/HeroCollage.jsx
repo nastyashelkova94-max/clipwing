@@ -10,8 +10,10 @@ import notification from '../assets/images/hero-collage/notification.png'
 const DESIGN_W = 2000
 const DESIGN_H = 1130
 
+// Card 1 is centered in the canvas and locked — keep it that way, don't
+// reposition or make it draggable when adjusting the other cards.
 const cards = [
-  { src: clipReview, w: 1637, left: 182, top: 80, z: 10, locked: true },
+  { src: clipReview, w: 1637, left: 182, top: 82, z: 10, locked: true },
   { src: newTask, w: 527, left: -30, top: 223, z: 20 },
   { src: postSetting, w: 438, left: 1562, top: 350, z: 20 },
   { src: notification, w: 471, left: 1529, top: 8, z: 30 },
