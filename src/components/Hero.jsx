@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import HeroCollage from './HeroCollage'
 
 const container = {
   hidden: {},
@@ -61,6 +62,10 @@ export default function Hero() {
         </div>
         <p className="text-base text-slate-500">No credit card required</p>
       </motion.div>
+
+      <div className="w-full pt-8">
+        <HeroCollage />
+      </div>
     </motion.section>
   )
 }
