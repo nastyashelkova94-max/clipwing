@@ -16,10 +16,7 @@ const cards = [
     highlighted: false,
     title: (
       <>
-        AI <span className="text-slate-500 line-through">Clippers</span>{' '}
-        <span className="inline-block -rotate-2 font-serif italic text-indigo-600/50">
-          Sloppers
-        </span>
+        AI <span className="text-slate-500 line-through">Clippers</span> Sloppers
       </>
     ),
     points: [
@@ -64,7 +61,7 @@ export default function ComparisonSection() {
     <section className="relative z-10 mx-auto max-w-[1240px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex flex-col items-center gap-2 text-center">
         <h2 className="text-[32px] leading-[100%] font-medium text-slate-900 sm:text-[40px] lg:text-[48px] lg:leading-[1.15]">
-          Get your clips without ai slop
+          Get your clips without AI slop
           <br className="hidden lg:inline" /> or hiring hassle
         </h2>
       </Reveal>
