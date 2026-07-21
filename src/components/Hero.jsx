@@ -44,7 +44,9 @@ export default function Hero() {
       <motion.div variants={item} className="flex flex-col items-center gap-4">
         <div className="flex flex-nowrap items-center justify-center gap-4">
           <motion.a
-            href="#"
+            href="https://auto.clipwing.pro/"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ y: -3, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
@@ -52,7 +54,9 @@ export default function Hero() {
             Get my clips
           </motion.a>
           <motion.a
-            href="#"
+            href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ y: -3, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="glass-soft flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-300! px-6 py-3 text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)]"

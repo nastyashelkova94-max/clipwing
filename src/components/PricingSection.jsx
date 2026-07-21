@@ -3,12 +3,11 @@ import Reveal from './Reveal'
 import circleCheck from '../assets/icons/circle-check.svg'
 import circleCheckGray from '../assets/icons/circle-check-gray.svg'
 
-const enterpriseFeatures = [
+const studioFeatures = [
   'Everything in Autopilot',
   'A dedicated editing team',
-  'Custom formats and higher volume',
+  'Full-length episodes',
   'Priority turnaround',
-  'Hands-on onboarding and an account manager',
 ]
 
 const autopilotFeatures = [
@@ -31,7 +30,7 @@ export default function PricingSection() {
           </span>
         </h2>
         <p className="max-w-[379px] text-xl font-normal leading-tight text-[#3f3f46]">
-          Start on Autopilot. Move to Enterprise when you need more
+          Start on Autopilot. Move to Studio when you need more
         </p>
       </Reveal>
 
@@ -79,7 +78,9 @@ export default function PricingSection() {
             </ul>
             <div className="mt-auto flex flex-col gap-3">
               <motion.a
-                href="#"
+                href="https://auto.clipwing.pro/"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex h-12 items-center justify-center rounded-xl border border-indigo-400 bg-indigo-500 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)]"
@@ -87,7 +88,9 @@ export default function PricingSection() {
                 Get my clips
               </motion.a>
               <motion.a
-                href="#"
+                href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)]"
@@ -108,7 +111,7 @@ export default function PricingSection() {
         >
           <div className="flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-4 lg:p-5">
             <div>
-              <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Enterprise</h3>
+              <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Studio</h3>
               <p className="mt-1 whitespace-nowrap text-[15px] text-[#52525c]">
                 Higher volume and full-service production for teams
               </p>
@@ -117,7 +120,7 @@ export default function PricingSection() {
               Custom
             </p>
             <ul className="flex flex-col gap-3">
-              {enterpriseFeatures.map((f) => (
+              {studioFeatures.map((f) => (
                 <li
                   key={f}
                   className="flex items-start gap-2 text-base text-slate-500 lg:whitespace-nowrap"
@@ -129,15 +132,19 @@ export default function PricingSection() {
             </ul>
             <div className="mt-auto flex flex-col gap-3">
               <motion.a
-                href="#"
+                href="https://clipwing.pro/custom-video-production"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex h-12 items-center justify-center rounded-xl border border-slate-800 bg-slate-800 text-base font-medium text-white"
               >
-                See Enterprise
+                See Studio
               </motion.a>
               <motion.a
-                href="#"
+                href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)]"
