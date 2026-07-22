@@ -41,8 +41,8 @@ export default function App() {
 
         <Hero />
         <OneVideoSection />
-        <ProcessSection />
         <ComparisonSection />
+        <ProcessSection />
         <PricingSection />
         <FAQSection />
         <FinalCtaSection />

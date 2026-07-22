@@ -63,7 +63,7 @@ const cards = [
 
 export default function ComparisonSection() {
   return (
-    <section className="relative z-10 mx-auto max-w-[1240px] px-6 pb-[160px]">
+    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex flex-col items-center gap-2 text-center">
         <h2 className="text-[32px] leading-[100%] font-medium text-slate-900 sm:text-[40px] lg:text-[48px] lg:leading-[1.15]">
           Get your clips without AI slop
@@ -88,17 +88,28 @@ export default function ComparisonSection() {
           >
             <div
               className={`relative flex flex-col gap-6 overflow-hidden rounded-2xl text-left ${
-                card.highlighted ? 'bg-white p-5 pb-40' : 'border border-slate-100 bg-white/70 p-5'
+                card.highlighted
+                  ? 'bg-white px-5 pb-[140px] pt-[30px]'
+                  : 'border border-slate-100 bg-white/70 p-5'
               }`}
             >
               {card.highlighted && (
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-cover bg-bottom"
-                  style={{
-                    backgroundImage: `linear-gradient(to bottom, #fff 0%, rgba(255,255,255,0) 55%), url(${card2Bg})`,
-                  }}
-                />
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 overflow-hidden"
+                >
+                  <img
+                    src={card2Bg}
+                    alt=""
+                    className="absolute inset-0 h-full w-full scale-125 object-cover object-bottom"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: 'linear-gradient(to bottom, #fff 0%, rgba(255,255,255,0) 55%)',
+                    }}
+                  />
+                </div>
               )}
 
               <h3

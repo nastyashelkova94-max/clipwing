@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import clipReview from '../assets/images/hero-collage/clip-review.png'
+import clipReview from '../assets/images/hero-collage/hero1.png'
 import newTask from '../assets/images/hero-collage/new-task.png'
 import postSetting from '../assets/images/hero-collage/post-setting.png'
 import notification from '../assets/images/hero-collage/notification.png'
