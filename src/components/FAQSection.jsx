@@ -5,10 +5,6 @@ import plusIcon from '../assets/icons/plus.svg'
 
 const faqs = [
   {
-    q: 'Will the clips be generic?',
-    a: 'No. AI gets the draft fast, a real editor makes it land. On-brand, in context, not a template cut.',
-  },
-  {
     q: 'Do I need to send timecodes or pick moments?',
     a: 'Never. Finding the best moments is our job. Most clients never send a single timecode.',
   },
@@ -21,20 +17,12 @@ const faqs = [
     a: 'A hand-picked editor from our vetted group. You never search for one or manage one.',
   },
   {
-    q: 'Will it match my brand?',
-    a: 'Yes. Captions, style, and pacing follow your look. Tell us once.',
-  },
-  {
     q: 'What can I send?',
     a: 'Right now, any video on YouTube: podcasts, webinars, demos, or product updates. Just paste the link.',
   },
   {
     q: 'How are you different from auto-clip tools?',
     a: 'Auto-clippers give you generic cuts you still have to fix. With us, a real, vetted editor makes the clips.',
-  },
-  {
-    q: 'What about hiring a freelance editor?',
-    a: 'No job posts, no managing, no chasing deadlines. Fixed monthly plan, predictable output.',
   },
 ]
 
