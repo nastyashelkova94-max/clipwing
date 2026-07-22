@@ -35,6 +35,18 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Below lg: mobile browsers (notably iOS Safari) don't reliably support
+   background-attachment: fixed, silently falling back to scroll. Combined
+   with a 100vh-tall background tile, that repeats the gradient every
+   viewport height down a long page, showing a hard seam at each repeat.
+   Cover the whole (much taller) page instead of tiling one viewport. */
+@media (max-width: 1023px) {
+  body {
+    background-attachment: scroll;
+    background-size: 100% 100%;
+  }
+}
+
 a, button, [role="button"] {
   cursor: pointer;
 }
