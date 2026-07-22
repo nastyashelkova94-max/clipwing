@@ -62,7 +62,7 @@ export default function ComparisonSection() {
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-4 grid w-full grid-cols-1 items-center gap-4 lg:mt-16 lg:grid-cols-3">
+      <div className="mx-auto mt-4 grid w-full grid-cols-1 items-center gap-4 lg:mt-16 lg:grid-cols-3 lg:gap-8">
         {cards.map((card, i) => (
           <motion.div
             key={card.key}
@@ -74,7 +74,7 @@ export default function ComparisonSection() {
             className={`overflow-hidden rounded-[20px] p-1 lg:rounded-3xl lg:p-2 ${
               card.highlighted
                 ? 'glass-indigo relative z-10 shadow-xl shadow-indigo-500/30 lg:-my-6 lg:scale-110'
-                : 'glass-soft'
+                : 'glass-soft lg:mx-3'
             }`}
           >
             <div
