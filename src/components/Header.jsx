@@ -122,7 +122,9 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <motion.a
-            href="#"
+            href="https://auto.clipwing.pro/"
+            target="_blank"
+            rel="noopener noreferrer"
             whileTap={{ scale: 0.98 }}
             className="hidden h-12 whitespace-nowrap rounded-xl border border-indigo-400 bg-indigo-500 px-4 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3] sm:flex sm:items-center sm:justify-center"
           >
@@ -184,7 +186,9 @@ export default function Header() {
             </a>
           ))}
           <a
-            href="#"
+            href="https://auto.clipwing.pro/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-2 flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-400 bg-indigo-500 px-4 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3] sm:hidden"
           >
             Create my viral clip
