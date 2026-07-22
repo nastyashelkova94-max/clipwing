@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
-import circleX from '../assets/icons/circle-x.svg'
 import logoMark from '../assets/logo/logo-mark.svg'
 import card2Bg from '../assets/images/card2.png'
 
@@ -43,9 +42,9 @@ const cards = [
   {
     key: 'upwork',
     highlighted: false,
-    title: 'Upwork',
+    title: 'Freelance editor',
     points: [
-      'Post a job, run test project, screen strangers',
+      'Post a job, screen strangers',
       'Re-explain your brand every time',
       'Chase files and deadlines',
       'Start over when they disappear',
@@ -74,13 +73,13 @@ export default function ComparisonSection() {
             whileHover={{ y: -8 }}
             className={`overflow-hidden rounded-[20px] p-1 lg:rounded-3xl lg:p-2 ${
               card.highlighted
-                ? 'glass-indigo relative z-10 shadow-[0_24px_48px_-16px_rgba(79,70,229,0.35)] lg:-my-6 lg:scale-110'
+                ? 'glass-indigo relative z-10 shadow-[0_24px_48px_-16px_rgba(79,70,229,0.35)] lg:-my-6 lg:scale-105'
                 : 'glass-soft lg:mx-3'
             }`}
           >
             <div
               className={`relative flex flex-col gap-6 overflow-hidden rounded-2xl p-5 text-left ${
-                card.highlighted ? 'bg-white' : 'border border-slate-100 bg-white'
+                card.highlighted ? 'bg-white' : 'border border-slate-100 bg-white/70'
               }`}
             >
               {card.highlighted && (
@@ -112,11 +111,7 @@ export default function ComparisonSection() {
                     key={point}
                     className="flex items-start gap-2 text-base text-slate-500"
                   >
-                    {card.highlighted ? (
-                      <CheckIcon className="mt-1 size-4 shrink-0 text-indigo-600" />
-                    ) : (
-                      <img src={circleX} alt="" className="mt-1 h-4 w-4 shrink-0" />
-                    )}
+                    <CheckIcon className="mt-1 size-4 shrink-0 text-indigo-600" />
                     {point}
                   </li>
                 ))}
