@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
 import circleX from '../assets/icons/circle-x.svg'
+import logoMark from '../assets/logo/logo-mark.svg'
 
 function CheckIcon(props) {
   return (
@@ -77,19 +78,22 @@ export default function ComparisonSection() {
             }`}
           >
             <div
-              className={`flex flex-col gap-6 rounded-2xl p-6 text-left ${
+              className={`flex flex-col gap-6 rounded-2xl p-5 text-left ${
                 card.highlighted
-                  ? 'bg-[#AA9FFF]'
+                  ? 'bg-indigo-500'
                   : 'border border-slate-100 bg-white'
               }`}
             >
               <h3
                 className={
                   card.highlighted
-                    ? 'text-2xl font-semibold leading-[100%] tracking-tight text-white'
+                    ? 'flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-white'
                     : 'text-xl font-medium leading-[100%] text-[#21234e]'
                 }
               >
+                {card.highlighted && (
+                  <img src={logoMark} alt="" className="h-6 w-6 shrink-0 invert" />
+                )}
                 {card.title}
               </h3>
 
@@ -116,7 +120,7 @@ export default function ComparisonSection() {
                   href="https://auto.clipwing.pro/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass-soft mt-auto flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-300! px-6 py-3 text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)] transition-colors hover:bg-[#6565F0]/30"
+                  className="mt-auto flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-white px-6 py-3 text-base font-medium text-indigo-600 shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.1)] transition-colors hover:bg-indigo-50"
                 >
                   Get my clips
                 </a>
