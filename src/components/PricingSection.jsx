@@ -11,8 +11,7 @@ const studioFeatures = [
 ]
 
 const autopilotFeatures = [
-  'A hand-picked editor on your account',
-  'AI draft plus human editing on every clip',
+  'Unlimited tasks',
   'Vertical clips with captions, ready in 3 days',
   'Review, comment, and approve in the app',
   'Post to your socials from the app',
