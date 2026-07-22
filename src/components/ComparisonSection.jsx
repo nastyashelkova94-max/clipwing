@@ -1,17 +1,22 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
-import frameSlop from '../assets/images/frame-slop.gif'
-import frameClipwing from '../assets/images/frame-clipwing.gif'
-import frameUpwork from '../assets/images/frame-upwork.gif'
 import circleCheck from '../assets/icons/circle-check-2.svg'
 import circleX from '../assets/icons/circle-x.svg'
 import logoMark from '../assets/logo/logo-mark.svg'
+import teamAvatars from '../assets/images/team-avatars.png'
+
+function PersonIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" {...props}>
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" strokeLinecap="round" />
+    </svg>
+  )
+}
 
 const cards = [
   {
     key: 'ai',
-    image: frameSlop,
-    imageHeight: 'h-[244px]',
     icon: circleX,
     highlighted: false,
     title: (
@@ -28,8 +33,6 @@ const cards = [
   },
   {
     key: 'clipwing',
-    image: frameClipwing,
-    imageHeight: 'h-[352px]',
     icon: circleCheck,
     highlighted: true,
     title: 'Clipwing Autopilot',
@@ -42,8 +45,6 @@ const cards = [
   },
   {
     key: 'upwork',
-    image: frameUpwork,
-    imageHeight: 'h-[244px]',
     icon: circleX,
     highlighted: false,
     title: 'Upwork',
@@ -81,37 +82,45 @@ export default function ComparisonSection() {
                 : 'glass-soft'
             }`}
           >
-            <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white">
-              <img
-                src={card.image}
-                alt=""
-                className={`w-full object-cover ${card.imageHeight}`}
-              />
-              <div className="flex flex-col items-start gap-6 p-4 text-left lg:px-4 lg:py-8">
-                <h3
-                  className={`flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight ${
-                    card.highlighted ? 'text-slate-900' : 'text-slate-500'
-                  }`}
-                >
-                  {card.highlighted && (
-                    <img src={logoMark} alt="" className="h-6 w-6" />
+            <div className="flex flex-col gap-6 rounded-2xl border border-slate-100 bg-white p-6 text-left">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  {card.highlighted ? (
+                    <img src={logoMark} alt="" className="h-7 w-7 shrink-0" />
+                  ) : (
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full border border-slate-200 text-slate-400">
+                      <PersonIcon className="size-5" />
+                    </span>
                   )}
-                  {card.title}
-                </h3>
-                <ul className="flex flex-col gap-3">
-                  {card.points.map((point) => (
-                    <li
-                      key={point}
-                      className={`flex items-start gap-2 text-base ${
-                        card.highlighted ? 'text-slate-700' : 'text-slate-500'
-                      }`}
-                    >
-                      <img src={card.icon} alt="" className="mt-1 h-4 w-4 shrink-0" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
+                  <h3 className="text-2xl font-semibold leading-[100%] tracking-tight text-slate-900">
+                    {card.title}
+                  </h3>
+                </div>
+                {card.highlighted && (
+                  <div className="flex shrink-0 items-center gap-2">
+                    <img src={teamAvatars} alt="" className="h-8 w-auto" />
+                    <span className="whitespace-nowrap text-sm text-slate-500">
+                      +15 creators
+                    </span>
+                  </div>
+                )}
               </div>
+
+              <hr className="border-slate-100" />
+
+              <ul className="flex flex-col gap-3">
+                {card.points.map((point) => (
+                  <li
+                    key={point}
+                    className={`flex items-start gap-2 text-base ${
+                      card.highlighted ? 'text-slate-700' : 'text-slate-500'
+                    }`}
+                  >
+                    <img src={card.icon} alt="" className="mt-1 h-4 w-4 shrink-0" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
             </div>
           </motion.div>
         ))}
