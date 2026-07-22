@@ -1,6 +1,16 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
+import circleX from '../assets/icons/circle-x.svg'
 import teamAvatars from '../assets/images/team-avatars.png'
+
+function CheckIcon(props) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="0.933" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M6 8l1.333 1.333L10 6.667" />
+      <circle cx="8" cy="8" r="6.667" />
+    </svg>
+  )
+}
 
 const cards = [
   {
@@ -70,7 +80,7 @@ export default function ComparisonSection() {
             <div
               className={`flex flex-col gap-6 rounded-2xl p-6 text-left ${
                 card.highlighted
-                  ? 'bg-indigo-600'
+                  ? 'bg-[#3731A0]'
                   : 'border border-slate-100 bg-white'
               }`}
             >
@@ -98,10 +108,15 @@ export default function ComparisonSection() {
                 {card.points.map((point) => (
                   <li
                     key={point}
-                    className={`text-base ${
+                    className={`flex items-start gap-2 text-base ${
                       card.highlighted ? 'text-white/90' : 'text-slate-500'
                     }`}
                   >
+                    {card.highlighted ? (
+                      <CheckIcon className="mt-1 size-4 shrink-0" />
+                    ) : (
+                      <img src={circleX} alt="" className="mt-1 h-4 w-4 shrink-0" />
+                    )}
                     {point}
                   </li>
                 ))}
