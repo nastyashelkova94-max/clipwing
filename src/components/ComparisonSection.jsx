@@ -73,14 +73,14 @@ export default function ComparisonSection() {
             whileHover={{ y: -8 }}
             className={`overflow-hidden rounded-[20px] p-1 lg:rounded-3xl lg:p-2 ${
               card.highlighted
-                ? 'glass-indigo relative z-10 shadow-xl shadow-indigo-500/30 lg:-my-6 lg:scale-110'
+                ? 'glass-indigo relative z-10 shadow-[0_24px_48px_-16px_rgba(79,70,229,0.35)] lg:-my-6 lg:scale-110'
                 : 'glass-soft lg:mx-3'
             }`}
           >
             <div
               className={`flex flex-col gap-6 rounded-2xl p-5 text-left ${
                 card.highlighted
-                  ? 'bg-indigo-500'
+                  ? 'bg-indigo-500 shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),inset_0_-10px_20px_rgba(0,0,0,0.12)]'
                   : 'border border-slate-100 bg-white'
               }`}
             >
