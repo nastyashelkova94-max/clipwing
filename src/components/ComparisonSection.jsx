@@ -12,6 +12,15 @@ function CheckIcon(props) {
   )
 }
 
+function CrossIcon(props) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="0.933" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M10 6L6 10M6 6l4 4" />
+      <circle cx="8" cy="8" r="6.667" />
+    </svg>
+  )
+}
+
 const cards = [
   {
     key: 'ai',
@@ -78,8 +87,8 @@ export default function ComparisonSection() {
             }`}
           >
             <div
-              className={`relative flex flex-col gap-6 overflow-hidden rounded-2xl p-5 text-left ${
-                card.highlighted ? 'bg-white' : 'border border-slate-100 bg-white/70'
+              className={`relative flex flex-col gap-6 overflow-hidden rounded-2xl text-left ${
+                card.highlighted ? 'bg-white p-5 pb-40' : 'border border-slate-100 bg-white/70 p-5'
               }`}
             >
               {card.highlighted && (
@@ -96,7 +105,7 @@ export default function ComparisonSection() {
                 className={
                   card.highlighted
                     ? 'relative flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-[#21234e]'
-                    : 'text-xl font-medium leading-[100%] text-[#21234e]'
+                    : 'text-xl font-medium leading-[100%] text-slate-500'
                 }
               >
                 {card.highlighted && (
@@ -111,7 +120,11 @@ export default function ComparisonSection() {
                     key={point}
                     className="flex items-start gap-2 text-base text-slate-500"
                   >
-                    <CheckIcon className="mt-1 size-4 shrink-0 text-indigo-600" />
+                    {card.highlighted ? (
+                      <CheckIcon className="mt-1 size-4 shrink-0 text-indigo-600" />
+                    ) : (
+                      <CrossIcon className="mt-1 size-4 shrink-0 text-slate-500" />
+                    )}
                     {point}
                   </li>
                 ))}
