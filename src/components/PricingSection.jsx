@@ -51,7 +51,7 @@ export default function PricingSection() {
                   Most popular
                 </span>
               </div>
-              <p className="mt-1 whitespace-nowrap text-[15px] text-[#52525c]">
+              <p className="mt-1 text-[15px] text-[#52525c] lg:whitespace-nowrap">
                 A real editor on every video you send
               </p>
             </div>
@@ -110,7 +110,7 @@ export default function PricingSection() {
           <div className="flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-4 lg:p-5">
             <div>
               <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Studio</h3>
-              <p className="mt-1 whitespace-nowrap text-[15px] text-[#52525c]">
+              <p className="mt-1 text-[15px] text-[#52525c] lg:whitespace-nowrap">
                 Higher volume and full-service production for teams
               </p>
             </div>
