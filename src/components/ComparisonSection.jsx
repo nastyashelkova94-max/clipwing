@@ -83,7 +83,7 @@ export default function ComparisonSection() {
             className={`overflow-hidden rounded-[20px] p-1 lg:rounded-3xl lg:p-2 ${
               card.highlighted
                 ? 'glass-indigo relative z-10 shadow-[0_24px_48px_-16px_rgba(79,70,229,0.35)] lg:-my-6 lg:scale-105'
-                : 'glass-soft lg:mx-3'
+                : 'glass-soft'
             }`}
           >
             <div
@@ -115,7 +115,7 @@ export default function ComparisonSection() {
               <h3
                 className={
                   card.highlighted
-                    ? 'relative flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-[#21234e]'
+                    ? 'relative flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-black'
                     : 'text-xl font-medium leading-[100%] text-slate-500'
                 }
               >
@@ -129,7 +129,9 @@ export default function ComparisonSection() {
                 {card.points.map((point) => (
                   <li
                     key={point}
-                    className="flex items-start gap-2 text-base text-slate-500"
+                    className={`flex items-start gap-2 text-base ${
+                      card.highlighted ? 'text-black' : 'text-slate-500'
+                    }`}
                   >
                     {card.highlighted ? (
                       <CheckIcon className="mt-1 size-4 shrink-0 text-indigo-600" />
