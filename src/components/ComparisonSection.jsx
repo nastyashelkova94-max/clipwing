@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
 import circleX from '../assets/icons/circle-x.svg'
-import teamAvatars from '../assets/images/team-avatars.png'
 
 function CheckIcon(props) {
   return (
@@ -62,7 +61,7 @@ export default function ComparisonSection() {
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-4 grid w-full grid-cols-1 items-center gap-4 lg:mt-8 lg:grid-cols-3">
+      <div className="mx-auto mt-4 grid w-full grid-cols-1 items-center gap-4 lg:mt-16 lg:grid-cols-3">
         {cards.map((card, i) => (
           <motion.div
             key={card.key}
@@ -80,29 +79,19 @@ export default function ComparisonSection() {
             <div
               className={`flex flex-col gap-6 rounded-2xl p-6 text-left ${
                 card.highlighted
-                  ? 'bg-[#3731A0]'
+                  ? 'bg-[#AA9FFF]'
                   : 'border border-slate-100 bg-white'
               }`}
             >
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3
-                  className={
-                    card.highlighted
-                      ? 'text-2xl font-semibold leading-[100%] tracking-tight text-white'
-                      : 'text-xl font-medium leading-[100%] text-[#21234e]'
-                  }
-                >
-                  {card.title}
-                </h3>
-                {card.highlighted && (
-                  <div className="flex shrink-0 items-center gap-2">
-                    <img src={teamAvatars} alt="" className="h-8 w-auto" />
-                    <span className="whitespace-nowrap text-sm text-indigo-100">
-                      +15 creators
-                    </span>
-                  </div>
-                )}
-              </div>
+              <h3
+                className={
+                  card.highlighted
+                    ? 'text-2xl font-semibold leading-[100%] tracking-tight text-white'
+                    : 'text-xl font-medium leading-[100%] text-[#21234e]'
+                }
+              >
+                {card.title}
+              </h3>
 
               <ul className="flex flex-col gap-3">
                 {card.points.map((point) => (
@@ -127,7 +116,7 @@ export default function ComparisonSection() {
                   href="https://auto.clipwing.pro/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto flex h-12 items-center justify-center rounded-xl bg-white text-base font-medium text-indigo-600 transition-colors hover:bg-indigo-50"
+                  className="glass-soft mt-auto flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-300! px-6 py-3 text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)] transition-colors hover:bg-[#6565F0]/30"
                 >
                   Get my clips
                 </a>
