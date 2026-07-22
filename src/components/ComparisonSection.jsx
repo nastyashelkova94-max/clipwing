@@ -16,14 +16,14 @@ const cards = [
     highlighted: false,
     title: (
       <>
-        AI <span className="text-slate-500 line-through">Clippers</span> Sloppers
+        AI <span className="text-slate-500 line-through">Clippers</span> Slopers
       </>
     ),
     points: [
-      'Cuts at random, misses the point',
-      'Captions jump, transitions glitch',
-      'Cheap, and it looks cheap',
-      'You fix it all by hand anyway',
+      'Picks random moments',
+      'Misses the key idea',
+      'Makes generic edits',
+      'You still have to fix everything',
     ],
   },
   {
@@ -32,12 +32,12 @@ const cards = [
     imageHeight: 'h-[352px]',
     icon: circleCheck,
     highlighted: true,
-    title: 'Clipwing',
+    title: 'Clipwing Autopilot',
     points: [
-      'Send a link, a real editor makes it',
-      'AI draft plus human taste',
-      'Same editor, your brand kit',
-      'Ready in 3 days, all in one app',
+      'Upload your video',
+      'Get matched with a real editor',
+      'Get consistent, high-quality edits',
+      'Review, approve, and publish in one app',
     ],
   },
   {
@@ -46,12 +46,12 @@ const cards = [
     imageHeight: 'h-[244px]',
     icon: circleX,
     highlighted: false,
-    title: 'An Upwork editor',
+    title: 'Upwork',
     points: [
-      'Post a job, run test edits, screen strangers',
-      'Ghosts you, then misses the deadline',
+      'Post a job, run test project, screen strangers',
       'Re-explain your brand every time',
-      'Quality is a coin flip',
+      'Chase files and deadlines',
+      'Start over when they disappear',
     ],
   },
 ]
