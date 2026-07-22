@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "dev",
-      "runtimeExecutable": "/Users/nastyaedge/untitled folder/dev.sh",
+      "runtimeExecutable": "/Users/nastyaedge/clipwing/dev.sh",
       "runtimeArgs": [],
       "port": 5173
     }

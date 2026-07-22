@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import Reveal from './Reveal'
 import circleX from '../assets/icons/circle-x.svg'
 import logoMark from '../assets/logo/logo-mark.svg'
+import card2Bg from '../assets/images/card2.png'
 
 function CheckIcon(props) {
   return (
@@ -78,35 +79,41 @@ export default function ComparisonSection() {
             }`}
           >
             <div
-              className={`flex flex-col gap-6 rounded-2xl p-5 text-left ${
-                card.highlighted
-                  ? 'bg-indigo-500 shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),inset_0_-10px_20px_rgba(0,0,0,0.12)]'
-                  : 'border border-slate-100 bg-white'
+              className={`relative flex flex-col gap-6 overflow-hidden rounded-2xl p-5 text-left ${
+                card.highlighted ? 'bg-white' : 'border border-slate-100 bg-white'
               }`}
             >
+              {card.highlighted && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-cover bg-bottom"
+                  style={{
+                    backgroundImage: `linear-gradient(to bottom, #fff 0%, rgba(255,255,255,0) 55%), url(${card2Bg})`,
+                  }}
+                />
+              )}
+
               <h3
                 className={
                   card.highlighted
-                    ? 'flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-white'
+                    ? 'relative flex items-center gap-2 text-2xl font-semibold leading-[100%] tracking-tight text-[#21234e]'
                     : 'text-xl font-medium leading-[100%] text-[#21234e]'
                 }
               >
                 {card.highlighted && (
-                  <img src={logoMark} alt="" className="h-6 w-6 shrink-0 invert" />
+                  <img src={logoMark} alt="" className="h-6 w-6 shrink-0" />
                 )}
                 {card.title}
               </h3>
 
-              <ul className="flex flex-col gap-3">
+              <ul className="relative flex flex-col gap-3">
                 {card.points.map((point) => (
                   <li
                     key={point}
-                    className={`flex items-start gap-2 text-base ${
-                      card.highlighted ? 'text-white/90' : 'text-slate-500'
-                    }`}
+                    className="flex items-start gap-2 text-base text-slate-500"
                   >
                     {card.highlighted ? (
-                      <CheckIcon className="mt-1 size-4 shrink-0" />
+                      <CheckIcon className="mt-1 size-4 shrink-0 text-indigo-600" />
                     ) : (
                       <img src={circleX} alt="" className="mt-1 h-4 w-4 shrink-0" />
                     )}
@@ -120,7 +127,7 @@ export default function ComparisonSection() {
                   href="https://auto.clipwing.pro/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-white px-6 py-3 text-base font-medium text-indigo-600 shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.1)] transition-colors hover:bg-indigo-50"
+                  className="relative mt-auto flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3 text-base font-medium text-white shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-indigo-600"
                 >
                   Get my clips
                 </a>
