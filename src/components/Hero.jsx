@@ -24,7 +24,7 @@ export default function Hero() {
           variants={item}
           className="font-sans text-[46px] font-medium leading-[1.15] text-slate-900 sm:text-[56px] lg:text-[70px] lg:leading-[76px]"
         >
-          <span className="block">Smarter than an AI clipper,</span>
+          <span className="block">Smarter than AI clippers,</span>
           <span className="block">
             <span className="font-serif font-medium italic text-indigo-600">
               easier
