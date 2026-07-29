@@ -43,9 +43,12 @@ export default function Header() {
   }
 
   return (
+    // Fade in only — no y/transform. A transform on this element would make it a
+    // "backdrop root" and stop the scrolled pill's backdrop-filter blur from
+    // sampling the page behind it (i.e. the glass effect would disappear).
     <motion.header
-      initial={{ y: -16 }}
-      animate={{ y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="pointer-events-none sticky top-0 z-30 flex flex-col items-center px-6 py-6 lg:px-10"
     >
