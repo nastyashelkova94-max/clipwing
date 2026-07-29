@@ -181,9 +181,10 @@ a, button, [role="button"] {
    glass with a layered inset rim-light (no outer drop shadow). */
 .nav-pill.is-scrolled {
   max-width: 1000px;
-  /* Frosted fill: same tint as clipwing.pro (rgb 239,239,239) but a higher
-     alpha so the pill reads less transparent / more solidly glassy. */
-  background: rgba(239, 239, 239, 0.5);
+  /* Frosted white fill with a high alpha so the pill stays opaque enough that
+     page text/background don't show through, even where backdrop-filter blur
+     isn't rendered by the browser. */
+  background: rgba(255, 255, 255, 0.82);
   border-color: transparent;
   /* Exact 4-layer inset rim-light copied from clipwing.pro's nav pill. */
   box-shadow:
