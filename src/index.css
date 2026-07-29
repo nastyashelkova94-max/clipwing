@@ -167,20 +167,21 @@ a, button, [role="button"] {
   border: 1px solid transparent;
   background: transparent;
   box-shadow: none;
-  backdrop-filter: blur(0);
-  -webkit-backdrop-filter: blur(0);
+  /* No backdrop-filter here: it would make the pill a "backdrop root" and stop
+     the Free-tools dropdown's own glass blur from sampling the page behind it
+     (the dropdown hangs below the pill, over empty area of that root). The
+     scrolled pill's frosted look comes from its background + inset rim-light. */
   transition:
     max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     background 0.35s,
     box-shadow 0.35s,
-    border-color 0.35s,
-    backdrop-filter 0.35s;
+    border-color 0.35s;
 }
 /* Scrolled "in motion" pill — matched to clipwing.pro: a transparent frosted
    glass with a layered inset rim-light (no outer drop shadow). */
 .nav-pill.is-scrolled {
   max-width: 1000px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.32);
   border-color: transparent;
   box-shadow:
     0.4px 0.4px 0.4px -0.9px rgba(255, 255, 255, 0.25) inset,
