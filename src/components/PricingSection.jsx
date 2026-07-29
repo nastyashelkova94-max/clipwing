@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
+import { Button } from '@/components/ui/button'
 import circleCheck from '../assets/icons/circle-check.svg'
 import circleCheckGray from '../assets/icons/circle-check-gray.svg'
 
@@ -35,8 +36,8 @@ export default function PricingSection() {
 
       <div className="mx-auto mt-4 grid max-w-[900px] grid-cols-1 gap-4 lg:mt-8 lg:items-center lg:gap-6 lg:grid-cols-2">
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ y: 28 }}
+          whileInView={{ y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ y: -6 }}
@@ -76,31 +77,33 @@ export default function PricingSection() {
               ))}
             </ul>
             <div className="mt-auto flex flex-col gap-3">
-              <motion.a
-                href="https://auto.clipwing.pro/"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileTap={{ scale: 0.98 }}
-                className="flex h-12 items-center justify-center rounded-xl border border-indigo-400 bg-indigo-500 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3]"
-              >
-                Get my clips
-              </motion.a>
-              <motion.a
-                href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileTap={{ scale: 0.98 }}
-                className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)] transition-colors hover:bg-[#6565F0]/30"
-              >
-                Book a call
-              </motion.a>
+              <Button asChild variant="brand" size="xl" className="w-full">
+                <motion.a
+                  href="https://auto.clipwing.pro/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Get my clips
+                </motion.a>
+              </Button>
+              <Button asChild variant="brandSoft" size="xl" className="w-full">
+                <motion.a
+                  href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Book a call
+                </motion.a>
+              </Button>
             </div>
           </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ y: 28 }}
+          whileInView={{ y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ y: -6 }}
@@ -128,24 +131,32 @@ export default function PricingSection() {
               ))}
             </ul>
             <div className="mt-auto flex flex-col gap-3">
-              <motion.a
-                href="https://clipwing.pro/custom-video-production"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileTap={{ scale: 0.98 }}
-                className="flex h-12 items-center justify-center rounded-xl border border-slate-800 bg-slate-800 text-base font-medium text-white transition-colors hover:bg-[#0F172A]"
+              <Button
+                asChild
+                variant="brand"
+                size="xl"
+                className="w-full"
+                style={{ background: '#0F172A', borderColor: '#0F172A' }}
               >
-                See Studio
-              </motion.a>
-              <motion.a
-                href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileTap={{ scale: 0.98 }}
-                className="glass-soft flex h-12 items-center justify-center rounded-xl border border-indigo-300! text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)] transition-colors hover:bg-[#6565F0]/30"
-              >
-                Book a call
-              </motion.a>
+                <motion.a
+                  href="https://clipwing.pro/custom-video-production"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileTap={{ scale: 0.97 }}
+                >
+                  See Studio
+                </motion.a>
+              </Button>
+              <Button asChild variant="brandSoft" size="xl" className="w-full">
+                <motion.a
+                  href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Book a call
+                </motion.a>
+              </Button>
             </div>
           </div>
         </motion.div>

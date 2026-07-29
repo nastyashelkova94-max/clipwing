@@ -1,0 +1,823 @@
+/* ============================================================
+   Interactive hero app ("clickable demo").
+   All rules are scoped under `.hero-app` so the widget's generic
+   class names (.btn, .chip, .glass, .comment, .platform, …) never
+   collide with the app's Tailwind/shadcn utilities. Keyframes are
+   hoisted to the top level (they can't live inside a nested rule).
+
+   Type system — Linear-strict: ONE family (Inter), ONE size (15px) and
+   ONE weight (400) for the entire app. Hierarchy comes from colour only
+   (--ink > --body-c > --muted > --faint), never from size or weight.
+   Spacing is a strict 4px grid; radii and palette are the app's
+   shadcn tokens.
+   ============================================================ */
+
+@keyframes ha-pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.8); } }
+@keyframes ha-hint-bob { 0%, 100% { transform: rotate(-4deg) translateY(0); } 50% { transform: rotate(-3deg) translateY(-5px); } }
+@keyframes ha-panel-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes ha-card-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes ha-shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+@keyframes ha-floater-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+.hero-app {
+  /* palette — shadcn/slate */
+  --ink: #0f172a;
+  --body-c: #475569;
+  --muted: #64748b;
+  --faint: #94a3b8;
+  --accent: #6366f1;
+  --accent-deep: #4f46e5;
+  --accent-hover: #5457e8;
+  --accent-soft: #eef2ff;
+  --accent-line: #c7d2fe;
+  --paper: #ffffff;
+  --surface: #f8fafc;
+  --surface-2: #f1f5f9;
+  --line: #e2e8f0;
+  --ok: #16a34a;
+
+  /* radius — bumped up one step for a rounder look across the app */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+
+  /* spacing — strict 4px grid */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+
+  /* one type family + size + weight for the whole app.
+     Inter (not the page's Geist) — this is product UI, not marketing copy. */
+  --ha-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --fs: 15px;
+  --fw: 400;
+
+  /* control heights — scaled to the 16px type (shadcn default control = 36px) */
+  --h-md: 36px;
+  --h-sm: 32px;
+  --h-xs: 28px;
+
+  /* The window never changes height between tabs. This is the Clip board's
+     own natural content height — every other panel is locked to it and
+     scrolls internally instead of growing. */
+  --panel-h: 500px;
+
+  --shadow-xs: 0 1px 2px rgba(15,23,42,.05);
+  --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
+  --shadow-lg: 0 12px 32px rgba(15,23,42,.12), 0 2px 6px rgba(15,23,42,.06);
+
+  --ha-serif: 'Playfair Display', Georgia, serif;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+
+  color: var(--ink);
+  text-align: left;
+  font-family: var(--ha-sans);
+  font-size: var(--fs);
+  font-weight: var(--fw);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+
+  /* Enforce the single type scale on every descendant. Hierarchy is
+     expressed with colour, so nothing needs its own size or weight. */
+  * {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+  }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    height: var(--h-md);
+    padding: 0 var(--sp-3);
+    border-radius: var(--r-md);
+    white-space: nowrap;
+    transition: transform .15s var(--ease-out), background .15s, border-color .15s, box-shadow .15s, color .15s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-primary {
+    background: linear-gradient(180deg, #6a63f5 0%, #5551ec 55%, #4d46e8 100%);
+    color: #f7f6ff;
+    border: 1px solid #5d55ee;
+    box-shadow: inset 0 1.5px 0 rgba(255,255,255,.35), 0 6px 16px rgba(65,57,227,.28);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(180deg, #5f58f2 0%, #4139e3 60%, #382fe0 100%);
+    box-shadow: inset 0 1.5px 0 rgba(255,255,255,.3), 0 8px 22px rgba(65,57,227,.36);
+  }
+  .btn-outline {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    box-shadow: var(--shadow-xs);
+  }
+  .btn-outline:hover { background: var(--surface); border-color: #cbd5e1; }
+  .btn-sm { height: var(--h-sm); padding: 0 var(--sp-2); border-radius: var(--r-sm); }
+
+  /* ---------- chips ----------
+     Badges are fully rounded; only inputs, buttons and cards use the radius
+     scale. Keeps them readable as status, not as another control. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    height: calc(var(--h-xs) + 2px);
+    padding: 0 var(--sp-3);
+    border-radius: 999px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--body-c);
+    white-space: nowrap;
+  }
+  /* neutral outlined pill (ref look) — status reads through the dot, not a fill */
+  .chip-live { color: var(--body-c); border-color: var(--line); background: var(--paper); }
+  .chip-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: ha-pulse-dot 1.6s ease-in-out infinite; }
+  .chip-editor .chip-face {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: linear-gradient(135deg, #f6a5c0, #c084fc);
+    color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  /* ---------- glass bezel ---------- */
+  .glass {
+    position: relative;
+    padding: 6px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.55);
+    border: 1px solid rgba(255,255,255,.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.8),
+      0 8px 28px rgba(15,23,42,.10),
+      0 1px 3px rgba(15,23,42,.06);
+  }
+
+  .logo-img-sm { height: 24px; width: auto; }
+
+  /* ---------- stage ---------- */
+  .demo-stage {
+    position: relative;
+    z-index: 2;
+    max-width: 1260px;
+    margin: 44px auto 0;
+    padding-bottom: 0;
+  }
+  /* decorative page annotation — deliberately outside the app's type scale */
+  .demo-hint {
+    position: absolute;
+    top: -34px;
+    left: 4%;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    color: var(--accent-deep);
+    transform: rotate(-4deg);
+    animation: ha-hint-bob 3.4s ease-in-out infinite;
+    z-index: 3;
+  }
+  .demo-hint .demo-hint-text {
+    font-family: var(--ha-serif);
+    font-style: italic;
+    font-size: 21px;
+    font-weight: 500;
+  }
+  .demo-hint-arrow { margin-top: 16px; }
+
+  /* ---- demo window ---- */
+  .glass-demo { border-radius: 20px; box-shadow: inset 0 1px 1px rgba(255,255,255,.8), 0 20px 50px rgba(15,23,42,.14), 0 2px 6px rgba(15,23,42,.06); }
+  /* concentric with the glass bezel: outer r-xl (20) minus the .glass 6px pad
+     = 14, so the translucent frame stays an even 6px around every corner */
+  .glass-demo > .demo-window { border-radius: calc(var(--r-xl) - 6px); }
+  .demo-window {
+    position: relative;
+    background: var(--paper);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .demo-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: var(--sp-2) var(--sp-4);
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+  }
+  .demo-brand { display: flex; align-items: center; gap: var(--sp-2); }
+  .demo-tabs {
+    display: flex;
+    gap: var(--sp-1);
+    padding: var(--sp-1);
+    border-radius: calc(var(--r-md) + 2px);
+    background: var(--surface-2);
+  }
+  .demo-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    height: calc(var(--h-sm) + 5px);
+    padding: 0 var(--sp-3);
+    border-radius: calc(var(--r-sm) + 2px);
+    color: var(--muted);
+    transition: color .15s, background .15s, box-shadow .15s;
+  }
+  .demo-tab:hover { color: var(--ink); }
+  .demo-tab.active { background: #fff; color: var(--ink); box-shadow: var(--shadow-xs); }
+  .demo-tab-badge {
+    min-width: 20px; height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .demo-top-right { display: flex; align-items: center; gap: var(--sp-3); }
+  .demo-bell { position: relative; color: var(--muted); display: inline-flex; }
+  .demo-bell i {
+    position: absolute; top: -1px; right: -1px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #ef4444; border: 1.5px solid #fff;
+  }
+  .demo-avatar {
+    width: var(--h-xs); height: var(--h-xs);
+    border-radius: 50%;
+    background: linear-gradient(135deg, #93c5fd, #6366f1);
+    color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .demo-avatar img, .comment-face img, .chip-face img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  /* shadcn Avatar fallback — neutral circle + lucide user glyph */
+  .demo-avatar.avatar-fallback, .comment-face.avatar-fallback {
+    background: var(--surface-2);
+    color: var(--muted);
+    border: 1px solid var(--line);
+  }
+  .avatar-fallback svg { width: 56%; height: 56%; }
+
+  .demo-panel { display: none; padding: var(--sp-4); background: var(--surface); height: var(--panel-h); overflow: hidden; }
+  .demo-panel.active { display: block; animation: ha-panel-in .3s var(--ease-out); }
+  /* an open popover is allowed out of the window, the way a portalled Radix
+     popover would be — otherwise the fixed-height panel clips it */
+  &.popover-open .demo-window, &.popover-open .demo-panel { overflow: visible; }
+
+  .demo-label { display: block; color: var(--ink); margin-bottom: var(--sp-2); }
+  .demo-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: calc(var(--h-md) + 4px);
+    padding: 0 var(--sp-3);
+    border-radius: var(--r-md);
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    outline: none;
+    box-shadow: var(--shadow-xs);
+    transition: border-color .15s, box-shadow .15s;
+    min-width: 0;
+  }
+  .demo-input::placeholder { color: var(--faint); }
+  #panel-board .board-add, #panel-board .board-queue,
+  .review-grid > *, .sched-grid > * { min-width: 0; }
+  .demo-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,.18); }
+  .icon-btn {
+    width: var(--h-sm); height: var(--h-sm);
+    border-radius: var(--r-md);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    background: #fff;
+    box-shadow: var(--shadow-xs);
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .icon-btn:hover { color: var(--ink); background: var(--surface); border-color: #cbd5e1; }
+
+  /* ---------- board ----------
+     Two columns: the input flow on the left (link → queued), everything the
+     service gives back on the right. One spacing scale throughout —
+     label→control 8, block→block 12, card padding 12, column gap 20. */
+  #panel-board { display: none; }
+  #panel-board.active { display: grid; grid-template-columns: calc((100% - var(--sp-5) - 110px) / 2) calc((100% - var(--sp-5) + 110px) / 2); gap: var(--sp-5); align-items: stretch; }
+  /* columns run on an 8px rhythm (label→control); a block that starts a new
+     group adds 4 on top of it, so group→group is 12. */
+  #panel-board .board-add, #panel-board .board-queue { display: flex; flex-direction: column; gap: var(--sp-2); min-height: 0; }
+  #panel-board .demo-label { margin-bottom: 0; }
+  #panel-board .board-group { margin-top: var(--sp-1); }
+  .board-add-row { display: flex; gap: var(--sp-2); }
+  .board-add-row .demo-input { flex: 1; }
+  .demo-add-btn { height: calc(var(--h-md) + 4px); border-radius: var(--r-md); padding: 0 var(--sp-4); }
+  .board-error {
+    display: none;
+    color: #dc2626;
+    animation: ha-panel-in .2s var(--ease-out);
+  }
+  .board-error.show { display: block; }
+  .board-count { color: var(--muted); margin-left: 2px; }
+  .board-samples { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+  .board-samples-label { color: var(--muted); }
+  .chip-sample { cursor: pointer; transition: border-color .15s, color .15s, background .15s; }
+  .chip-sample:hover { border-color: var(--accent-line); color: var(--accent-deep); background: var(--accent-soft); }
+  .board-next {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    flex: 1;
+    padding: var(--sp-3);
+    border-radius: var(--r-lg);
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .board-next-title { color: var(--ink); }
+  .board-next ol { list-style: none; display: flex; flex-direction: column; justify-content: space-around; gap: var(--sp-2); flex: 1; }
+  .board-next li { display: flex; align-items: center; gap: var(--sp-2); color: var(--body-c); }
+  .board-next li span {
+    width: 24px; height: 24px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .board-ready { display: flex; flex-direction: column; gap: var(--sp-2); flex: 1; }
+  .ready-row {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: 9px var(--sp-3);
+    border-radius: var(--r-md);
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-xs);
+    text-align: left;
+    transition: border-color .15s, background .15s, box-shadow .15s;
+  }
+  .ready-row:hover { border-color: var(--accent-line); background: var(--surface); box-shadow: var(--shadow-sm); }
+  .ready-row img { width: 36px; height: 48px; object-fit: cover; border-radius: var(--r-sm); flex-shrink: 0; }
+  .ready-name { flex: 1; color: var(--ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ready-row svg { color: var(--faint); flex-shrink: 0; }
+  .board-list { display: flex; flex-direction: column; gap: var(--sp-2); flex: 1; min-height: 0; overflow-y: auto; padding-right: 3px; }
+  /* Thumbnail on top, meta under it — the card owns one 12px padding box.
+     A lone card stretches to fill the column (its thumbnail gives up ratio
+     for height); as soon as there are several, every card keeps its natural
+     16/9 size and the list scrolls instead of squashing them all. */
+  .board-card {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    overflow: hidden; /* clips the full-bleed cover's top corners to the card radius */
+    border-radius: var(--r-lg);
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-xs);
+    animation: ha-card-in .45s var(--ease-out);
+  }
+  .board-card:only-child { flex: 1 1 auto; min-height: 0; max-height: calc(100% - 30px); }
+  /* a lone card fills the column by growing its cover — not by leaving a gap
+     under the chips */
+  .board-card:only-child .board-thumb { flex: 1 1 auto; }
+  /* with a queue, thumbnails go compact so a card's title and chips stay
+     visible instead of every card being a full-height poster */
+  .board-list:has(.board-card + .board-card) .board-thumb { max-height: 120px; }
+  .board-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    min-height: 96px;
+    border-radius: 0; /* top corners come from the card clip; bottom stays square */
+    overflow: hidden;
+    background: var(--surface-2);
+    position: relative;
+  }
+  .board-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .board-thumb.skeleton::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.85) 50%, transparent 70%);
+    animation: ha-shimmer 1.2s infinite;
+  }
+  .board-meta { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; padding: var(--sp-3); }
+  .board-title { color: var(--ink); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .board-chips { display: flex; gap: var(--sp-1); flex-wrap: wrap; }
+
+  /* ---------- review ---------- */
+  .review-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: var(--sp-4); align-items: stretch; height: 100%; }
+  .review-player {
+    display: flex; flex-direction: column; gap: var(--sp-3);
+    min-height: 0;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: var(--sp-3);
+    box-shadow: var(--shadow-sm);
+  }
+  /* single line — a wrapped header would eat the video's height */
+  .review-player-top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); flex-wrap: nowrap; }
+  .review-clipnav { display: flex; align-items: center; gap: var(--sp-2); color: var(--ink); white-space: nowrap; }
+  .review-actions { display: flex; gap: var(--sp-2); }
+  .review-actions .btn { height: var(--h-sm); padding: 0 var(--sp-2); border-radius: var(--r-sm); gap: var(--sp-1); }
+  #approveBtn.approved { background: var(--ok); border-color: transparent; box-shadow: var(--shadow-xs); }
+  .player-frame {
+    position: relative;
+    border-radius: 0; /* video keeps square corners */
+    overflow: hidden;
+    background: #0b0d16;
+    aspect-ratio: 9/16;
+    flex: 1 1 auto;    /* fills whatever height the fixed panel leaves */
+    min-height: 0;
+    align-self: center;
+  }
+  .player-frame video { width: 100%; height: 100%; object-fit: contain; }
+  .player-bigplay {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.95);
+    color: #0f172a;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(11,13,22,.16), 0 10px 28px rgba(11,13,22,.3);
+    transition: transform .2s var(--ease-out), opacity .25s;
+  }
+  .player-bigplay:hover { transform: scale(1.06); }
+  .ic-tri { display: block; margin-left: 5%; }
+  .player-frame.playing .player-bigplay { opacity: 0; pointer-events: none; transform: scale(.85); }
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: 0;
+    background: transparent;
+    border: 0;
+  }
+  .player-controls .icon-btn { width: auto; height: auto; border: 0; background: transparent; box-shadow: none; color: var(--ink); }
+  .player-controls .icon-btn:hover { background: transparent; border: 0; color: #000; }
+  .player-speed { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .player-time { color: var(--ink); font-variant-numeric: tabular-nums; min-width: 30px; text-align: center; }
+  .player-track {
+    position: relative;
+    flex: 1;
+    height: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .player-track::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 4px;
+    border-radius: 999px;
+    background: #dfe3ec;
+  }
+  .player-track-fill {
+    position: absolute;
+    left: 0;
+    height: 4px;
+    width: 0%;
+    border-radius: 999px;
+    background: var(--ink);
+  }
+  .player-track-dot {
+    position: absolute;
+    left: 0%;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid #cbd5e1;
+    box-shadow: 0 1px 3px rgba(15,23,42,.28);
+    transform: translateX(-50%);
+  }
+  .review-side {
+    display: flex; flex-direction: column; gap: var(--sp-3);
+    min-height: 0;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: var(--sp-3);
+    box-shadow: var(--shadow-sm);
+  }
+  .review-side-tabs { display: grid; grid-template-columns: 1fr; gap: var(--sp-1); padding: 0; border-radius: var(--r-md); background: transparent; border: 1px solid var(--line); }
+  .side-tab {
+    height: var(--h-sm);
+    border-radius: var(--r-sm);
+    color: var(--muted);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: color .15s, background .15s, box-shadow .15s;
+  }
+  .side-tab:hover { color: var(--ink); }
+  .side-tab.active { background: transparent; color: var(--ink); box-shadow: none; }
+  .comments { display: flex; flex-direction: column; gap: var(--sp-2); flex: 1 1 auto; overflow-y: auto; min-height: 0; padding-right: 3px; }
+  /* `display:flex` beats the hidden attribute — restore it for the tab swap */
+  .comments[hidden], .comment-form[hidden], .transcript[hidden] { display: none; }
+
+  /* ---------- transcript ---------- */
+  .transcript {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    padding-right: 3px;
+    animation: ha-panel-in .25s var(--ease-out);
+  }
+  /* empty state — centred in the side panel, muted like every other placeholder */
+  .transcript-empty {
+    margin: auto;
+    max-width: 240px;
+    text-align: center;
+    color: var(--muted);
+  }
+  .comment {
+    display: flex;
+    gap: var(--sp-2);
+    padding: var(--sp-2);
+    background: var(--surface-2);
+    border: 0;
+    border-radius: var(--r-sm);
+    animation: ha-card-in .35s var(--ease-out);
+  }
+  .comment-face {
+    width: 24px; height: 24px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #93c5fd, #6366f1);
+    color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .comment-body { min-width: 0; }
+  .comment-head { color: var(--ink); display: flex; align-items: center; gap: var(--sp-1); }
+  .comment-head time { color: var(--muted); }
+  .comment-text { color: var(--body-c); }
+  .tc {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 var(--sp-2);
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    font-variant-numeric: tabular-nums;
+    transition: background .15s;
+  }
+  .tc:hover { background: #e0e7ff; }
+  .mention { color: var(--accent-deep); }
+  .comment-form {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-1) var(--sp-2);
+    border-radius: var(--r-md);
+    background: var(--surface-2);
+    border: 1px solid transparent;
+    flex-shrink: 0;
+  }
+  .tc-live { flex-shrink: 0; }
+  .comment-input { border: 0; box-shadow: none; height: calc(var(--h-sm) + 4px); padding: 0 var(--sp-1); background: transparent; }
+  .comment-input:focus { box-shadow: none; border: 0; }
+  .comment-send { width: var(--h-sm); height: var(--h-sm); padding: 0; border-radius: var(--r-sm); flex-shrink: 0; }
+
+  /* ---------- scheduler ---------- */
+  /* content is centred in the panel — both columns, horizontally and vertically */
+  /* schedule panel centres its content vertically (reference: short panel,
+     flex column, justify-center) so the grass line below never shifts */
+  #panel-schedule.active { display: flex; flex-direction: column; justify-content: center; }
+  /* preview + form hug their content so the whole block can be centred in the
+     panel; the form itself is only as wide as the platform pill row */
+  .sched-grid {
+    display: grid;
+    grid-template-columns: 280px auto;
+    gap: 34px;
+    position: relative;
+    margin: 0 auto;
+    width: fit-content;
+    align-items: start;
+  }
+  .sched-preview {
+    position: relative;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: #0b0d16;
+    align-self: start;
+    border: 1px solid var(--line);
+  }
+  .sched-preview img { width: 100%; aspect-ratio: 9/14; object-fit: cover; display: block; opacity: .96; }
+  .sched-preview-badge {
+    position: absolute;
+    top: var(--sp-2); left: var(--sp-2);
+    height: calc(var(--h-xs) + 2px);
+    padding: 0 var(--sp-3);
+    border-radius: 999px;
+    background: var(--ok);
+    color: #fff;
+    display: inline-flex; align-items: center;
+  }
+  /* the form is as wide as its widest control — the YouTube + TikTok row —
+     so Title and the date row line up with it instead of a magic number */
+  .sched-form { display: flex; flex-direction: column; gap: 14px; width: fit-content; }
+  .sched-form .demo-label { margin-bottom: -6px; }
+  /* scheduler controls run taller than the app default for a roomier form */
+  --h-sched: 42px;
+  .sched-platforms { display: flex; gap: var(--sp-2); }
+  .sched-form .demo-input { height: var(--h-sched); }
+  .platform {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    height: var(--h-sched);
+    padding: 0 var(--sp-3);
+    border-radius: var(--r-md);
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--body-c);
+    box-shadow: var(--shadow-xs);
+    transition: border-color .15s, box-shadow .15s, color .15s;
+  }
+  .platform.active { border-color: var(--accent); color: var(--ink); box-shadow: 0 0 0 3px rgba(99,102,241,.15); }
+  /* Date + time size to their own content. `width: 0; min-width: 100%` keeps the
+     row out of the form's fit-content calculation, so when a longer date makes
+     the fields wider they grow to the right instead of re-centring the grid and
+     nudging the video. */
+  /* the date/time row is pinned to the form width (which the platform pills
+     define) so it never widens the form */
+  .sched-when { display: flex; gap: 10px; width: 0; min-width: 100%; }
+  .sched-datewrap, .sched-timewrap { position: relative; }
+  .sched-datewrap { flex: 1.7; }
+  .sched-timewrap { flex: 1; }
+  .sched-field { gap: 6px; cursor: pointer; text-align: left; width: 100%; color: var(--body-c); white-space: nowrap; padding: 0 10px; }
+  .sched-field.filled { color: var(--ink); }
+  .sched-field svg { flex-shrink: 0; color: var(--faint); }
+  /* shadcn Calendar geometry: p-3, 32px cells, ghost nav, centred caption.
+     Opens upward — downward it runs past the bottom of the window. */
+  .calendar {
+    position: absolute;
+    bottom: calc(100% + var(--sp-1));
+    left: 0;
+    z-index: 20;
+    width: 248px;
+    padding: var(--sp-3);
+    border-radius: var(--r-lg);
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-lg);
+    animation: ha-panel-in .2s var(--ease-out);
+  }
+  .cal-head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    margin-bottom: var(--sp-1);
+    color: var(--ink);
+  }
+  .cal-head .icon-btn {
+    position: absolute;
+    top: 0;
+    width: 32px; height: 32px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .cal-head .icon-btn:hover { background: var(--surface-2); border: 0; color: var(--ink); }
+  .cal-head #calPrev { left: 0; }
+  .cal-head #calNext { right: 0; }
+  .cal-week { display: grid; grid-template-columns: repeat(7, 32px); margin-bottom: var(--sp-1); }
+  .cal-week span {
+    height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    padding: 0;
+  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 32px); gap: 0; }
+  .cal-day {
+    width: 32px; height: 32px;
+    border-radius: var(--r-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .12s, color .12s;
+  }
+  .cal-day:hover { background: var(--surface-2); }
+  .cal-day.other, .cal-day.past { color: #cbd5e1; }
+  .cal-day.past { pointer-events: none; }
+  .cal-day.today { background: var(--surface-2); }
+  .cal-day.selected { background: var(--accent); color: #fff; }
+  /* drops downward; JS caps max-height so it always ends inside the window */
+  .timelist {
+    position: absolute;
+    top: calc(100% + var(--sp-1));
+    left: 0; right: 0;
+    z-index: 20;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: var(--sp-1);
+    border-radius: var(--r-md);
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-lg);
+    animation: ha-panel-in .2s var(--ease-out);
+  }
+  .timelist.up { top: auto; bottom: calc(100% + var(--sp-1)); }
+  .timelist button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: var(--sp-1) var(--sp-2);
+    border-radius: var(--r-sm);
+    font-variant-numeric: tabular-nums;
+    transition: background .12s, color .12s;
+  }
+  .timelist button:hover { background: var(--surface-2); }
+  .timelist button.selected { background: var(--accent); color: #fff; }
+  .sched-submit { height: var(--h-sched); margin-top: var(--sp-1); align-self: flex-start; padding: 0 var(--sp-5); border-radius: var(--r-md); }
+  .sched-success {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    border-radius: var(--r-lg);
+    background: var(--surface);
+    animation: ha-panel-in .35s var(--ease-out);
+    text-align: center;
+  }
+  .sched-success[hidden] { display: none; }
+  .sched-success-title { color: var(--ink); }
+  .sched-success-sub { color: var(--muted); margin-bottom: var(--sp-2); }
+
+  /* ---------- floaters ---------- */
+  .floater {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-3);
+    border-radius: var(--r-xl);
+    background: rgba(255,255,255,.92);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: ha-floater-bob 5.4s ease-in-out infinite;
+  }
+  .floater-slack { top: -52px; right: -34px; }
+  .floater-title { color: var(--ink); }
+  .floater-sub { color: var(--body-c); }
+  .floater-time { color: var(--faint); align-self: flex-start; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    /* stacked layouts can't share one fixed height — let them grow */
+    .demo-panel { height: auto; min-height: var(--panel-h); overflow: visible; }
+    .review-grid { height: auto; grid-template-columns: 1fr; }
+    .review-player-top { flex-wrap: wrap; }
+    .player-frame { flex: 0 0 auto; height: 320px; }
+    .comments { max-height: 260px; }
+    #panel-board.active { grid-template-columns: 1fr; }
+    .sched-grid { grid-template-columns: 1fr; gap: var(--sp-4); max-width: 420px; height: auto; }
+    .sched-preview { max-width: 200px; }
+    .floater-slack { right: -8px; top: -40px; }
+  }
+  @media (max-width: 560px) {
+    /* the 16px scale can't fit logo + 3 tabs + actions on a phone —
+       the tabs are the only part that has to survive */
+    --fs: 14px;
+    .demo-tab { padding: 0 var(--sp-2); white-space: nowrap; flex: 1; justify-content: center; }
+    /* brand, bell and the account avatar all drop out on a phone — the tab bar
+       is the only survivor, so let it fill the header width evenly */
+    .demo-tabs { min-width: 0; flex: 1; }
+    .demo-brand, .demo-bell, .demo-top-right { display: none; }
+    .demo-topbar { padding: var(--sp-2) var(--sp-3); gap: var(--sp-2); justify-content: stretch; }
+    .demo-panel { padding: var(--sp-3); }
+    .floater { display: none; }
+    .demo-hint { display: none; }
+  }
+}

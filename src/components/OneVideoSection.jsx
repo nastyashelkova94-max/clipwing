@@ -215,8 +215,8 @@ function MobileConnector({ mobileClips }) {
             style={{ left: pos.x, top: pos.y, width: M_CARD_W, zIndex: pos.z }}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ scale: 0.85 }}
+              whileInView={{ scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="glass-soft overflow-hidden rounded-[21px] p-2 shadow-lg"
@@ -363,8 +363,8 @@ function DesktopVideoBranch({ playing, setPlaying }) {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               <motion.div
-                initial={{ opacity: 0, scale: 0.85 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ scale: 0.85 }}
+                whileInView={{ scale: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ scale: 1.06 }}

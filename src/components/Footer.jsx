@@ -1,6 +1,6 @@
 import Logo from './Logo'
 import Reveal from './Reveal'
-import grassImg from '../assets/images/footer-grass.png'
+import grassImg from '../assets/images/grass.png'
 import socialX from '../assets/icons/social-x.png'
 import socialTikTok from '../assets/icons/social-tiktok.png'
 import socialYoutube from '../assets/icons/social-youtube.png'
@@ -54,7 +54,20 @@ function FooterColumn({ title, items }) {
 export default function Footer() {
   return (
     <div className="relative">
-      <Reveal as="footer" className="relative z-10 mx-auto max-w-[1200px] px-6 pt-12 pb-5">
+      {/* Full uncropped grass scene as the footer backdrop: anchored to the
+          bottom, full width, natural aspect (no crop, no stretch). Its
+          transparent/sky top blends into the page's sky background, so there's
+          no seam. The footer content is laid on top of it (z-10). */}
+      <img
+        src={grassImg}
+        alt=""
+        className="pointer-events-none absolute inset-x-0 bottom-0 w-full select-none"
+      />
+      {/* The hills sit 10.24vw above the image's bottom edge (they start at
+          705/912 of a 2021×912 image scaled to full width). The flat part is
+          tuned so the last line of footer text clears the tallest hill by 10px
+          at every viewport width. */}
+      <Reveal as="footer" className="relative z-10 mx-auto max-w-[1200px] px-6 pt-12 pb-[calc(10.24vw+34px)]">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
@@ -70,7 +83,7 @@ export default function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-14 w-14 items-center justify-center rounded-lg bg-white"
+                  className="flex h-12 w-12 items-center justify-center rounded-lg bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)]"
                 >
                   <img src={s.icon} alt={s.label} className="h-10 w-10" />
                 </a>
@@ -85,12 +98,6 @@ export default function Footer() {
           </div>
         </div>
       </Reveal>
-
-      <img
-        src={grassImg}
-        alt=""
-        className="pointer-events-none block w-full select-none"
-      />
     </div>
   )
 }

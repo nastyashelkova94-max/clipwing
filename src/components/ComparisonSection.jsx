@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
+import { Button } from '@/components/ui/button'
 import logoMark from '../assets/logo/logo-mark.svg'
 import card2Bg from '../assets/images/card2.png'
 
@@ -75,8 +76,8 @@ export default function ComparisonSection() {
         {cards.map((card, i) => (
           <motion.div
             key={card.key}
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ y: 28 }}
+            whileInView={{ y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -8 }}
@@ -144,14 +145,16 @@ export default function ComparisonSection() {
               </ul>
 
               {card.highlighted && (
-                <a
-                  href="https://auto.clipwing.pro/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative mt-auto flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3 text-base font-medium text-white shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-indigo-600"
-                >
-                  Get my clips
-                </a>
+                <Button asChild variant="brand" size="xl" className="relative mt-auto w-full">
+                  <motion.a
+                    href="https://auto.clipwing.pro/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    Get my clips
+                  </motion.a>
+                </Button>
               )}
             </div>
           </motion.div>

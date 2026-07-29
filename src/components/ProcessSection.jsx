@@ -125,11 +125,11 @@ export default function ProcessSection() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-                <div className="mt-3 h-[220px] overflow-hidden rounded-2xl">
+                <div className="mt-3 overflow-hidden rounded-2xl">
                   <img
                     src={s.image}
                     alt={s.tab}
-                    className="h-full w-full object-cover object-top"
+                    className="h-auto w-full object-contain"
                   />
                 </div>
               </div>

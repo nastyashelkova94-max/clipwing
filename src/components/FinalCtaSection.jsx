@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import Reveal from './Reveal'
+import { Button } from '@/components/ui/button'
 
 export default function FinalCtaSection() {
   return (
@@ -19,24 +20,26 @@ export default function FinalCtaSection() {
 
       <div className="mx-auto mt-4 flex flex-col items-center gap-4 lg:mt-8">
         <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:flex-nowrap sm:items-center sm:justify-center">
-          <motion.a
-            href="https://auto.clipwing.pro/"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileTap={{ scale: 0.97 }}
-            className="flex h-12 w-full items-center justify-center whitespace-nowrap rounded-xl bg-indigo-500 px-6 py-3 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3] sm:w-auto"
-          >
-            Get my clips
-          </motion.a>
-          <motion.a
-            href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileTap={{ scale: 0.97 }}
-            className="glass-soft flex h-12 w-full items-center justify-center whitespace-nowrap rounded-xl border border-indigo-300! px-6 py-3 text-base font-medium text-[#21234e] shadow-[inset_0_1px_2px_0_rgba(59,24,237,0.25)] transition-colors hover:bg-[#6565F0]/30 sm:w-auto"
-          >
-            Book a call
-          </motion.a>
+          <Button asChild variant="brand" size="xl" className="w-full sm:w-auto">
+            <motion.a
+              href="https://auto.clipwing.pro/"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileTap={{ scale: 0.97 }}
+            >
+              Get my clips
+            </motion.a>
+          </Button>
+          <Button asChild variant="brandSoft" size="xl" className="w-full sm:w-auto">
+            <motion.a
+              href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileTap={{ scale: 0.97 }}
+            >
+              Book a call
+            </motion.a>
+          </Button>
         </div>
       </div>
     </section>

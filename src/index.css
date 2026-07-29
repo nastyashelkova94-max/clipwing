@@ -1,5 +1,81 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@1,500;1,600&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
+
+/* Scope shadcn's `dark:` utilities to an explicit `.dark` class instead of the
+   OS `prefers-color-scheme`. This is a light-only site, so without this the
+   Radix/shadcn `dark:` variants (e.g. `dark:bg-input/30`) would wrongly fire
+   for visitors whose OS is in dark mode. */
+@custom-variant dark (&:is(.dark *));
+
+/* shadcn/ui design tokens — brand-mapped so components match the Figma 1:1
+   (primary = indigo #6366f1, borders = slate-200, input = slate-300, etc.).
+   Note: we deliberately do NOT set `body { bg-background }` here — the page
+   keeps its custom gradient background defined further down. */
+:root {
+  --radius: 0.625rem;
+
+  --background: #ffffff;
+  --foreground: #0f172a;
+
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --border: #e2e8f0;
+  --input: #cbd5e1;
+  --ring: #6366f1;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+}
 
 @theme {
   --font-sans: "Geist", "Inter", system-ui, sans-serif;
@@ -23,28 +99,15 @@
 
 body {
   margin: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 15% 12%, rgba(255, 255, 255, 0.55) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 35% at 85% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 60%),
-    radial-gradient(ellipse 65% 45% at 25% 70%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 85%, rgba(255, 255, 255, 0.45) 0%, transparent 60%),
-    linear-gradient(180deg, #bfe3fa 0%, #a3cdef 45%, #bfe3fa 100%);
-  background-attachment: fixed;
-  background-size: 100% 100vh;
+  /* Main-site sky: clear-day clouds distributed down the whole page. Scaled
+     with `cover` (never `100% 100%`) so it fills any viewport without
+     stretching — it crops evenly at the sides on narrow screens. The grass is
+     NOT part of this layer; it's a separate floor band at the bottom of the
+     footer, so the footer content always sits in clear sky above the grass.
+     #bfe3fa is the sky-tone fallback shown before the SVG loads. */
+  background: url('./assets/images/sky-bg.svg') no-repeat top center / cover, #bfe3fa;
   color: #0f172a;
   font-family: var(--font-sans);
-}
-
-/* Below lg: mobile browsers (notably iOS Safari) don't reliably support
-   background-attachment: fixed, silently falling back to scroll. Combined
-   with a 100vh-tall background tile, that repeats the gradient every
-   viewport height down a long page, showing a hard seam at each repeat.
-   Cover the whole (much taller) page instead of tiling one viewport. */
-@media (max-width: 1023px) {
-  body {
-    background-attachment: scroll;
-    background-size: 100% 100%;
-  }
 }
 
 a, button, [role="button"] {
@@ -52,15 +115,15 @@ a, button, [role="button"] {
 }
 
 @utility glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.5),
-    0 10px 34px rgba(15, 23, 42, 0.14),
-    0 1px 3px rgba(15, 23, 42, 0.08);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 1px 2px rgba(25, 27, 58, 0.05),
+    0 14px 40px rgba(25, 27, 58, 0.12);
 }
 
 @utility glass-soft {
@@ -70,11 +133,82 @@ a, button, [role="button"] {
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+/* Header pill — "liquid glass" à la clipwing.pro: an almost-clear fill so the
+   sky reads right through, light backdrop blur + saturation, and a stack of
+   inset white highlights that fake the refractive rim of a wet glass bead.
+   The whitish look comes from the highlights + blur, not from a white tint. */
+@utility glass-header {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 8px 24px rgba(255, 255, 255, 0.10),
+    inset 0 -10px 24px rgba(255, 255, 255, 0.06),
+    0 1px 2px rgba(25, 27, 58, 0.05),
+    0 14px 40px rgba(25, 27, 58, 0.12);
+}
+
 @utility glass-indigo {
   background: rgba(99, 102, 241, 0.16);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(165, 180, 252, 0.5);
+}
+
+/* Header pill — ported from the reference (clipwing.pro main-nav feel).
+   At rest it is fully transparent at max width; on scroll the SAME element
+   simultaneously narrows AND fades in the glass/shadow. Animating width and
+   material together (not just the background) is what sells the effect. */
+.nav-pill {
+  max-width: 1140px;
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  transition:
+    max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s,
+    box-shadow 0.35s,
+    border-color 0.35s,
+    backdrop-filter 0.35s;
+}
+/* Scrolled "in motion" pill — matched to clipwing.pro: a transparent frosted
+   glass with a layered inset rim-light (no outer drop shadow). */
+.nav-pill.is-scrolled {
+  max-width: 1000px;
+  background: rgba(255, 255, 255, 0.25);
+  border-color: transparent;
+  box-shadow:
+    0.4px 0.4px 0.4px -0.9px rgba(255, 255, 255, 0.25) inset,
+    1.2px 1.2px 1.2px -1.75px rgba(255, 255, 255, 0.24) inset,
+    3.2px 3.2px 3.2px -2.6px rgba(255, 255, 255, 0.21) inset,
+    10px 10px 10px -3.5px rgba(255, 255, 255, 0.11) inset;
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+
+/* Primary button — reference gradient with the inset white highlight + colored
+   outer shadow. Without the inset highlight the button reads flat. */
+.btn-primary-grad {
+  background: linear-gradient(180deg, #6a63f5 0%, #5551ec 55%, #4d46e8 100%);
+  color: #f7f6ff;
+  border: 1px solid #5d55ee;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.35), 0 6px 16px rgba(65, 57, 227, 0.28);
+  transition: background 0.18s, box-shadow 0.18s;
+}
+.btn-primary-grad:hover {
+  background: linear-gradient(180deg, #5f58f2 0%, #4139e3 60%, #382fe0 100%);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.3), 0 8px 22px rgba(65, 57, 227, 0.36);
+}
+
+/* active nav item — indigo label, no underline dot */
+.nav-link-active {
+  color: #4139e3;
+  font-weight: 550;
 }
 
 @keyframes flow-dot {

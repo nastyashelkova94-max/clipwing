@@ -6,7 +6,7 @@ import chevronDown from '../assets/icons/chevron-down.svg'
 const navLinks = [
   { label: 'Pricing', href: 'https://clipwing.pro/pricing' },
   { label: 'Video production', href: 'https://clipwing.pro/custom-video-production' },
-  { label: 'Autopilot' },
+  { label: 'Autopilot', active: true },
   { label: 'SaaS launch video', href: 'https://clipwing.pro/saas-launch-video' },
   { label: 'Free tools', hasChevron: true },
 ]
@@ -44,16 +44,14 @@ export default function Header() {
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: -16 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ y: -16 }}
+      animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="pointer-events-none sticky top-0 z-30 flex flex-col items-center px-6 py-6 lg:px-10"
     >
       <div
-        className={`pointer-events-auto flex w-full items-center justify-between transition-all duration-300 ${
-          scrolled
-            ? 'glass max-w-[1140px] rounded-[26px] p-[10px]'
-            : 'max-w-[1300px]'
+        className={`nav-pill pointer-events-auto flex w-full items-center justify-between rounded-[26px] p-[9px] ${
+          scrolled ? 'is-scrolled' : ''
         }`}
       >
         <div className="flex items-center gap-3">
@@ -92,6 +90,7 @@ export default function Header() {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ background: 'rgba(255,255,255,0.8)' }}
                     className={`glass absolute left-1/2 top-full w-72 -translate-x-1/2 rounded-3xl p-2 ${
                       scrolled ? 'mt-6' : 'mt-3'
                     }`}
@@ -126,7 +125,7 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
             whileTap={{ scale: 0.98 }}
-            className="hidden h-12 whitespace-nowrap rounded-xl border border-indigo-400 bg-indigo-500 px-4 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3] sm:flex sm:items-center sm:justify-center"
+            className="btn-primary-grad hidden h-11 items-center justify-center whitespace-nowrap rounded-[14px] px-4 text-base font-medium lg:flex"
           >
             Create my viral clip
           </motion.a>
@@ -189,7 +188,7 @@ export default function Header() {
             href="https://auto.clipwing.pro/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 flex h-12 items-center justify-center whitespace-nowrap rounded-xl border border-indigo-400 bg-indigo-500 px-4 text-base font-medium text-[#f6f5f4] shadow-[inset_0_2px_9px_0_rgba(254,254,254,0.25)] transition-colors hover:bg-[#4139E3] sm:hidden"
+            className="btn-primary-grad mt-2 flex h-11 items-center justify-center whitespace-nowrap rounded-[14px] px-4 text-base font-medium lg:hidden"
           >
             Create my viral clip
           </a>
