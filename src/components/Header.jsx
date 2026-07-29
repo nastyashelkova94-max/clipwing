@@ -90,7 +90,7 @@ export default function Header() {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ background: 'rgba(255,255,255,0.8)' }}
+                    style={{ background: 'rgba(255,255,255,0.25)' }}
                     className={`glass absolute left-1/2 top-full w-72 -translate-x-1/2 rounded-3xl p-2 ${
                       scrolled ? 'mt-6' : 'mt-3'
                     }`}
