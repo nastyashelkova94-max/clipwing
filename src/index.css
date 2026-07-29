@@ -181,15 +181,18 @@ a, button, [role="button"] {
    glass with a layered inset rim-light (no outer drop shadow). */
 .nav-pill.is-scrolled {
   max-width: 1000px;
-  background: rgba(255, 255, 255, 0.32);
+  /* Frosted fill: same tint as clipwing.pro (rgb 239,239,239) but a higher
+     alpha so the pill reads less transparent / more solidly glassy. */
+  background: rgba(239, 239, 239, 0.5);
   border-color: transparent;
+  /* Exact 4-layer inset rim-light copied from clipwing.pro's nav pill. */
   box-shadow:
-    0.4px 0.4px 0.4px -0.9px rgba(255, 255, 255, 0.25) inset,
-    1.2px 1.2px 1.2px -1.75px rgba(255, 255, 255, 0.24) inset,
-    3.2px 3.2px 3.2px -2.6px rgba(255, 255, 255, 0.21) inset,
-    10px 10px 10px -3.5px rgba(255, 255, 255, 0.11) inset;
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
+    0.3496px 0.3496px 0.34609px -0.76842px rgba(255, 255, 255, 0.22) inset,
+    1.0602px 1.0602px 1.04954px -1.53683px rgba(255, 255, 255, 0.21) inset,
+    2.80259px 2.80259px 2.77442px -2.30525px rgba(255, 255, 255, 0.184) inset,
+    8.78189px 8.78189px 8.69363px -3.07366px rgba(255, 255, 255, 0.098) inset;
+  backdrop-filter: blur(7.9px);
+  -webkit-backdrop-filter: blur(7.9px);
 }
 
 /* Primary button — reference gradient with the inset white highlight + colored
