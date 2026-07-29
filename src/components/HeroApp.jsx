@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 import logoUrl from '@/assets/logo/clipwing-logo.svg'
 import avatarJohn from '@/assets/images/hero-collage/parts/avatar-1.png'
+import { publicAsset } from '@/lib/publicAsset'
 
-const A = '/hero-app' // public asset base for the ported widget
+const A = publicAsset('hero-app')
 
 /** TikTok's current music-note mark; drawn three times for the offset colours. */
 const TIKTOK_NOTE =

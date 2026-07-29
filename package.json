@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run check:public-assets && vite build",
+    "check:public-assets": "node scripts/check-public-asset-paths.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },
