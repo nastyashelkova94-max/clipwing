@@ -461,7 +461,7 @@
     transition: transform .2s var(--ease-out), opacity .25s;
   }
   .player-bigplay:hover { transform: scale(1.06); }
-  .ic-tri { display: block; margin-left: 5%; }
+  .ic-tri { display: block; }
   .player-frame.playing .player-bigplay { opacity: 0; pointer-events: none; transform: scale(.85); }
   .player-controls {
     display: flex;

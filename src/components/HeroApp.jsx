@@ -634,7 +634,7 @@ export default function HeroApp() {
                   <div className="player-frame" id="playerFrame">
                     <video id="demoVideo" src={`${A}/clip1.mp4`} poster={`${A}/post-video-poster.jpg`} playsInline preload="metadata"></video>
                     <button className="player-bigplay" id="bigPlay" type="button" aria-label="Play">
-                      <svg className="ic-tri" width="24" height="27" viewBox="9.4 3.5 13.8 17" fill="currentColor" aria-hidden="true"><path d="M10 6.15c0-1.53 1.66-2.48 2.98-1.7l8.3 4.9c1.3.77 1.3 2.66 0 3.43l-8.3 4.9c-1.32.78-2.98-.17-2.98-1.7V6.15z" /></svg>
+                      <svg className="ic-tri" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.5 7.2c0-1.16 1.26-1.88 2.26-1.29l7.92 4.8c.99.6.99 2.02 0 2.62l-7.92 4.8c-1 .6-2.26-.13-2.26-1.29V7.2z" /></svg>
                     </button>
                   </div>
                   <div className="player-controls">
