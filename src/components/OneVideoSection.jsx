@@ -446,7 +446,7 @@ export default function OneVideoSection() {
   }, [])
 
   return (
-    <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
+    <section className="relative z-10 mx-auto mt-[100px] max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex max-w-[751px] flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium leading-[100%] text-slate-900 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
           See what we make from{' '}

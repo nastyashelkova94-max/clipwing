@@ -78,8 +78,25 @@ export default function Hero() {
 
       {/* Clickable prototype. Mobile + tablet: stretch to the full grid width.
           Desktop (lg+): fixed, capped width, centered in the hero text column. */}
-      <div className="mx-auto -mt-2 w-full lg:mt-0 lg:w-[calc(min(1260px,100vw-2rem)-220px)]">
-        <HeroApp />
+      <div className="hero-grass-frame mx-auto -mt-2 w-full lg:mt-0 lg:w-[calc(min(1260px,100vw-2rem)-220px)]">
+        {/* Grass behind the app — its top blades cover the bottom ~20% of the app. */}
+        <img
+          src="/hero-grass-under.png"
+          alt=""
+          aria-hidden="true"
+          className="hero-grass hero-grass--under"
+        />
+        <div className="hero-grass-app">
+          <HeroApp />
+        </div>
+        {/* Grass in front of the app — identical placement, so it sits at the
+            same height and overlaps the same bottom band from the front. */}
+        <img
+          src="/hero-grass-over.png"
+          alt=""
+          aria-hidden="true"
+          className="hero-grass hero-grass--over"
+        />
       </div>
     </motion.section>
   )

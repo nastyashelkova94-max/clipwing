@@ -821,3 +821,57 @@
     .demo-hint { display: none; }
   }
 }
+
+/* ============================================================
+   Hero grass — the app is "planted" in grass. Two identical
+   bands sit at the same height: one behind the app, one in
+   front. Each is anchored to the app's bottom and covers the
+   lower ~20% of the app, so the app looks planted in a meadow.
+   ============================================================ */
+.hero-grass-frame {
+  position: relative;
+}
+
+.hero-grass-app {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-grass {
+  position: absolute;
+  left: 50%;
+  /* Band anchored to the app's bottom: it covers the lower part of the app
+     and fades out just below. Sized as a share of the app height so it stays
+     inside the hero at every width instead of scaling with the image. */
+  /* full-width, full image (no crop, natural proportions). The PNG has ~30%
+     transparent padding below the grass (= ~17vw at 100vw wide); offsetting by
+     that much drops the visible grass so its base sits at the app bottom.
+     The extra -66px lowers it below that base. */
+  bottom: calc(-17vw - 66px);
+  height: auto;
+  width: 100vw;
+  max-width: none;
+  /* tilted 2deg counter-clockwise (left) */
+  transform: translateX(-50%) rotate(-2deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* the back layer sits 70px lower than the front one */
+.hero-grass--under { z-index: 0; bottom: calc(-17vw - 136px); }
+.hero-grass--over  { z-index: 2; }
+
+/* Raise the whole grass group on smaller screens (desktop, lg+, is left
+   untouched). Keeps the desktop two-layer setup: the back layer (--under)
+   stays behind the app, the front layer (base .hero-grass) stays over it.
+   "Up by Npx" = add +Npx to the bottom offset. */
+/* Tablet (md–lg): front (over) band down 10px, back (under) band up 10px */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .hero-grass         { bottom: calc(-17vw - 28px); }
+  .hero-grass--under  { bottom: calc(-17vw - 78px); }
+}
+/* Mobile (< md): front (over) band down 10px, back (under) band up 10px */
+@media (max-width: 767.98px) {
+  .hero-grass         { bottom: calc(-17vw - 6px); }
+  .hero-grass--under  { bottom: calc(-17vw - 14px); }
+}
