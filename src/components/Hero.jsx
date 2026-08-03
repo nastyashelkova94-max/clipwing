@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import HeroApp from './HeroApp'
 import { Button } from '@/components/ui/button'
+import { publicAsset } from '@/lib/publicAsset'
 import '@/hero-app.css'
 
 const container = {
@@ -81,7 +82,7 @@ export default function Hero() {
       <div className="hero-grass-frame mx-auto -mt-2 w-full lg:mt-0 lg:w-[calc(min(1260px,100vw-2rem)-220px)]">
         {/* Grass behind the app — its top blades cover the bottom ~20% of the app. */}
         <img
-          src="/hero-grass-under.png"
+          src={publicAsset('hero-grass-under.png')}
           alt=""
           aria-hidden="true"
           className="hero-grass hero-grass--under"
@@ -92,7 +93,7 @@ export default function Hero() {
         {/* Grass in front of the app — identical placement, so it sits at the
             same height and overlaps the same bottom band from the front. */}
         <img
-          src="/hero-grass-over.png"
+          src={publicAsset('hero-grass-over.png')}
           alt=""
           aria-hidden="true"
           className="hero-grass hero-grass--over"
