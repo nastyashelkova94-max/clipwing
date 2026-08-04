@@ -5,14 +5,15 @@ import circleCheck from '../assets/icons/circle-check.svg'
 import circleCheckGray from '../assets/icons/circle-check-gray.svg'
 
 const studioFeatures = [
-  'Everything in Autopilot',
-  'A dedicated editing team',
-  'Full-length episodes',
-  'Priority turnaround',
+  'Everything in Autopilot, +',
+  'Full-length episodes (video+audio)',
+  'YouTube thumbnail design',
+  'Custom fonts, captions and branding',
+  'Chat with team via Slack',
 ]
 
 const autopilotFeatures = [
-  'Unlimited tasks',
+  'Unlimited requests',
   'Vertical clips with captions, ready in 3 days',
   'Review, comment, and approve in the app',
   'Post to your socials from the app',
@@ -45,12 +46,7 @@ export default function PricingSection() {
         >
           <div className="relative flex h-full flex-col gap-6 rounded-2xl border border-white/60 bg-white p-4 lg:p-5">
             <div>
-              <div className="flex items-center justify-between gap-2">
-                <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Autopilot</h3>
-                <span className="shrink-0 rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-600">
-                  Most popular
-                </span>
-              </div>
+              <h3 className="text-2xl font-medium leading-[100%] text-slate-900">Autopilot</h3>
               <p className="mt-1 text-[15px] text-[#52525c] lg:whitespace-nowrap">
                 A real editor on every video you send
               </p>
@@ -149,7 +145,7 @@ export default function PricingSection() {
               </Button>
               <Button asChild variant="brandSoft" size="xl" className="w-full">
                 <motion.a
-                  href="https://cal.com/lera-clipwing/clipwing-autopilot-onboarding"
+                  href="https://cal.com/lera-clipwing/clipwing-studio-onboarding"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileTap={{ scale: 0.97 }}
