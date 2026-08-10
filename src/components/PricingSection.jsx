@@ -53,9 +53,9 @@ export default function PricingSection() {
             </div>
             <div>
               <p className="flex items-end gap-2">
-                <span className="text-xl text-slate-600 line-through">$499</span>
+                <span className="text-xl text-slate-600 line-through">$999.99</span>
                 <span className="text-3xl font-semibold tracking-tight text-slate-900">
-                  $399
+                  $399.99
                 </span>
                 <span className="text-base text-[#52525c]">/month</span>
               </p>
