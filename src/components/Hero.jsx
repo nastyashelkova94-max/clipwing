@@ -20,8 +20,22 @@ export default function Hero() {
       initial="hidden"
       animate="show"
       variants={container}
-      className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center gap-8 px-6 pt-16 pb-[160px] text-center"
+      className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center gap-8 px-6 pt-[34px] pb-[160px] text-center"
     >
+      <motion.a
+        variants={item}
+        href="https://www.producthunt.com/products/clipwing?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-clipwing-autopilot"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          alt="Clipwing Autopilot - Get your clips without AI slop or hiring hassle | Product Hunt"
+          width="250"
+          height="54"
+          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1213987&theme=light&t=1787037594019"
+        />
+      </motion.a>
+
       <div className="flex flex-col items-center gap-4">
         <motion.h1
           variants={item}
