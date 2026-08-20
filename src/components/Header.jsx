@@ -58,7 +58,7 @@ export default function Header() {
         }`}
       >
         <div className="flex items-center gap-3">
-          <a href="https://clipwing.pro/">
+          <a href="https://clipwing.pro/autopilot">
             <Logo />
           </a>
         </div>
