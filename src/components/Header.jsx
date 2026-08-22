@@ -6,7 +6,6 @@ import chevronDown from '../assets/icons/chevron-down.svg'
 const navLinks = [
   { label: 'Pricing', href: 'https://clipwing.pro/pricing' },
   { label: 'Video production', href: 'https://clipwing.pro/custom-video-production' },
-  { label: 'Autopilot', active: true },
   { label: 'SaaS launch video', href: 'https://clipwing.pro/saas-launch-video' },
   { label: 'Free tools', hasChevron: true },
 ]
