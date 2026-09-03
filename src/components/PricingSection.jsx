@@ -55,7 +55,7 @@ export default function PricingSection() {
               <p className="flex items-end gap-2">
                 <span className="text-xl text-slate-600 line-through">$999.99</span>
                 <span className="text-3xl font-semibold tracking-tight text-slate-900">
-                  $399.99
+                  $499.99
                 </span>
                 <span className="text-base text-[#52525c]">/month</span>
               </p>
@@ -112,8 +112,12 @@ export default function PricingSection() {
                 Higher volume and full-service production for teams
               </p>
             </div>
-            <p className="text-3xl font-semibold tracking-tight text-slate-900">
-              Custom
+            <p className="flex items-end gap-2">
+              <span className="text-base text-[#52525c]">Starting at</span>
+              <span className="text-3xl font-semibold tracking-tight text-slate-900">
+                $2,999.99
+              </span>
+              <span className="text-base text-[#52525c]">/month</span>
             </p>
             <ul className="flex flex-col gap-3">
               {studioFeatures.map((f) => (
