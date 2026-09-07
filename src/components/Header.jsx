@@ -129,7 +129,7 @@ export default function Header() {
             whileTap={{ scale: 0.98 }}
             className="btn-primary-grad hidden h-11 items-center justify-center whitespace-nowrap rounded-[14px] px-4 text-base font-medium lg:flex"
           >
-            Create my viral clip
+            Get my clips
           </motion.a>
 
           <button
@@ -192,7 +192,7 @@ export default function Header() {
             rel="noopener noreferrer"
             className="btn-primary-grad mt-2 flex h-11 items-center justify-center whitespace-nowrap rounded-[14px] px-4 text-base font-medium lg:hidden"
           >
-            Create my viral clip
+            Get my clips
           </a>
         </motion.div>
       )}
