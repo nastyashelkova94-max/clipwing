@@ -140,8 +140,6 @@ export default function PricingSection() {
               >
                 <motion.a
                   href="https://clipwing.pro/custom-video-production"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   whileTap={{ scale: 0.97 }}
                 >
                   See Studio
