@@ -7,14 +7,11 @@ export default function FinalCtaSection() {
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium leading-[100%] text-slate-900 sm:text-[40px] lg:leading-[normal] lg:whitespace-nowrap lg:text-[48px]">
-          Get clips without the{' '}
-          <span className="font-serif text-[32px] font-medium italic leading-[100%] text-indigo-600 sm:text-[40px] lg:leading-[normal] lg:text-[48px]">
-            editor hunt
-          </span>
+          Squeeze the max out of your videos
         </h2>
         <p className="max-w-[480px] text-xl font-normal leading-tight text-[#3f3f46]">
-          Send a link and a hand-picked editor takes it from there. Pick a plan
-          to start.
+          You already made the video. Now get a week of content out of it – with
+          a real editor doing the rest
         </p>
       </Reveal>
 

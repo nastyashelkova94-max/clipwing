@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
 export default function Reveal({
   children,
@@ -8,6 +8,13 @@ export default function Reveal({
   as = 'div',
 }) {
   const Component = motion[as] ?? motion.div
+  // With "reduce motion" on, the content is simply there — no travel, no
+  // transition — instead of sliding into place on every scroll.
+  const reduced = useReducedMotion()
+  if (reduced) {
+    const Plain = as
+    return <Plain className={className}>{children}</Plain>
+  }
   return (
     <Component
       className={className}

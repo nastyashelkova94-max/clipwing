@@ -7,8 +7,8 @@ import socialYoutube from '../assets/icons/social-youtube.png'
 
 const browse = [
   { label: 'Pricing', href: 'https://clipwing.pro/pricing' },
-  { label: 'Affiliates', href: 'https://clipwing.pro/affiliates' },
   { label: 'Blog', href: 'https://clipwing.pro/blog' },
+  { label: 'Clipwing vs OpusClip', href: 'https://clipwing.pro/clipwing-vs-opusclip' },
   { label: 'Terms and Conditions', href: 'https://clipwing.pro/terms-and-conditions' },
   { label: 'Privacy Policy', href: 'https://clipwing.pro/privacy-policy' },
   { label: 'Refund Policy', href: 'https://clipwing.pro/refund-policy' },
@@ -25,7 +25,6 @@ const freeTools = [
 const services = [
   { label: 'Video production', href: 'https://clipwing.pro/custom-video-production' },
   { label: 'SaaS launch video', href: 'https://clipwing.pro/saas-launch-video' },
-  { label: 'Autopilot' },
 ]
 
 const socials = [

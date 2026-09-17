@@ -2,12 +2,36 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/autopilot/clipwing-vs-opusclip",
+      "destination": "/clipwing-vs-opusclip.html"
+    },
+    {
       "source": "/autopilot",
       "destination": "/"
     },
     {
       "source": "/autopilot/:path*",
       "destination": "/:path*"
+    },
+    {
+      "source": "/clipwing-vs-opusclip",
+      "destination": "/clipwing-vs-opusclip.html"
+    },
+    {
+      "source": "/clipwing-vs-opusclip/:path*",
+      "destination": "/clipwing-vs-opusclip.html"
+    },
+    {
+      "source": "/comparison",
+      "destination": "/"
+    },
+    {
+      "source": "/comparison/:path*",
+      "destination": "/"
+    },
+    {
+      "source": "/comparison-4",
+      "destination": "/"
     }
   ]
 }
