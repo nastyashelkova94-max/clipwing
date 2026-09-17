@@ -7,7 +7,9 @@ export default function FinalCtaSection() {
     <section className="relative z-10 mx-auto max-w-[1200px] px-6 pb-[160px]">
       <Reveal className="mx-auto flex flex-col items-center gap-4 text-center">
         <h2 className="text-[32px] font-medium leading-[100%] text-slate-900 sm:text-[40px] lg:leading-[normal] lg:whitespace-nowrap lg:text-[48px]">
-          Squeeze the max out of your videos
+          Squeeze the max
+          <br />
+          out of your videos
         </h2>
         <p className="max-w-[480px] text-xl font-normal leading-tight text-[#3f3f46]">
           You already made the video. Now get a week of content out of it – with
